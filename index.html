@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scales &amp; Stones — Kira &amp; Sana Marlowe</title>
+  <meta name="description" content="Scales & Stones — A dark fantasy romance by Kira & Sana Marlowe. The deepest shadows are cast by the ones who swear to protect you.">
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body class="landing-body">
+
+  <!-- Slow Midnight Water Ripple Canvas -->
+  <canvas id="ripple-canvas"></canvas>
+
+  <!-- Full-Viewport Gothic Botanical Frame -->
+  <div class="landing-frame" aria-hidden="true">
+    <div class="landing-corner tl"></div>
+    <div class="landing-corner tr"></div>
+    <div class="landing-corner bl"></div>
+    <div class="landing-corner br"></div>
+  </div>
+
+  <!-- Transition Overlay -->
+  <div class="transition-overlay"></div>
+
+  <!-- Center Portal -->
+  <div class="landing-content">
+    <div class="landing-authors">Kira &amp; Sana Marlowe</div>
+    <h1 class="landing-title">Scales &amp; Stones</h1>
+
+    <div class="book-container" id="book-portal" role="button" tabindex="0" aria-label="Enter the website">
+      <img
+        src="assets/images/book-cover.jpg"
+        alt="Scales & Stones — Book Cover"
+        class="book-cover"
+        draggable="false"
+      >
+    </div>
+
+    <p class="landing-tagline">
+      &ldquo;The deepest shadows are cast by the ones<br>who swear to protect you.&rdquo;
+    </p>
+
+    <div class="landing-enter">Click the book to enter</div>
+  </div>
+
+  <script src="js/ripple.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const book = document.getElementById('book-portal');
+      const body = document.body;
+
+      function enterSite() {
+        if (body.classList.contains('transitioning')) return;
+        body.classList.add('transitioning');
+
+        if (window.waterRipple) {
+          const rect = book.getBoundingClientRect();
+          window.waterRipple.splash(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        }
+
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 1050);
+      }
+
+      book.addEventListener('click', enterSite);
+      book.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          enterSite();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
