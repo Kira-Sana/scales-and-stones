@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — Kira &amp; Sana Marlowe</title>
-  <meta name="description" content="Journal entries, writing updates, and lore notes from Kira & Sana Marlowe.">
+  <title>Blog &amp; Author Journal — Kira &amp; Sana Marlowe | Scales &amp; Stones</title>
+  <meta name="description" content="Read blog entries, writing updates, and worldbuilding lore from Kira Marlowe and Sana Marlowe, authors of the dark fantasy romance trilogy Scales & Stones.">
+  <link rel="canonical" href="https://scalesandstones.com/blog.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,6 +24,33 @@
     </header>
 
     <div class="editorial-column">
+      <!-- Blog Search, Category Filter & Sort Toolbar (Hidden when reading a single post) -->
+      <div class="blog-controls-bar" id="blog-controls-bar">
+        <div class="blog-search-sort-row">
+          <input
+            type="search"
+            id="blog-search-input"
+            class="form-control"
+            placeholder="Search journal entries by title, keyword, or topic..."
+            aria-label="Search journal entries"
+          >
+          <!-- Custom Styled Gothic Sort Dropdown -->
+          <div class="gothic-dropdown" id="blog-sort-dropdown">
+            <button type="button" class="gothic-dropdown-trigger" id="blog-sort-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="blog-sort-label">✦ Newest to Oldest</span>
+              <span class="dd-arrow" aria-hidden="true">▾</span>
+            </button>
+            <div class="gothic-dropdown-menu" role="listbox">
+              <button type="button" class="gothic-dropdown-option active" data-sort="newest" role="option">✦ Newest to Oldest</button>
+              <button type="button" class="gothic-dropdown-option" data-sort="oldest" role="option">✦ Oldest to Newest</button>
+            </div>
+          </div>
+        </div>
+        <div class="blog-category-pills" id="blog-category-pills" role="tablist" aria-label="Filter by category"></div>
+      </div>
+
+      <div class="blog-status-count" id="blog-status-count"></div>
+
       <!-- Blog Feed / Article Reader Container -->
       <div id="blog-container"></div>
     </div>
@@ -48,23 +77,118 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('blog-container');
+      const controlsBar = document.getElementById('blog-controls-bar');
+      const statusCount = document.getElementById('blog-status-count');
+      const searchInput = document.getElementById('blog-search-input');
+      const sortDropdown = document.getElementById('blog-sort-dropdown');
+      const sortTrigger = document.getElementById('blog-sort-trigger');
+      const sortLabel = document.getElementById('blog-sort-label');
+      const categoryPills = document.getElementById('blog-category-pills');
+
       const posts = window.BLOG_POSTS || [];
+      const PAGE_SIZE = 10;
+
+      let activeCategory = 'All';
+      let searchQuery = '';
+      let sortOrder = 'newest';
+      let visibleLimit = PAGE_SIZE;
+
+      // Build dynamic category pills from posts
+      const categories = ['All', ...new Set(posts.map(p => p.category).filter(Boolean))];
+      function renderCategoryPills() {
+        categoryPills.innerHTML = categories.map(cat => `
+          <button type="button" class="blog-cat-btn ${cat === activeCategory ? 'active' : ''}" data-cat="${cat}">
+            ${cat === 'All' ? 'All Entries' : cat}
+          </button>
+        `).join('');
+
+        categoryPills.querySelectorAll('.blog-cat-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            activeCategory = btn.getAttribute('data-cat');
+            visibleLimit = PAGE_SIZE;
+            renderCategoryPills();
+            renderFeed();
+          });
+        });
+      }
+
+      function getFilteredPosts() {
+        const q = searchQuery.trim().toLowerCase();
+        const filtered = posts.filter((post) => {
+          const matchesCat = activeCategory === 'All' || post.category === activeCategory;
+          if (!matchesCat) return false;
+          if (!q) return true;
+          const haystack = [
+            post.title,
+            post.category,
+            post.date,
+            post.excerpt,
+            ...(post.content || [])
+          ].join(' ').toLowerCase();
+          return haystack.includes(q);
+        });
+
+        // Sort by date (or original array index fallback)
+        filtered.sort((a, b) => {
+          const timeA = Date.parse(a.date) || 0;
+          const timeB = Date.parse(b.date) || 0;
+          return sortOrder === 'newest' ? timeB - timeA : timeA - timeB;
+        });
+
+        return filtered;
+      }
 
       function renderFeed() {
-        const cards = posts.map(post => `
+        if (controlsBar) controlsBar.style.display = 'block';
+        if (statusCount) statusCount.style.display = 'block';
+
+        const filtered = getFilteredPosts();
+        const slice = filtered.slice(0, visibleLimit);
+
+        if (statusCount) {
+          statusCount.textContent = `Showing ${slice.length} of ${filtered.length} ${filtered.length === 1 ? 'Entry' : 'Entries'}`;
+        }
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 3rem 1rem; border: 1px solid var(--parchment-faint);">
+              <p style="color: var(--parchment-muted); margin-bottom: 1rem;">No journal entries match your search or filter.</p>
+              <button type="button" class="btn-gothic outline" id="reset-blog-filters">Show All Entries</button>
+            </div>
+          `;
+          document.getElementById('reset-blog-filters').addEventListener('click', () => {
+            activeCategory = 'All';
+            searchQuery = '';
+            if (searchInput) searchInput.value = '';
+            visibleLimit = PAGE_SIZE;
+            renderCategoryPills();
+            renderFeed();
+          });
+          return;
+        }
+
+        const cards = slice.map(post => `
           <article class="blog-card" data-post-id="${post.id}">
             <div class="blog-meta">
               <span>${post.date}</span>
               <span>&middot;</span>
               <span>${post.category}</span>
             </div>
-            <h2>${post.title}</h2>
+            <h2 style="font-family: var(--font-body); font-weight: 700; font-size: 1.55rem;">${post.title}</h2>
             <p>${post.excerpt}</p>
             <span class="blog-read-link">Read Entry &rarr;</span>
           </article>
         `).join('');
 
-        container.innerHTML = `<div class="blog-grid">${cards}</div>`;
+        const loadMoreHTML = filtered.length > visibleLimit ? `
+          <div style="text-align: center; margin-top: 2rem;">
+            <button type="button" class="btn-gothic outline" id="load-more-posts">
+              Load More Entries (${filtered.length - visibleLimit} remaining)
+            </button>
+          </div>
+        ` : '';
+
+        container.innerHTML = `<div class="blog-grid">${cards}</div>${loadMoreHTML}`;
 
         container.querySelectorAll('.blog-card').forEach(card => {
           card.addEventListener('click', () => {
@@ -72,9 +196,20 @@
             window.location.hash = id;
           });
         });
+
+        const loadMoreBtn = document.getElementById('load-more-posts');
+        if (loadMoreBtn) {
+          loadMoreBtn.addEventListener('click', () => {
+            visibleLimit += PAGE_SIZE;
+            renderFeed();
+          });
+        }
       }
 
       function renderPost(post) {
+        if (controlsBar) controlsBar.style.display = 'none';
+        if (statusCount) statusCount.style.display = 'none';
+
         const paragraphs = post.content.map(p => `<p>${p}</p>`).join('');
         container.innerHTML = `
           <article class="blog-article-view">
@@ -90,7 +225,7 @@
               <span>&middot;</span>
               <span>${post.author}</span>
             </div>
-            <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">${post.title}</h2>
+            <h2 class="section-title" style="text-align: left; font-family: var(--font-body); font-weight: 700; font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 1.5rem;">${post.title}</h2>
             ${paragraphs}
           </article>
         `;
@@ -99,6 +234,41 @@
           history.pushState('', document.title, window.location.pathname + window.location.search);
           renderFeed();
           window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          searchQuery = e.target.value;
+          visibleLimit = PAGE_SIZE;
+          renderFeed();
+        });
+      }
+
+      if (sortDropdown && sortTrigger) {
+        sortTrigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = sortDropdown.classList.toggle('open');
+          sortTrigger.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        sortDropdown.querySelectorAll('.gothic-dropdown-option').forEach(opt => {
+          opt.addEventListener('click', () => {
+            sortOrder = opt.getAttribute('data-sort');
+            if (sortLabel) sortLabel.textContent = opt.textContent;
+            sortDropdown.querySelectorAll('.gothic-dropdown-option').forEach(o => o.classList.remove('active'));
+            opt.classList.add('active');
+            sortDropdown.classList.remove('open');
+            sortTrigger.setAttribute('aria-expanded', 'false');
+            renderFeed();
+          });
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!sortDropdown.contains(e.target)) {
+            sortDropdown.classList.remove('open');
+            sortTrigger.setAttribute('aria-expanded', 'false');
+          }
         });
       }
 
@@ -113,6 +283,7 @@
         }
       }
 
+      renderCategoryPills();
       window.addEventListener('hashchange', handleRoute);
       handleRoute();
     });

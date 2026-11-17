@@ -98,11 +98,16 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="modal-kicker">✦ Crow Scrolls ✦</div>
       <h2 id="sanctuary-modal-title">Before You Leave the Deep...</h2>
       <p>
-        Receive Crow Scrolls from Kira &amp; Sana Marlowe with cover reveals, release dates, and secret chapters from <em>Scales &amp; Stones</em>.
+        Receive Crow Scrolls from Kira &amp; Sana Marlowe with cover reveals, release dates, secret chapters from <em>Scales &amp; Stones</em>, and so on.
       </p>
       <form class="sanctuary-modal-form" id="sanctuary-newsletter-form">
-        <input type="email" class="form-control" placeholder="Enter your email address..." required style="text-align: center;">
-        <button type="submit" class="btn-gothic" style="width: 100%;">Seal Your Name</button>
+        <input type="text" name="first_name" class="form-control" placeholder="Your first name or nickname..." required>
+        <input type="email" name="email" class="form-control" placeholder="Your email address..." required>
+        <label class="sanctuary-consent-label">
+          <input type="checkbox" name="consent" required>
+          <span>I agree to receive Crow Scrolls (email updates) from Kira &amp; Sana Marlowe. You can unsubscribe at any time.</span>
+        </label>
+        <button type="submit" class="btn-gothic" style="width: 100%; margin-top: 0.2rem;">Seal Your Name</button>
       </form>
       <button type="button" class="sanctuary-close-btn" id="sanctuary-modal-close">Close</button>
     </div>

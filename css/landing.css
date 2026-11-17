@@ -5,6 +5,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=UnifrakturMaguntia&display=swap');
 
+html {
+  font-size: clamp(15.5px, 0.22vw + 14px, 19px);
+}
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -118,7 +122,7 @@
 }
 
 .book-cover {
-  width: 225px;
+  width: clamp(175px, 14vw, 380px);
   height: auto;
   display: block;
   border: 1px solid rgba(227, 222, 200, 0.45);
