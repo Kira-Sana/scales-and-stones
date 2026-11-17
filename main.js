@@ -100,14 +100,17 @@ document.addEventListener('DOMContentLoaded', () => {
       <p>
         Receive Crow Scrolls from Kira &amp; Sana Marlowe with cover reveals, release dates, secret chapters from <em>Scales &amp; Stones</em>, and so on.
       </p>
-      <form class="sanctuary-modal-form" id="sanctuary-newsletter-form">
-        <input type="text" name="first_name" class="form-control" placeholder="Your first name or nickname..." required>
-        <input type="email" name="email" class="form-control" placeholder="Your email address..." required>
+      <form class="sanctuary-modal-form" id="sanctuary-newsletter-form" action="https://assets.mailerlite.com/jsonp/2802467/forms/204368528875193774/subscribe" method="POST">
+        <input type="text" name="fields[name]" class="form-control" placeholder="Your first name or nickname..." required autocomplete="given-name">
+        <input type="email" name="fields[email]" class="form-control" placeholder="Your email address..." required autocomplete="email">
+        <input type="hidden" name="ml-submit" value="1">
+        <input type="hidden" name="anticsrf" value="true">
         <label class="sanctuary-consent-label">
           <input type="checkbox" name="consent" required>
           <span>I agree to receive Crow Scrolls (email updates) from Kira &amp; Sana Marlowe. You can unsubscribe at any time.</span>
         </label>
-        <button type="submit" class="btn-gothic" style="width: 100%; margin-top: 0.2rem;">Seal Your Name</button>
+        <button type="submit" class="btn-gothic" id="sanctuary-modal-submit-btn" style="width: 100%; margin-top: 0.2rem;">Seal Your Name</button>
+        <div id="sanctuary-modal-status" style="display:none; font-size: 0.85rem; margin-top: 0.8rem; color: #B89B67; text-align: center; font-style: italic;"></div>
       </form>
       <button type="button" class="sanctuary-close-btn" id="sanctuary-modal-close">Close</button>
     </div>
@@ -131,10 +134,40 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === modalBackdrop) closeNewsletterModal();
   });
 
-  document.getElementById('sanctuary-newsletter-form').addEventListener('submit', (e) => {
+  const newsletterForm = document.getElementById('sanctuary-newsletter-form');
+  const submitBtn = document.getElementById('sanctuary-modal-submit-btn');
+  const statusEl = document.getElementById('sanctuary-modal-status');
+
+  newsletterForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    alert('Thank you! Your name has been added to our Crow Scrolls.');
-    closeNewsletterModal();
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Sealing Your Oath...';
+    statusEl.style.display = 'block';
+    statusEl.innerText = 'Dispatching raven to Lucantis...';
+
+    const formData = new FormData(newsletterForm);
+
+    fetch('https://assets.mailerlite.com/jsonp/2802467/forms/204368528875193774/subscribe', {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors'
+    })
+    .then(() => {
+      submitBtn.innerText = '✦ Oath Sealed ✦';
+      statusEl.innerHTML = '✦ Your name has been inscribed in the Crow Scrolls.<br>Check your inbox for your welcome scroll!';
+      setTimeout(() => {
+        closeNewsletterModal();
+        newsletterForm.reset();
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Seal Your Name';
+        statusEl.style.display = 'none';
+      }, 3500);
+    })
+    .catch((err) => {
+      console.error('Newsletter submit error:', err);
+      // Fallback submit
+      newsletterForm.submit();
+    });
   });
 
   // Add a subtle "Crow Scrolls (Newsletter)" trigger link in the footer so visitors (or you!) can also open it anytime
