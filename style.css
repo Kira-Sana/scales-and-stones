@@ -25,7 +25,7 @@
   --font-title: 'UnifrakturMaguntia', cursive;
   --font-body: 'Philosopher', serif;
 
-  --frame-inset: 18px;
+  --frame-inset: clamp(10px, 0.95vw, 30px);
   --frame-radius: 18px;
 }
 
@@ -38,13 +38,15 @@
 
 html {
   scroll-behavior: smooth;
+  /* Gentle scaling: 16px on standard screens, up to 19px max on 4K so boxes never get squeezed */
+  font-size: clamp(15.5px, 0.22vw + 14px, 19px);
 }
 
 body {
   background-color: var(--ink);
   color: var(--parchment);
   font-family: var(--font-body);
-  font-size: 18px;
+  font-size: 1.05rem;
   line-height: 1.75;
   min-height: 100vh;
   overflow-x: hidden;
@@ -99,7 +101,7 @@ a {
 
 .botanical-corner {
   position: absolute;
-  width: 72px;
+  width: 4.5rem;
   height: auto;
   pointer-events: none;
 }
@@ -277,7 +279,7 @@ body.toc-open .toc-overlay {
 /* ─── Page Container Inside Frame ─── */
 .page-shell {
   padding: calc(var(--frame-inset) + 3.5rem) calc(var(--frame-inset) + 2rem) calc(var(--frame-inset) + 3rem);
-  max-width: 1280px;
+  max-width: 80rem;
   margin: 0 auto;
   animation: pageFade 0.7s ease-out;
 }
@@ -289,12 +291,14 @@ body.toc-open .toc-overlay {
 
 /* ─── Hero Full-Viewport Centered Stage ─── */
 .hero-stage {
-  min-height: calc(100vh - (var(--frame-inset) * 2) - 5.5rem);
+  min-height: calc(100dvh - (var(--frame-inset) * 2) - 4rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: clamp(0.8rem, 2vh, 2.2rem);
   width: 100%;
+  padding-bottom: 1.5rem;
 }
 
 /* ─── Giant Hero Title (Like "Return of the certified ones") ─── */
@@ -344,12 +348,12 @@ body.toc-open .toc-overlay {
 /* ─── Book Showcase & Selling Section on Hero Page ─── */
 .hero-book-showcase {
   display: grid;
-  grid-template-columns: 245px minmax(0, 470px);
+  grid-template-columns: 15.5rem minmax(0, 30rem);
   justify-content: center;
   gap: 3rem;
   align-items: center;
   width: 100%;
-  max-width: 860px;
+  max-width: 54rem;
   margin: 1rem auto 2.2rem;
   padding: 2.6rem 3.2rem;
   border: 1px solid var(--parchment-dim);
@@ -378,7 +382,7 @@ body.toc-open .toc-overlay {
 
 .showcase-cover {
   width: 100%;
-  max-width: 280px;
+  max-width: 100%;
   border: 1px solid var(--parchment-dim);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
   transition: transform 0.4s ease;
@@ -450,7 +454,8 @@ body.toc-open .toc-overlay {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   padding: 0.9rem 2.2rem;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
   background: var(--parchment);
   color: var(--ink);
   border: 1px solid var(--parchment);
@@ -557,7 +562,7 @@ body.toc-open .toc-overlay {
 
 /* ─── Editorial Content Container (Inner Pages & Below Hero) ─── */
 .editorial-column {
-  max-width: 780px;
+  max-width: 49rem;
   margin: 0 auto;
   padding: 1rem 0 2rem;
 }
@@ -1181,7 +1186,7 @@ blockquote.gothic-quote cite {
 }
 
 .char-slide-card {
-  flex: 0 0 350px;
+  flex: 0 0 22rem;
   scroll-snap-align: start;
   border: 1px solid var(--parchment-dim);
   padding: 1.5rem;
@@ -1343,7 +1348,7 @@ blockquote.gothic-quote cite {
 .sanctuary-arch-modal {
   position: relative;
   width: 100%;
-  max-width: 440px;
+  max-width: 28rem;
   border: 1.5px solid var(--parchment);
   border-radius: 220px 220px 12px 12px;
   background: linear-gradient(180deg, #13201F 0%, #080A0A 100%);
@@ -1498,7 +1503,7 @@ blockquote.gothic-quote cite {
 
 .quiz-Stage-wrapper {
   width: 100%;
-  max-width: 780px;
+  max-width: 49rem;
   margin: auto;
   border: 1px solid var(--parchment-dim);
   padding: 3rem 3.2rem;
@@ -1665,7 +1670,7 @@ blockquote.gothic-quote cite {
 
 .vault-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.8rem;
   margin-bottom: 2rem;
 }
@@ -1689,17 +1694,19 @@ blockquote.gothic-quote cite {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
   margin-bottom: 1rem;
 }
 
 .vault-badge {
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  padding: 0.22rem 0.65rem;
+  letter-spacing: 0.16em;
+  padding: 0.25rem 0.65rem;
   background: var(--parchment);
   color: var(--ink);
+  white-space: nowrap;
 }
 
 .vault-badge.shop-badge {
@@ -1709,14 +1716,18 @@ blockquote.gothic-quote cite {
 }
 
 .vault-price {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--gold-accent);
+  white-space: nowrap;
 }
 
 .vault-preview {
-  height: 150px;
+  height: 8.5rem;
+  padding: 0 1rem;
+  text-align: center;
+  line-height: 1.2;
   border: 1px solid var(--parchment-faint);
   background: #060808;
   margin-bottom: 1.2rem;
@@ -1724,25 +1735,44 @@ blockquote.gothic-quote cite {
   align-items: center;
   justify-content: center;
   font-family: var(--font-title);
-  font-size: 2rem;
+  font-size: 1.85rem;
   color: var(--parchment-dim);
 }
 
 .vault-item h3 {
-  font-family: var(--font-title);
-  font-size: 1.75rem;
-  font-weight: 400;
-  color: var(--parchment);
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--parchment-bright);
   margin-bottom: 0.5rem;
+  line-height: 1.25;
 }
 
 .vault-item p {
   font-size: 0.92rem;
   color: var(--parchment-muted);
   margin-bottom: 1.4rem;
+  line-height: 1.65;
+}
+
+.vault-item .btn-gothic {
+  width: 100%;
+  padding: 0.75rem 0.75rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+}
+
+@media (max-width: 920px) {
+  .vault-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 720px) {
+  .vault-grid {
+    grid-template-columns: 1fr;
+  }
   .char-tabs-bar,
   .char-medallion-row {
     grid-template-columns: repeat(2, 1fr);
@@ -1802,7 +1832,7 @@ textarea.form-control {
    ========================================================================== */
 
 .trilogy-demo-section {
-  max-width: 1040px;
+  max-width: 68rem;
   margin: 3.5rem auto;
   padding: 0 1rem;
 }
@@ -1823,7 +1853,7 @@ textarea.form-control {
 .triptych-altar {
   display: flex;
   gap: 1rem;
-  min-height: 520px;
+  min-height: 32rem;
   margin-top: 2rem;
   align-items: stretch;
 }
@@ -1858,7 +1888,7 @@ textarea.form-control {
 }
 
 .triptych-wing.active {
-  flex: 2.7;
+  flex: 3.4;
   border-color: var(--parchment);
   background: linear-gradient(180deg, rgba(23, 38, 37, 0.45) 0%, rgba(10, 13, 13, 0.98) 100%);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85);
@@ -1885,6 +1915,7 @@ textarea.form-control {
 /* Collapsed state preview */
 .triptych-sealed-info {
   margin: auto 0;
+  padding: 0 0.4rem;
   transition: opacity 0.3s ease;
 }
 
@@ -1894,29 +1925,29 @@ textarea.form-control {
 
 .triptych-sealed-title {
   font-family: var(--font-title);
-  font-size: 1.75rem;
+  font-size: 1.6rem;
   color: var(--parchment);
   margin-bottom: 0.6rem;
+  white-space: nowrap;
 }
 
 .triptych-sealed-hint {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   color: var(--parchment-muted);
 }
 
 /* Expanded state content */
 .triptych-open-content {
   display: none;
-  grid-template-columns: 170px 1fr;
-  gap: 2rem;
+  grid-template-columns: 155px minmax(0, 1fr);
+  gap: 1.75rem;
   align-items: center;
   text-align: left;
   width: 100%;
-  max-width: 560px;
   margin: auto;
-  padding: 1rem 0.8rem;
+  padding: 1rem 1.4rem;
   animation: fadeInWing 0.55s ease forwards;
 }
 
@@ -1930,7 +1961,7 @@ textarea.form-control {
 }
 
 .triptych-cover-box {
-  width: 170px;
+  width: 155px;
   aspect-ratio: 2 / 3;
   border: 1px solid var(--parchment-dim);
   background: var(--ink);
@@ -1955,27 +1986,31 @@ textarea.form-control {
   color: var(--parchment-dim);
 }
 
+.triptych-details {
+  min-width: 0;
+}
+
 .triptych-details .status-pill {
   display: inline-block;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   color: var(--gold-accent);
   margin-bottom: 0.4rem;
 }
 
 .triptych-details h3 {
   font-family: var(--font-title);
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 400;
   color: var(--parchment);
-  line-height: 1.1;
-  margin-bottom: 0.7rem;
+  line-height: 1.15;
+  margin-bottom: 0.65rem;
 }
 
 .triptych-details p {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: var(--parchment-muted);
   line-height: 1.65;
   margin-bottom: 1rem;
