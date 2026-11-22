@@ -877,13 +877,16 @@ blockquote.gothic-quote cite {
   margin: 1.5rem 0 0.7rem;
 }
 
-/* Ornamental Centered Ogee-Arch Quote Plaque */
+/* Centered Rounded Quote Frame (Matches Website Viewport Frame) */
 .blog-rich-content blockquote {
   position: relative;
   max-width: 38rem;
   width: 90%;
   margin: 2.2rem auto;
-  padding: 1.4rem 3rem;
+  padding: 1.5rem 2.2rem;
+  border: 1.5px solid var(--parchment);
+  border-radius: var(--frame-radius);
+  background: rgba(23, 38, 37, 0.18);
   text-align: center;
   font-family: var(--font-body);
   font-style: italic;
@@ -891,43 +894,10 @@ blockquote.gothic-quote cite {
   color: var(--parchment-bright);
   line-height: 1.7;
   clear: both;
-  border: none;
-  background-color: transparent;
-  background-image:
-    linear-gradient(#B89B67, #B89B67),
-    linear-gradient(#B89B67, #B89B67),
-    linear-gradient(180deg, rgba(23, 38, 37, 0.36), rgba(13, 17, 17, 0.65));
-  background-size:
-    calc(100% - 62px) 1.5px,
-    calc(100% - 62px) 1.5px,
-    calc(100% - 62px) calc(100% - 3px);
-  background-position:
-    31px 0,
-    31px 100%,
-    31px 1.5px;
-  background-repeat: no-repeat;
 }
 
-.blog-rich-content blockquote::before,
-.blog-rich-content blockquote::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 32px;
-  pointer-events: none;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 100' preserveAspectRatio='none'%3E%3Cpath d='M32,1.5 H22 C15,1.5 14,9 14,18 C14,27 7,39 1.5,50 C7,61 14,73 14,82 C14,91 15,98.5 22,98.5 H32 Z' fill='rgba(23,38,37,0.32)'/%3E%3Cpath d='M32,1.5 H22 C15,1.5 14,9 14,18 C14,27 7,39 1.5,50 C7,61 14,73 14,82 C14,91 15,98.5 22,98.5 H32' fill='none' stroke='%23B89B67' stroke-width='1.5' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
-}
-
-.blog-rich-content blockquote::before {
-  left: 0;
-}
-
-.blog-rich-content blockquote::after {
-  right: 0;
-  transform: scaleX(-1);
+.blog-rich-content blockquote p:last-child {
+  margin-bottom: 0;
 }
 
 /* Star Lists Indented Toward Center */
@@ -984,20 +954,34 @@ blockquote.gothic-quote cite {
 
 .blog-rich-content hr.gothic-divider {
   border: none;
-  text-align: center;
-  margin: 2.2rem 0;
-  height: auto;
+  height: 1.4rem;
+  margin: 2.2rem auto;
+  max-width: 36rem;
+  width: 85%;
+  position: relative;
   overflow: visible;
   clear: both;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--parchment-dim) 12%,
+    var(--parchment) 50%,
+    var(--parchment-dim) 88%,
+    transparent
+  ) no-repeat center / 100% 1px;
 }
 
 .blog-rich-content hr.gothic-divider::after {
-  content: '✦   ✦   ✦';
-  display: inline-block;
-  color: var(--gold-accent);
-  font-size: 0.85rem;
-  letter-spacing: 0.35em;
-  opacity: 0.85;
+  content: '✦';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--parchment);
+  font-size: 0.95rem;
+  line-height: 1;
+  letter-spacing: 0;
+  text-shadow: 0 0 8px var(--ink), 0 0 4px var(--ink);
 }
 
 /* Inline Source Numbers & Footnote Section */
@@ -1216,7 +1200,7 @@ blockquote.gothic-quote cite {
 
   .blog-rich-content blockquote {
     width: 100%;
-    padding: 1.2rem 2.2rem;
+    padding: 1.2rem 1.4rem;
   }
 
   .blog-figure.align-left,
