@@ -100,16 +100,20 @@ html {
 }
 
 .landing-title {
-  font-family: 'UnifrakturMaguntia', cursive;
-  font-size: clamp(2.8rem, 6.5vw, 5.2rem);
-  font-weight: 400;
-  color: #E3DEC8;
   text-align: center;
   line-height: 1;
   margin-bottom: 1.8rem;
-  text-shadow: 0 10px 35px rgba(0, 0, 0, 0.95);
   opacity: 0;
   animation: fadeUp 1.8s ease-out 0.4s forwards;
+}
+
+.landing-title-logo {
+  width: clamp(270px, 38vw, 560px);
+  max-width: 90vw;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 10px 35px rgba(0, 0, 0, 0.95));
 }
 
 /* ─── Book Cover Portal ─── */

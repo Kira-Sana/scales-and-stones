@@ -94,7 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
   modalBackdrop.setAttribute('aria-hidden', 'true');
   modalBackdrop.innerHTML = `
     <div class="sanctuary-arch-modal" role="dialog" aria-modal="true" aria-labelledby="sanctuary-modal-title">
-      <div class="wax-seal-crest" aria-hidden="true">S &amp; S</div>
+      <div class="wax-seal-crest" aria-hidden="true">
+        <img src="emblem.svg" alt="Scales & Stones Emblem" class="modal-emblem-img">
+      </div>
       <div class="modal-kicker">✦ Newsletter ✦</div>
       <h2 id="sanctuary-modal-title">Before You Leave the Deep...</h2>
       <p>
@@ -187,6 +189,14 @@ document.addEventListener('DOMContentLoaded', () => {
     footerCopy.parentNode.insertBefore(triggerLink, footerCopy);
     document.getElementById('footer-newsletter-trigger').addEventListener('click', openNewsletterModal);
   }
+
+  // Event delegation for any "[data-open-newsletter]" button (e.g., at the bottom of blog posts)
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('[data-open-newsletter]')) {
+      e.preventDefault();
+      openNewsletterModal();
+    }
+  });
 
   // Track cumulative browsing time across pages so it pops up after 2 minutes (120,000 ms)
   if (!sessionStorage.getItem('ss_newsletter_shown')) {
