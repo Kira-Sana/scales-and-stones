@@ -123,6 +123,7 @@
             post.category,
             post.date,
             post.excerpt,
+            post.html ? post.html.replace(/<[^>]+>/g, ' ') : '',
             ...(post.content || [])
           ].join(' ').toLowerCase();
           return haystack.includes(q);
@@ -210,7 +211,10 @@
         if (controlsBar) controlsBar.style.display = 'none';
         if (statusCount) statusCount.style.display = 'none';
 
-        const paragraphs = post.content.map(p => `<p>${p}</p>`).join('');
+        const bodyHtml = post.html
+          ? post.html
+          : (post.content || []).map(p => `<p>${p}</p>`).join('');
+
         container.innerHTML = `
           <article class="blog-article-view">
             <div style="margin-bottom: 1.8rem;">
@@ -226,7 +230,7 @@
               <span>${post.author}</span>
             </div>
             <h2 class="section-title" style="text-align: left; font-family: var(--font-body); font-weight: 700; font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 1.5rem;">${post.title}</h2>
-            ${paragraphs}
+            <div class="blog-rich-content">${bodyHtml}</div>
           </article>
         `;
 

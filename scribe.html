@@ -1,0 +1,2648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Scales &amp; Stones</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ─── Minimal Gatekeeper Lock Screen ─── */
+    .gatekeeper-shell {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: calc(var(--frame-inset) + 2rem);
+      position: relative;
+      z-index: 10;
+    }
+
+    .gatekeeper-card {
+      width: 100%;
+      max-width: 28rem;
+      padding: 2.8rem 2.2rem 2.3rem;
+      border: 1px solid var(--parchment-dim);
+      background: linear-gradient(155deg, rgba(23, 38, 37, 0.28) 0%, rgba(8, 9, 9, 0.94) 100%);
+      box-shadow: 0 28px 75px rgba(0, 0, 0, 0.9);
+      text-align: center;
+      position: relative;
+      animation: pageFade 0.55s ease-out;
+    }
+
+    .gatekeeper-card::before {
+      content: '✦';
+      position: absolute;
+      top: -0.58em;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--gold-accent);
+      font-size: 1.25rem;
+      line-height: 1;
+      text-shadow: 0 0 10px var(--ink), 0 0 4px var(--ink);
+    }
+
+    .gatekeeper-card::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid var(--parchment-faint);
+      pointer-events: none;
+    }
+
+    .gatekeeper-prompt {
+      font-family: var(--font-body);
+      font-size: 1.12rem;
+      font-style: italic;
+      color: var(--parchment-bright);
+      line-height: 1.55;
+      margin-bottom: 1.6rem;
+    }
+
+    .gatekeeper-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .gatekeeper-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .gatekeeper-input-wrap .form-control {
+      padding-right: 4.8rem;
+      text-align: center;
+      letter-spacing: 0.08em;
+    }
+
+    .gatekeeper-eye-btn {
+      position: absolute;
+      right: 2.4rem;
+      background: transparent;
+      border: none;
+      color: var(--parchment-muted);
+      cursor: pointer;
+      padding: 0.35rem;
+      font-size: 0.85rem;
+      line-height: 1;
+      transition: color 0.2s ease;
+    }
+
+    .gatekeeper-eye-btn:hover {
+      color: var(--gold-accent);
+    }
+
+    .gatekeeper-enter-btn {
+      position: absolute;
+      right: 0.45rem;
+      background: transparent;
+      border: 1px solid var(--parchment-dim);
+      color: var(--gold-accent);
+      cursor: pointer;
+      width: 1.85rem;
+      height: 1.85rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .gatekeeper-enter-btn:hover {
+      background: var(--gold-accent);
+      color: var(--ink);
+      border-color: var(--gold-accent);
+    }
+
+    .gatekeeper-error {
+      font-size: 0.8rem;
+      color: #D46A6A;
+      min-height: 1.2em;
+      font-style: italic;
+      margin: -0.2rem 0 0.1rem;
+    }
+
+    .gatekeeper-card.shake {
+      animation: gateShake 0.42s ease;
+      border-color: rgba(212, 106, 106, 0.65);
+    }
+
+    @keyframes gateShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    .gatekeeper-home-btn {
+      margin-top: 0.5rem;
+      padding: 0.65rem 1.4rem;
+      font-size: 0.72rem;
+    }
+
+    /* ─── Sanctuary Scribe Studio ─── */
+    .scribe-studio {
+      display: none;
+      padding: calc(var(--frame-inset) + 2rem) calc(var(--frame-inset) + 2rem) calc(var(--frame-inset) + 3rem);
+      max-width: 68rem;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+      animation: pageFade 0.5s ease-out;
+    }
+
+    .scribe-studio.active {
+      display: block;
+    }
+
+    .studio-topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 1.4rem;
+      margin-bottom: 1.6rem;
+      border-bottom: 1px solid var(--parchment-faint);
+    }
+
+    .studio-brand .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.26em;
+      color: var(--gold-accent);
+      margin-bottom: 0.2rem;
+    }
+
+    .studio-brand h1 {
+      font-family: var(--font-title);
+      font-size: clamp(2rem, 4vw, 2.9rem);
+      font-weight: 400;
+      color: var(--parchment);
+      line-height: 1.05;
+    }
+
+    .studio-top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+    }
+
+    .btn-studio-sm {
+      appearance: none;
+      background: transparent;
+      border: 1px solid var(--parchment-dim);
+      color: var(--parchment);
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.55rem 1.05rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-studio-sm:hover:not(:disabled) {
+      border-color: var(--gold-accent);
+      color: var(--gold-accent);
+      background: rgba(184, 155, 103, 0.08);
+    }
+
+    .btn-studio-sm:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn-studio-sm.danger:hover:not(:disabled) {
+      border-color: #D45B5B;
+      color: #D45B5B;
+      background: rgba(212, 91, 91, 0.1);
+    }
+
+    .btn-studio-sm.gold {
+      background: rgba(184, 155, 103, 0.16);
+      border-color: var(--gold-accent);
+      color: var(--parchment-bright);
+    }
+
+    .btn-studio-sm.gold:hover:not(:disabled) {
+      background: var(--gold-accent);
+      color: var(--ink);
+    }
+
+    /* Metadata Card */
+    .studio-panel {
+      border: 1px solid var(--parchment-dim);
+      background: rgba(13, 17, 17, 0.85);
+      padding: 1.5rem 1.7rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .studio-post-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+      padding-bottom: 1.2rem;
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--parchment-faint);
+    }
+
+    .studio-post-bar label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold-accent);
+      white-space: nowrap;
+    }
+
+    .studio-post-bar select {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .meta-grid-2 {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .meta-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .studio-field label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--parchment-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .inline-helper-btn {
+      background: none;
+      border: none;
+      color: var(--gold-accent);
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .inline-helper-btn:hover {
+      color: var(--parchment-bright);
+    }
+
+    .date-input-row {
+      display: flex;
+      gap: 0.45rem;
+      align-items: stretch;
+    }
+
+    .date-picker-hidden {
+      width: 2.6rem;
+      padding: 0 0.35rem;
+      cursor: pointer;
+      color-scheme: dark;
+    }
+
+    /* ─── Word / Google Docs Toolbar ─── */
+    .editor-shell {
+      border: 1px solid var(--parchment-dim);
+      background: rgba(10, 13, 13, 0.94);
+      margin-bottom: 1.5rem;
+    }
+
+    .editor-toolbar {
+      position: sticky;
+      top: calc(var(--frame-inset) + 2px);
+      z-index: 50;
+      background: #0F1414;
+      border-bottom: 1px solid var(--parchment-dim);
+      padding: 0.65rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
+    }
+
+    .toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .tb-sep {
+      width: 1px;
+      height: 1.5rem;
+      background: var(--parchment-faint);
+      margin: 0 0.25rem;
+    }
+
+    .tb-select {
+      background: #080909;
+      border: 1px solid var(--parchment-dim);
+      color: var(--parchment);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      padding: 0.36rem 1.8rem 0.36rem 0.6rem;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23B89B67' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.55rem center;
+      transition: border-color 0.2s ease;
+    }
+
+    .tb-select:hover,
+    .tb-select:focus {
+      border-color: var(--gold-accent);
+    }
+
+    .tb-select option {
+      background: #0D1111;
+      color: var(--parchment);
+    }
+
+    .tb-size-stepper {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--parchment-dim);
+      background: #080909;
+    }
+
+    .tb-size-stepper button {
+      background: transparent;
+      border: none;
+      color: var(--parchment);
+      width: 1.7rem;
+      height: 1.9rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+      line-height: 1;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .tb-size-stepper button:hover {
+      background: rgba(184, 155, 103, 0.16);
+      color: var(--gold-accent);
+    }
+
+    .tb-size-input {
+      width: 2.3rem;
+      background: transparent;
+      border: none;
+      border-left: 1px solid var(--parchment-faint);
+      border-right: 1px solid var(--parchment-faint);
+      color: var(--parchment-bright);
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      height: 1.9rem;
+      outline: none;
+    }
+
+    .tb-btn {
+      appearance: none;
+      background: #080909;
+      border: 1px solid transparent;
+      color: var(--parchment);
+      min-width: 2rem;
+      height: 1.95rem;
+      padding: 0 0.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .tb-btn:hover {
+      border-color: var(--parchment-dim);
+      background: rgba(23, 38, 37, 0.5);
+      color: var(--parchment-bright);
+    }
+
+    .tb-btn.active {
+      border-color: var(--gold-accent);
+      background: rgba(184, 155, 103, 0.22);
+      color: var(--gold-accent);
+    }
+
+    .tb-btn.tb-photo-btn {
+      border: 1px solid rgba(184, 155, 103, 0.55);
+      background: rgba(184, 155, 103, 0.12);
+      color: var(--gold-accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0 0.75rem;
+    }
+
+    .tb-btn.tb-photo-btn:hover {
+      background: var(--gold-accent);
+      color: var(--ink);
+    }
+
+    .tb-btn svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .color-indicator-bar {
+      display: block;
+      width: 14px;
+      height: 3px;
+      margin-top: 1px;
+      background: var(--gold-accent);
+    }
+
+    /* Color Swatch Popover */
+    .tb-popover-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tb-popover {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      z-index: 100;
+      background: #0D1111;
+      border: 1px solid var(--gold-accent);
+      padding: 0.75rem;
+      width: 13.5rem;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+      display: none;
+    }
+
+    .tb-popover.open {
+      display: block;
+    }
+
+    .tb-popover-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--parchment-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.45rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .swatch-btn {
+      width: 100%;
+      aspect-ratio: 1;
+      border: 1px solid var(--parchment-dim);
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .swatch-btn:hover {
+      transform: scale(1.1);
+      border-color: var(--gold-accent);
+    }
+
+    .custom-color-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--parchment-faint);
+      font-size: 0.72rem;
+      color: var(--parchment-muted);
+    }
+
+    .custom-color-row input[type="color"] {
+      background: transparent;
+      border: 1px solid var(--parchment-dim);
+      width: 2.2rem;
+      height: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    /* ─── Contextual Image Placement Inspector ─── */
+    .image-inspector {
+      display: none;
+      background: linear-gradient(90deg, rgba(184, 155, 103, 0.15), rgba(23, 38, 37, 0.35));
+      border-top: 1px solid rgba(184, 155, 103, 0.45);
+      padding: 0.6rem 0.9rem;
+      margin-top: 0.25rem;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.72rem;
+    }
+
+    .image-inspector.open {
+      display: flex;
+    }
+
+    .inspector-group {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .inspector-label {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--gold-accent);
+      font-weight: 700;
+      margin-right: 0.25rem;
+    }
+
+    .insp-btn {
+      background: #080909;
+      border: 1px solid var(--parchment-dim);
+      color: var(--parchment);
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      padding: 0.28rem 0.55rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .insp-btn:hover,
+    .insp-btn.active {
+      border-color: var(--gold-accent);
+      background: var(--gold-accent);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .insp-caption-input {
+      background: #080909;
+      border: 1px solid var(--parchment-dim);
+      color: var(--parchment);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      padding: 0.28rem 0.6rem;
+      width: 12rem;
+      outline: none;
+    }
+
+    .insp-caption-input:focus {
+      border-color: var(--gold-accent);
+    }
+
+    /* ─── Editor Writing Canvas ─── */
+    .editor-canvas-wrap {
+      padding: 2.2rem 2.5rem;
+      background: rgba(13, 17, 17, 0.65);
+    }
+
+    #editor-surface {
+      min-height: 440px;
+      outline: none;
+      max-width: 49rem;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+
+    #editor-surface:empty::before {
+      content: attr(data-placeholder);
+      color: var(--parchment-muted);
+      font-style: italic;
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    #editor-surface .blog-figure {
+      cursor: pointer;
+      transition: outline 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #editor-surface .blog-figure:hover {
+      outline: 1px dashed rgba(184, 155, 103, 0.7);
+      outline-offset: 4px;
+    }
+
+    #editor-surface .blog-figure.selected-figure {
+      outline: 2px solid var(--gold-accent);
+      outline-offset: 5px;
+      box-shadow: 0 0 24px rgba(184, 155, 103, 0.28);
+    }
+
+    .editor-statusbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1.2rem;
+      border-top: 1px solid var(--parchment-faint);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--parchment-muted);
+      background: #0A0D0D;
+    }
+
+    /* Preview Pane */
+    #preview-surface {
+      display: none;
+      padding: 2rem 1.5rem;
+      background: rgba(8, 9, 9, 0.85);
+    }
+
+    #preview-surface.active {
+      display: block;
+    }
+
+    .preview-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--gold-accent);
+      margin-bottom: 0.8rem;
+    }
+
+    /* Publish & GitHub Connection Footer */
+    .publish-panel {
+      border: 1px solid var(--parchment-dim);
+      background: linear-gradient(145deg, rgba(23, 38, 37, 0.24), rgba(8, 9, 9, 0.94));
+      padding: 1.6rem 1.8rem;
+    }
+
+    .publish-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .publish-btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      align-items: center;
+    }
+
+    .publish-status-box {
+      margin-top: 1rem;
+      padding: 0.9rem 1.1rem;
+      border: 1px solid var(--gold-accent);
+      background: rgba(184, 155, 103, 0.1);
+      color: var(--parchment-bright);
+      font-size: 0.9rem;
+      display: none;
+      line-height: 1.6;
+    }
+
+    .publish-status-box.error {
+      border-color: #D45B5B;
+      background: rgba(212, 91, 91, 0.12);
+      color: #F2BABA;
+    }
+
+    .gh-settings-drawer {
+      margin-top: 1.4rem;
+      padding-top: 1.3rem;
+      border-top: 1px solid var(--parchment-faint);
+      display: none;
+    }
+
+    .gh-settings-drawer.open {
+      display: block;
+    }
+
+    .gh-guide-box {
+      background: rgba(8, 9, 9, 0.75);
+      border-left: 2px solid var(--gold-accent);
+      padding: 0.95rem 1.2rem;
+      margin-bottom: 1.1rem;
+      font-size: 0.85rem;
+      color: var(--parchment-muted);
+      line-height: 1.65;
+    }
+
+    .gh-guide-box strong {
+      color: var(--parchment-bright);
+    }
+
+    /* Modals inside Studio */
+    .studio-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 6, 6, 0.84);
+      backdrop-filter: blur(5px);
+      z-index: 1300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .studio-modal-backdrop.open {
+      display: flex;
+    }
+
+    .studio-modal-card {
+      width: 100%;
+      max-width: 31rem;
+      border: 1px solid var(--parchment);
+      background: linear-gradient(170deg, #121D1C 0%, #080909 100%);
+      padding: 2rem 1.9rem;
+      box-shadow: 0 28px 75px rgba(0, 0, 0, 0.95);
+      position: relative;
+    }
+
+    .studio-modal-card h3 {
+      font-family: var(--font-title);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--parchment);
+      margin-bottom: 0.9rem;
+    }
+
+    .photo-dropzone {
+      border: 1.5px dashed var(--parchment-dim);
+      padding: 1.4rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(8, 9, 9, 0.6);
+      margin-bottom: 0.9rem;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .photo-dropzone:hover,
+    .photo-dropzone.dragover {
+      border-color: var(--gold-accent);
+      background: rgba(184, 155, 103, 0.08);
+    }
+
+    .photo-preview-thumb {
+      max-height: 150px;
+      margin: 0.75rem auto 0;
+      border: 1px solid var(--parchment-dim);
+      display: none;
+    }
+
+    .choice-pills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.35rem;
+    }
+
+    .choice-pill {
+      background: #080909;
+      border: 1px solid var(--parchment-dim);
+      color: var(--parchment-muted);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      padding: 0.38rem 0.75rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .choice-pill.active,
+    .choice-pill:hover {
+      border-color: var(--gold-accent);
+      color: var(--ink);
+      background: var(--gold-accent);
+      font-weight: 700;
+    }
+
+    @media (max-width: 780px) {
+      .meta-grid-2,
+      .meta-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .editor-canvas-wrap {
+        padding: 1.4rem 1.1rem;
+      }
+      .scribe-studio {
+        padding: calc(var(--frame-inset) + 1.4rem) calc(var(--frame-inset) + 0.9rem) 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="viewport-frame" aria-hidden="true"></div>
+
+  <!-- ─── MINIMAL GATEKEEPER SCREEN (No hints, no navbar) ─── -->
+  <section class="gatekeeper-shell" id="gatekeeper-screen">
+    <div class="gatekeeper-card" id="gatekeeper-card">
+      <p class="gatekeeper-prompt">Hey, you&rsquo;re not supposed to be here, are you now?</p>
+      <form class="gatekeeper-form" id="gatekeeper-form" autocomplete="on">
+        <div class="gatekeeper-input-wrap">
+          <input
+            type="password"
+            id="gatekeeper-code-input"
+            class="form-control"
+            placeholder="..."
+            aria-label="Secret code"
+            autocomplete="current-password"
+            autofocus
+            required
+          >
+          <button type="button" class="gatekeeper-eye-btn" id="gatekeeper-eye-btn" title="Show/Hide code" aria-label="Show or hide code">&#9673;</button>
+          <button type="submit" class="gatekeeper-enter-btn" title="Enter" aria-label="Submit code">&rarr;</button>
+        </div>
+        <div class="gatekeeper-error" id="gatekeeper-error" aria-live="polite"></div>
+      </form>
+      <a href="home.html" class="btn-gothic outline gatekeeper-home-btn">&larr; Go back to the home page</a>
+    </div>
+  </section>
+
+  <!-- ─── UNLOCKED SANCTUARY SCRIBE STUDIO ─── -->
+  <main class="scribe-studio" id="scribe-studio" aria-hidden="true">
+    <header class="studio-topbar">
+      <div class="studio-brand">
+        <div class="eyebrow">✦ Sanctuary Scribe Studio ✦</div>
+        <h1>Journal Weaver</h1>
+      </div>
+      <div class="studio-top-actions">
+        <button type="button" class="btn-studio-sm gold" id="toggle-preview-btn">✦ Preview Entry</button>
+        <a href="blog.html" target="_blank" class="btn-studio-sm">Open Blog &nearr;</a>
+        <a href="home.html" class="btn-studio-sm">Home</a>
+        <button type="button" class="btn-studio-sm" id="lock-studio-btn">Lock</button>
+      </div>
+    </header>
+
+    <!-- Post Selection & Metadata -->
+    <section class="studio-panel">
+      <div class="studio-post-bar">
+        <label for="post-selector">Entry:</label>
+        <select id="post-selector" class="form-control"></select>
+        <button type="button" class="btn-studio-sm danger" id="delete-post-btn" disabled>Delete Entry</button>
+      </div>
+
+      <div class="meta-grid-2">
+        <div class="studio-field">
+          <label for="post-title">Post Title</label>
+          <input type="text" id="post-title" class="form-control" placeholder="e.g., Secrets of the Bloodline Magic...">
+        </div>
+        <div class="studio-field">
+          <label for="post-id">
+            <span>URL Slug ID</span>
+            <button type="button" class="inline-helper-btn" id="regen-slug-btn">Regenerate</button>
+          </label>
+          <input type="text" id="post-id" class="form-control" placeholder="e.g., secrets-of-bloodline-magic">
+        </div>
+      </div>
+
+      <div class="meta-grid-3">
+        <div class="studio-field">
+          <label for="post-date">Publication Date</label>
+          <div class="date-input-row">
+            <input type="text" id="post-date" class="form-control" placeholder="November 22, 2026">
+            <input type="date" id="post-date-picker" class="form-control date-picker-hidden" title="Pick date from calendar" aria-label="Pick date from calendar">
+          </div>
+        </div>
+        <div class="studio-field">
+          <label for="post-category">Category</label>
+          <select id="post-category" class="form-control"></select>
+          <input type="text" id="post-category-custom" class="form-control" placeholder="Type new category name..." style="display: none; margin-top: 0.45rem;">
+        </div>
+        <div class="studio-field">
+          <label for="post-author">Author(s)</label>
+          <input type="text" id="post-author" class="form-control" value="Kira &amp; Sana Marlowe">
+        </div>
+      </div>
+
+      <div class="studio-field">
+        <label for="post-excerpt">
+          <span>Card Excerpt (shown on the blog feed)</span>
+          <button type="button" class="inline-helper-btn" id="auto-excerpt-btn">✦ Auto-fill from article</button>
+        </label>
+        <textarea id="post-excerpt" class="form-control" style="min-height: 70px;" placeholder="A captivating 1–2 sentence hook shown on the journal card..."></textarea>
+      </div>
+    </section>
+
+    <!-- Google Docs / Word Editor Shell -->
+    <section class="editor-shell">
+      <div class="editor-toolbar" id="editor-toolbar">
+        <!-- Row 1: Typography & Inline Formats -->
+        <div class="toolbar-row">
+          <select id="fmt-block" class="tb-select" title="Text Style">
+            <option value="P">Normal Text</option>
+            <option value="H1">Heading 1</option>
+            <option value="H2">Heading 2</option>
+            <option value="H3">Heading 3</option>
+            <option value="BLOCKQUOTE">Prophecy / Quote</option>
+          </select>
+
+          <select id="fmt-font" class="tb-select" title="Font Family">
+            <option value="Philosopher, serif">Philosopher (Default)</option>
+            <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+            <option value="Cinzel, serif">Cinzel</option>
+            <option value="Lora, serif">Lora</option>
+            <option value="'UnifrakturMaguntia', cursive">UnifrakturMaguntia</option>
+          </select>
+
+          <div class="tb-size-stepper" title="Font Size (px)">
+            <button type="button" id="fmt-size-dec" aria-label="Decrease font size">&minus;</button>
+            <input type="number" id="fmt-size-val" class="tb-size-input" value="17" min="11" max="64" aria-label="Font size in pixels">
+            <button type="button" id="fmt-size-inc" aria-label="Increase font size">+</button>
+          </div>
+
+          <span class="tb-sep"></span>
+
+          <button type="button" class="tb-btn" data-cmd="bold" title="Bold (Ctrl+B)"><strong>B</strong></button>
+          <button type="button" class="tb-btn" data-cmd="italic" title="Italic (Ctrl+I)"><em>I</em></button>
+          <button type="button" class="tb-btn" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
+          <button type="button" class="tb-btn" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
+
+          <span class="tb-sep"></span>
+
+          <!-- Text Color Popover -->
+          <div class="tb-popover-wrap">
+            <button type="button" class="tb-btn" id="text-color-btn" title="Font Colour">
+              <span style="display:flex; flex-direction:column; align-items:center; line-height:1;">
+                <span style="font-weight:700; font-size:0.86rem;">A</span>
+                <span class="color-indicator-bar" id="active-text-color-bar" style="background:#E3DEC8;"></span>
+              </span>
+            </button>
+            <div class="tb-popover" id="text-color-popover">
+              <div class="tb-popover-title">Ink Colour</div>
+              <div class="swatch-grid">
+                <button type="button" class="swatch-btn" data-color="#E3DEC8" style="background:#E3DEC8;" title="Warm Parchment"></button>
+                <button type="button" class="swatch-btn" data-color="#EFEBD9" style="background:#EFEBD9;" title="Bright Parchment"></button>
+                <button type="button" class="swatch-btn" data-color="#B89B67" style="background:#B89B67;" title="Antique Gold"></button>
+                <button type="button" class="swatch-btn" data-color="#D45B5B" style="background:#D45B5B;" title="Blood Ember"></button>
+                <button type="button" class="swatch-btn" data-color="#9A3636" style="background:#9A3636;" title="Deep Crimson"></button>
+                <button type="button" class="swatch-btn" data-color="#67B8B0" style="background:#67B8B0;" title="Lucantis Teal"></button>
+                <button type="button" class="swatch-btn" data-color="#9E9987" style="background:#9E9987;" title="Muted Stone"></button>
+                <button type="button" class="swatch-btn" data-color="#FFFFFF" style="background:#FFFFFF;" title="Pure White"></button>
+              </div>
+              <div class="custom-color-row">
+                <span>Custom:</span>
+                <input type="color" id="custom-text-color" value="#B89B67">
+              </div>
+            </div>
+          </div>
+
+          <!-- Highlight Color Popover -->
+          <div class="tb-popover-wrap">
+            <button type="button" class="tb-btn" id="hilite-color-btn" title="Highlight Colour">
+              <span style="display:flex; flex-direction:column; align-items:center; line-height:1;">
+                <svg viewBox="0 0 24 24" style="width:13px; height:13px;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span class="color-indicator-bar" id="active-hilite-color-bar" style="background:rgba(184,155,103,0.45);"></span>
+              </span>
+            </button>
+            <div class="tb-popover" id="hilite-color-popover">
+              <div class="tb-popover-title">Parchment Highlight</div>
+              <div class="swatch-grid">
+                <button type="button" class="swatch-btn" data-hilite="transparent" style="background:#080909; position:relative;" title="No Highlight">&times;</button>
+                <button type="button" class="swatch-btn" data-hilite="rgba(184, 155, 103, 0.28)" style="background:rgba(184, 155, 103, 0.45);" title="Gilded Glow"></button>
+                <button type="button" class="swatch-btn" data-hilite="rgba(140, 35, 35, 0.42)" style="background:rgba(140, 35, 35, 0.6);" title="Crimson Wash"></button>
+                <button type="button" class="swatch-btn" data-hilite="rgba(23, 72, 70, 0.65)" style="background:rgba(23, 72, 70, 0.8);" title="Abyss Teal"></button>
+              </div>
+              <div class="custom-color-row">
+                <span>Custom:</span>
+                <input type="color" id="custom-hilite-color" value="#3d321c">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Alignment, Lists, Links, Divider & Photos -->
+        <div class="toolbar-row">
+          <button type="button" class="tb-btn" data-cmd="justifyLeft" title="Align Left">
+            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="19" y2="18"/></svg>
+          </button>
+          <button type="button" class="tb-btn" data-cmd="justifyCenter" title="Align Center">
+            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+          </button>
+          <button type="button" class="tb-btn" data-cmd="justifyRight" title="Align Right">
+            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="5" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <button type="button" class="tb-btn" data-cmd="justifyFull" title="Justify">
+            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+
+          <span class="tb-sep"></span>
+
+          <button type="button" class="tb-btn" data-cmd="insertUnorderedList" title="Bullet List">
+            <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
+          </button>
+          <button type="button" class="tb-btn" data-cmd="insertOrderedList" title="Numbered List">
+            <svg viewBox="0 0 24 24"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4M4 10h2M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+          </button>
+          <button type="button" class="tb-btn" data-cmd="outdent" title="Decrease Indent">
+            <svg viewBox="0 0 24 24"><polyline points="7 8 3 12 7 16"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="18" x2="11" y2="18"/></svg>
+          </button>
+          <button type="button" class="tb-btn" data-cmd="indent" title="Increase Indent">
+            <svg viewBox="0 0 24 24"><polyline points="3 8 7 12 3 16"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="18" x2="11" y2="18"/></svg>
+          </button>
+
+          <span class="tb-sep"></span>
+
+          <button type="button" class="tb-btn" id="fmt-link-btn" title="Insert Link">
+            <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+          </button>
+          <button type="button" class="tb-btn" id="fmt-divider-btn" title="Insert Ornamental Divider">✦</button>
+          <button type="button" class="tb-btn" data-cmd="removeFormat" title="Clear Formatting">
+            <svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16M18 4L6 20" stroke-width="1.8"/></svg>
+          </button>
+
+          <span class="tb-sep"></span>
+
+          <button type="button" class="tb-btn tb-photo-btn" id="open-photo-modal-btn" title="Insert & Place Photo">
+            <svg viewBox="0 0 24 24" style="width:14px; height:14px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>Insert Photo</span>
+          </button>
+        </div>
+
+        <!-- Contextual Photo Inspector (Appears when clicking any photo in the editor) -->
+        <div class="image-inspector" id="image-inspector">
+          <div class="inspector-group">
+            <span class="inspector-label">Place:</span>
+            <button type="button" class="insp-btn" data-img-align="align-left" title="Float Left (text wraps on right)">&#9703; Left</button>
+            <button type="button" class="insp-btn" data-img-align="align-center" title="Center">&#9644; Center</button>
+            <button type="button" class="insp-btn" data-img-align="align-right" title="Float Right (text wraps on left)">&#9704; Right</button>
+            <button type="button" class="insp-btn" data-img-align="align-full" title="Full Width">&#8596; Full</button>
+          </div>
+          <div class="inspector-group">
+            <span class="inspector-label">Size:</span>
+            <button type="button" class="insp-btn" data-img-size="size-25">25%</button>
+            <button type="button" class="insp-btn" data-img-size="size-50">50%</button>
+            <button type="button" class="insp-btn" data-img-size="size-75">75%</button>
+            <button type="button" class="insp-btn" data-img-size="size-100">100%</button>
+          </div>
+          <div class="inspector-group">
+            <span class="inspector-label">Caption:</span>
+            <input type="text" id="img-caption-input" class="insp-caption-input" placeholder="Optional caption...">
+          </div>
+          <div class="inspector-group" style="margin-left:auto;">
+            <button type="button" class="insp-btn" id="img-move-up" title="Move photo up one block">&uarr;</button>
+            <button type="button" class="insp-btn" id="img-move-down" title="Move photo down one block">&darr;</button>
+            <button type="button" class="insp-btn" id="img-delete-btn" style="border-color:#D45B5B; color:#D45B5B;">Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editable Document Area -->
+      <div class="editor-canvas-wrap" id="editor-canvas-wrap">
+        <div
+          id="editor-surface"
+          class="blog-rich-content"
+          contenteditable="true"
+          data-placeholder="Begin weaving your scroll here... Tip: click any inserted photo to change whether it sits Left, Center, Right, or Full Width."
+        ></div>
+      </div>
+
+      <!-- Live Preview Surface (matches blog.html 1-to-1) -->
+      <div id="preview-surface">
+        <div style="max-width: 49rem; margin: 0 auto;">
+          <div class="preview-label">✦ Blog Feed Card Preview</div>
+          <div id="preview-card-slot" style="margin-bottom: 2.2rem;"></div>
+          <div class="preview-label">✦ Full Article Reader Preview</div>
+          <div id="preview-article-slot"></div>
+        </div>
+      </div>
+
+      <div class="editor-statusbar">
+        <span id="editor-word-count">0 words &middot; 0 characters</span>
+        <span id="draft-save-indicator">Draft ready</span>
+      </div>
+    </section>
+
+    <!-- Publishing & Direct GitHub Connection Panel -->
+    <section class="publish-panel">
+      <div class="publish-actions-row">
+        <div class="publish-btn-group">
+          <button type="button" class="btn-gothic" id="publish-github-btn">✦ Publish to Sanctuary</button>
+          <button type="button" class="btn-gothic outline" id="download-posts-btn">Download posts.js</button>
+          <button type="button" class="btn-studio-sm" id="save-draft-btn">Save Local Draft</button>
+        </div>
+        <button type="button" class="btn-studio-sm" id="toggle-gh-settings-btn">
+          &#9881; GitHub Connection <span id="gh-badge-status" style="color:var(--gold-accent);"></span>
+        </button>
+      </div>
+
+      <div class="publish-status-box" id="publish-status-box" aria-live="polite"></div>
+
+      <!-- One-Time GitHub Connection Settings Drawer -->
+      <div class="gh-settings-drawer" id="gh-settings-drawer">
+        <div class="gh-guide-box">
+          <strong>One-Time Setup for 1-Click Direct Publishing:</strong><br>
+          1. On GitHub, go to <strong>Settings &rarr; Developer settings &rarr; Personal access tokens &rarr; Fine-grained tokens</strong> and click <strong>Generate new token</strong>.<br>
+          2. Under <strong>Repository access</strong>, select <em>Only select repositories</em> &rarr; choose <strong>scales-and-stones</strong>.<br>
+          3. Under <strong>Permissions &rarr; Repository permissions</strong>, set <strong>Contents</strong> to <strong>Read and write</strong>.<br>
+          4. Generate, copy the token, and paste it below. It stays saved privately in your browser only.
+        </div>
+
+        <div class="meta-grid-3">
+          <div class="studio-field">
+            <label for="gh-owner">GitHub Username</label>
+            <input type="text" id="gh-owner" class="form-control" value="Kira-Sana">
+          </div>
+          <div class="studio-field">
+            <label for="gh-repo">Repository Name</label>
+            <input type="text" id="gh-repo" class="form-control" value="scales-and-stones">
+          </div>
+          <div class="studio-field">
+            <label for="gh-branch">Branch</label>
+            <input type="text" id="gh-branch" class="form-control" value="main">
+          </div>
+        </div>
+
+        <div class="studio-field" style="margin-bottom: 0.9rem;">
+          <label for="gh-token">GitHub Personal Access Token (saved only in this browser)</label>
+          <input type="password" id="gh-token" class="form-control" placeholder="github_pat_...">
+        </div>
+
+        <div style="display:flex; gap:0.7rem; flex-wrap:wrap; align-items:center;">
+          <button type="button" class="btn-studio-sm gold" id="save-gh-settings-btn">Save &amp; Test Connection</button>
+          <button type="button" class="btn-studio-sm danger" id="clear-gh-token-btn">Forget Token</button>
+          <span id="gh-test-msg" style="font-size:0.82rem; color:var(--parchment-muted);"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ─── Photo Insertion Modal ─── -->
+  <div class="studio-modal-backdrop" id="photo-modal" aria-hidden="true">
+    <div class="studio-modal-card" role="dialog" aria-modal="true" aria-labelledby="photo-modal-title">
+      <h3 id="photo-modal-title">Insert Photo</h3>
+
+      <div class="photo-dropzone" id="photo-dropzone">
+        <div style="color:var(--gold-accent); font-size:0.82rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;">
+          ✦ Click to choose photo from your computer
+        </div>
+        <div style="font-size:0.78rem; color:var(--parchment-muted); margin-top:0.25rem;">
+          Or drag &amp; drop PNG / JPG / WebP here (auto-optimized when published)
+        </div>
+        <input type="file" id="photo-file-input" accept="image/*" style="display:none;">
+        <img id="photo-preview-thumb" class="photo-preview-thumb" alt="Selected preview">
+      </div>
+
+      <div class="studio-field" style="margin-bottom: 0.9rem;">
+        <label for="photo-url-input">Or Paste Image URL</label>
+        <input type="url" id="photo-url-input" class="form-control" placeholder="https://... or assets/images/...">
+      </div>
+
+      <div class="studio-field" style="margin-bottom: 0.9rem;">
+        <label>Placement on Page</label>
+        <div class="choice-pills-row" id="modal-align-pills">
+          <button type="button" class="choice-pill active" data-val="align-center">&#9644; Center</button>
+          <button type="button" class="choice-pill" data-val="align-left">&#9703; Float Left</button>
+          <button type="button" class="choice-pill" data-val="align-right">&#9704; Float Right</button>
+          <button type="button" class="choice-pill" data-val="align-full">&#8596; Full Width</button>
+        </div>
+      </div>
+
+      <div class="studio-field" style="margin-bottom: 0.9rem;">
+        <label>Width</label>
+        <div class="choice-pills-row" id="modal-size-pills">
+          <button type="button" class="choice-pill" data-val="size-25">25%</button>
+          <button type="button" class="choice-pill active" data-val="size-50">50%</button>
+          <button type="button" class="choice-pill" data-val="size-75">75%</button>
+          <button type="button" class="choice-pill" data-val="size-100">100%</button>
+        </div>
+      </div>
+
+      <div class="studio-field" style="margin-bottom: 1.2rem;">
+        <label for="photo-caption-input">Optional Caption</label>
+        <input type="text" id="photo-caption-input" class="form-control" placeholder="Illustration caption or atmospheric note...">
+      </div>
+
+      <div style="display:flex; gap:0.8rem; justify-content:flex-end;">
+        <button type="button" class="btn-studio-sm" id="cancel-photo-modal">Cancel</button>
+        <button type="button" class="btn-studio-sm gold" id="confirm-insert-photo">✦ Insert Into Scroll</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Link Insertion Modal ─── -->
+  <div class="studio-modal-backdrop" id="link-modal" aria-hidden="true">
+    <div class="studio-modal-card" role="dialog" aria-modal="true" aria-labelledby="link-modal-title">
+      <h3 id="link-modal-title">Insert Link</h3>
+      <div class="studio-field" style="margin-bottom: 0.9rem;">
+        <label for="link-text-input">Link Text</label>
+        <input type="text" id="link-text-input" class="form-control" placeholder="Text to display...">
+      </div>
+      <div class="studio-field" style="margin-bottom: 1.2rem;">
+        <label for="link-url-input">Destination URL</label>
+        <input type="url" id="link-url-input" class="form-control" placeholder="https://...">
+      </div>
+      <div style="display:flex; gap:0.8rem; justify-content:flex-end;">
+        <button type="button" class="btn-studio-sm" id="cancel-link-modal">Cancel</button>
+        <button type="button" class="btn-studio-sm gold" id="confirm-insert-link">Insert Link</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="posts.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      // Populate viewport botanical corners without loading main.js (no nav / no newsletter popup)
+      const frame = document.querySelector('.viewport-frame');
+      if (frame) {
+        const imgTag = '<img src="corner-parchment.png" alt="" class="corner-img corner-light" draggable="false">';
+        frame.innerHTML =
+          '<div class="botanical-corner tl">' + imgTag + '</div>' +
+          '<div class="botanical-corner tr">' + imgTag + '</div>' +
+          '<div class="botanical-corner bl">' + imgTag + '</div>' +
+          '<div class="botanical-corner br">' + imgTag + '</div>';
+      }
+
+      // ─── SHA-256 Verification (Web Crypto + pure-JS fallback for file://) ───
+      const ACCEPTED_HASHES = new Set([
+        '953920c2872a3943afa53930e5cb894a1cde42cbebec4512380203434437f552',
+        'b3556aa87a75d759556c8eac96fb9d8cbaaf1faf37561b2427fa6c5fbc79d875'
+      ]);
+
+      function sha256Fallback(asciiStr) {
+        function rightRotate(value, amount) {
+          return (value >>> amount) | (value << (32 - amount));
+        }
+        const bytes = new TextEncoder().encode(asciiStr);
+        const mathPow = Math.pow;
+        const maxWord = mathPow(2, 32);
+        let result = '';
+        const words = [];
+        const asciiBitLength = bytes.length * 8;
+
+        let hash = sha256Fallback.h = sha256Fallback.h || [];
+        let k = sha256Fallback.k = sha256Fallback.k || [];
+        let primeCounter = k.length;
+        const isComposite = {};
+        for (let candidate = 2; primeCounter < 64; candidate++) {
+          if (!isComposite[candidate]) {
+            for (let i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+            hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+            k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+          }
+        }
+        const hCopy = hash.slice(0, 8);
+        const padded = Array.from(bytes);
+        padded.push(0x80);
+        while ((padded.length % 64) !== 56) padded.push(0);
+        for (let i = 0; i < padded.length; i++) {
+          const j = padded[i];
+          words[i >> 2] = (words[i >> 2] || 0) | (j << (24 - (i % 4) * 8));
+        }
+        words.push((asciiBitLength / maxWord) | 0, asciiBitLength >>> 0);
+
+        for (let j = 0; j < words.length;) {
+          const w = words.slice(j, j += 16);
+          const oldHash = hCopy.slice(0);
+          for (let i = 0; i < 64; i++) {
+            const w15 = w[i - 15], w2 = w[i - 2];
+            const a = hCopy[0], e = hCopy[4];
+            const temp1 = hCopy[7] +
+              (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) +
+              ((e & hCopy[5]) ^ ((~e) & hCopy[6])) +
+              k[i] +
+              (w[i] = (i < 16) ? w[i] : (
+                w[i - 16] +
+                (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3)) +
+                w[i - 7] +
+                (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+              ) | 0);
+            const temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) +
+              ((a & hCopy[1]) ^ (a & hCopy[2]) ^ (hCopy[1] & hCopy[2]));
+            hCopy.unshift((temp1 + temp2) | 0);
+            hCopy[4] = (hCopy[4] + temp1) | 0;
+            hCopy.pop();
+          }
+          for (let i = 0; i < 8; i++) hCopy[i] = (hCopy[i] + oldHash[i]) | 0;
+        }
+        for (let i = 0; i < 8; i++) {
+          for (let j = 3; j + 1; j--) {
+            const b = (hCopy[i] >> (j * 8)) & 255;
+            result += ((b < 16) ? '0' : '') + b.toString(16);
+          }
+        }
+        return result;
+      }
+
+      async function hashSecretCode(text) {
+        if (window.crypto && window.crypto.subtle) {
+          try {
+            const data = new TextEncoder().encode(text);
+            const buf = await window.crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+          } catch (_) {
+            return sha256Fallback(text);
+          }
+        }
+        return sha256Fallback(text);
+      }
+
+      const gateScreen = document.getElementById('gatekeeper-screen');
+      const gateCard = document.getElementById('gatekeeper-card');
+      const gateForm = document.getElementById('gatekeeper-form');
+      const gateInput = document.getElementById('gatekeeper-code-input');
+      const gateError = document.getElementById('gatekeeper-error');
+      const gateEyeBtn = document.getElementById('gatekeeper-eye-btn');
+      const studioEl = document.getElementById('scribe-studio');
+
+      gateEyeBtn.addEventListener('click', () => {
+        gateInput.type = gateInput.type === 'password' ? 'text' : 'password';
+        gateInput.focus();
+      });
+
+      function unlockStudio() {
+        gateScreen.style.display = 'none';
+        studioEl.classList.add('active');
+        studioEl.setAttribute('aria-hidden', 'false');
+        document.title = 'Sanctuary Scribe — Kira & Sana Marlowe';
+        initStudio();
+      }
+
+      document.getElementById('lock-studio-btn').addEventListener('click', () => {
+        studioEl.classList.remove('active');
+        studioEl.setAttribute('aria-hidden', 'true');
+        gateScreen.style.display = 'flex';
+        gateInput.value = '';
+        gateError.textContent = '';
+        document.title = 'Scales & Stones';
+        gateInput.focus();
+      });
+
+      gateForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const candidate = gateInput.value.trim();
+        if (!candidate) return;
+        const digest = await hashSecretCode(candidate);
+        if (ACCEPTED_HASHES.has(digest)) {
+          gateError.textContent = '';
+          unlockStudio();
+        } else {
+          gateError.textContent = 'Not quite. Step softly away from the gate.';
+          gateCard.classList.remove('shake');
+          void gateCard.offsetWidth;
+          gateCard.classList.add('shake');
+          gateInput.select();
+        }
+      });
+
+      // ─── STUDIO LOGIC ───
+      let studioInitialized = false;
+      function initStudio() {
+        if (studioInitialized) return;
+        studioInitialized = true;
+
+        const DRAFT_KEY = 'ss_scribe_draft_v1';
+        const GH_CREDS_KEY = 'ss_gh_creds_v1';
+
+        const postSelector = document.getElementById('post-selector');
+        const deletePostBtn = document.getElementById('delete-post-btn');
+        const titleInput = document.getElementById('post-title');
+        const idInput = document.getElementById('post-id');
+        const regenSlugBtn = document.getElementById('regen-slug-btn');
+        const dateInput = document.getElementById('post-date');
+        const datePicker = document.getElementById('post-date-picker');
+        const catSelect = document.getElementById('post-category');
+        const catCustom = document.getElementById('post-category-custom');
+        const authorInput = document.getElementById('post-author');
+        const excerptInput = document.getElementById('post-excerpt');
+        const autoExcerptBtn = document.getElementById('auto-excerpt-btn');
+
+        const editor = document.getElementById('editor-surface');
+        const editorCanvasWrap = document.getElementById('editor-canvas-wrap');
+        const previewSurface = document.getElementById('preview-surface');
+        const togglePreviewBtn = document.getElementById('toggle-preview-btn');
+        const wordCountEl = document.getElementById('editor-word-count');
+        const draftIndicatorEl = document.getElementById('draft-save-indicator');
+
+        const fmtBlock = document.getElementById('fmt-block');
+        const fmtFont = document.getElementById('fmt-font');
+        const fmtSizeDec = document.getElementById('fmt-size-dec');
+        const fmtSizeVal = document.getElementById('fmt-size-val');
+        const fmtSizeInc = document.getElementById('fmt-size-inc');
+
+        const textColorBtn = document.getElementById('text-color-btn');
+        const textColorPop = document.getElementById('text-color-popover');
+        const activeTextBar = document.getElementById('active-text-color-bar');
+        const customTextColor = document.getElementById('custom-text-color');
+
+        const hiliteColorBtn = document.getElementById('hilite-color-btn');
+        const hiliteColorPop = document.getElementById('hilite-color-popover');
+        const activeHiliteBar = document.getElementById('active-hilite-color-bar');
+        const customHiliteColor = document.getElementById('custom-hilite-color');
+
+        const imageInspector = document.getElementById('image-inspector');
+        const imgCaptionInput = document.getElementById('img-caption-input');
+
+        let postsList = Array.isArray(window.BLOG_POSTS)
+          ? JSON.parse(JSON.stringify(window.BLOG_POSTS))
+          : [];
+        let currentEditingId = '__NEW__';
+        let slugManuallyEdited = false;
+        let savedRange = null;
+        let selectedFigure = null;
+        let pendingPhotoDataUrl = '';
+        let modalAlign = 'align-center';
+        let modalSize = 'size-50';
+        let isPreviewMode = false;
+
+        // ─── Helpers ───
+        function formatTodayReadable(dateObj = new Date()) {
+          return dateObj.toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+          });
+        }
+
+        function slugify(str) {
+          return String(str || '')
+            .toLowerCase()
+            .normalize('NFKD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '') || 'untitled-scroll';
+        }
+
+        function escapeHtml(str) {
+          return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+        }
+
+        function populateCategories(selectedVal) {
+          const defaults = ['Announcement', 'Worldbuilding', 'Writing Diary', 'Lore & Magic', 'Character Spotlight'];
+          const fromPosts = postsList.map(p => p.category).filter(Boolean);
+          const allCats = Array.from(new Set([...defaults, ...fromPosts]));
+          catSelect.innerHTML = allCats.map(c =>
+            `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`
+          ).join('') + '<option value="__CUSTOM__">+ Custom Category...</option>';
+
+          if (selectedVal && allCats.includes(selectedVal)) {
+            catSelect.value = selectedVal;
+            catCustom.style.display = 'none';
+          } else if (selectedVal) {
+            catSelect.value = '__CUSTOM__';
+            catCustom.value = selectedVal;
+            catCustom.style.display = 'block';
+          } else {
+            catCustom.style.display = 'none';
+          }
+        }
+
+        function populatePostSelector(selectValue = '__NEW__') {
+          postSelector.innerHTML = '<option value="__NEW__">✦ Write New Entry</option>' +
+            postsList.map(p =>
+              `<option value="${escapeHtml(p.id)}">${escapeHtml(p.title)} (${escapeHtml(p.date)})</option>`
+            ).join('');
+          postSelector.value = selectValue;
+          deletePostBtn.disabled = (selectValue === '__NEW__');
+        }
+
+        function loadPostIntoEditor(id) {
+          deselectFigure();
+          currentEditingId = id;
+          if (id === '__NEW__') {
+            slugManuallyEdited = false;
+            titleInput.value = '';
+            idInput.value = '';
+            dateInput.value = formatTodayReadable();
+            populateCategories('Announcement');
+            authorInput.value = 'Kira & Sana Marlowe';
+            excerptInput.value = '';
+            editor.innerHTML = '';
+            deletePostBtn.disabled = true;
+          } else {
+            const post = postsList.find(p => p.id === id);
+            if (!post) return;
+            slugManuallyEdited = true;
+            titleInput.value = post.title || '';
+            idInput.value = post.id || '';
+            dateInput.value = post.date || formatTodayReadable();
+            populateCategories(post.category || 'Announcement');
+            authorInput.value = post.author || 'Kira & Sana Marlowe';
+            excerptInput.value = post.excerpt || '';
+            if (post.html) {
+              editor.innerHTML = post.html;
+            } else if (Array.isArray(post.content)) {
+              editor.innerHTML = post.content.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+            } else {
+              editor.innerHTML = '';
+            }
+            editor.querySelectorAll('.blog-figure').forEach(fig => {
+              fig.setAttribute('contenteditable', 'false');
+            });
+            deletePostBtn.disabled = false;
+          }
+          updateWordCount();
+          if (isPreviewMode) renderPreview();
+        }
+
+        populateCategories('Announcement');
+        populatePostSelector('__NEW__');
+        dateInput.value = formatTodayReadable();
+
+        // Check saved draft
+        try {
+          const savedDraftRaw = localStorage.getItem(DRAFT_KEY);
+          if (savedDraftRaw) {
+            const d = JSON.parse(savedDraftRaw);
+            if (d && (d.title || d.html)) {
+              currentEditingId = d.editingId || '__NEW__';
+              postSelector.value = postsList.some(p => p.id === currentEditingId) ? currentEditingId : '__NEW__';
+              deletePostBtn.disabled = (postSelector.value === '__NEW__');
+              titleInput.value = d.title || '';
+              idInput.value = d.id || '';
+              dateInput.value = d.date || formatTodayReadable();
+              populateCategories(d.category || 'Announcement');
+              authorInput.value = d.author || 'Kira & Sana Marlowe';
+              excerptInput.value = d.excerpt || '';
+              editor.innerHTML = d.html || '';
+              editor.querySelectorAll('.blog-figure').forEach(fig => fig.setAttribute('contenteditable', 'false'));
+              slugManuallyEdited = Boolean(d.id);
+              draftIndicatorEl.textContent = 'Restored unsaved draft';
+            }
+          }
+        } catch (_) {}
+
+        postSelector.addEventListener('change', () => {
+          loadPostIntoEditor(postSelector.value);
+        });
+
+        titleInput.addEventListener('input', () => {
+          if (!slugManuallyEdited && currentEditingId === '__NEW__') {
+            idInput.value = slugify(titleInput.value);
+          }
+          scheduleDraftSave();
+        });
+
+        idInput.addEventListener('input', () => {
+          slugManuallyEdited = true;
+          scheduleDraftSave();
+        });
+
+        regenSlugBtn.addEventListener('click', () => {
+          idInput.value = slugify(titleInput.value);
+          slugManuallyEdited = false;
+          scheduleDraftSave();
+        });
+
+        datePicker.addEventListener('change', () => {
+          if (!datePicker.value) return;
+          const parts = datePicker.value.split('-');
+          const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+          dateInput.value = formatTodayReadable(d);
+          scheduleDraftSave();
+        });
+
+        catSelect.addEventListener('change', () => {
+          catCustom.style.display = catSelect.value === '__CUSTOM__' ? 'block' : 'none';
+          if (catSelect.value === '__CUSTOM__') catCustom.focus();
+          scheduleDraftSave();
+        });
+
+        function getCategoryValue() {
+          return catSelect.value === '__CUSTOM__'
+            ? (catCustom.value.trim() || 'Journal')
+            : catSelect.value;
+        }
+
+        autoExcerptBtn.addEventListener('click', () => {
+          const clone = editor.cloneNode(true);
+          clone.querySelectorAll('figcaption, hr').forEach(el => el.remove());
+          const plain = (clone.textContent || '').replace(/\s+/g, ' ').trim();
+          if (!plain) return;
+          excerptInput.value = plain.length > 180 ? plain.slice(0, 177).replace(/\s+\S*$/, '') + '...' : plain;
+          scheduleDraftSave();
+        });
+
+        // ─── Selection Management for ContentEditable Toolbar ───
+        function saveCurrentSelection() {
+          const sel = window.getSelection();
+          if (sel && sel.rangeCount > 0) {
+            const r = sel.getRangeAt(0);
+            if (editor.contains(r.commonAncestorContainer)) {
+              savedRange = r.cloneRange();
+            }
+          }
+        }
+
+        function restoreSelection() {
+          editor.focus();
+          if (savedRange) {
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(savedRange);
+          }
+        }
+
+        editor.addEventListener('mouseup', () => { saveCurrentSelection(); syncToolbarState(); });
+        editor.addEventListener('keyup', () => { saveCurrentSelection(); syncToolbarState(); updateWordCount(); scheduleDraftSave(); });
+        editor.addEventListener('blur', saveCurrentSelection);
+        document.addEventListener('selectionchange', () => {
+          const sel = window.getSelection();
+          if (sel && sel.rangeCount > 0 && editor.contains(sel.getRangeAt(0).commonAncestorContainer)) {
+            saveCurrentSelection();
+            syncToolbarState();
+          }
+        });
+
+        // Keep selection intact when clicking toolbar buttons
+        document.querySelectorAll('.editor-toolbar button, .tb-popover button').forEach(btn => {
+          btn.addEventListener('mousedown', (e) => {
+            if (e.target.tagName !== 'INPUT') e.preventDefault();
+          });
+        });
+
+        // Apply standard execCommand buttons
+        document.querySelectorAll('[data-cmd]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const cmd = btn.getAttribute('data-cmd');
+            restoreSelection();
+            document.execCommand(cmd, false, null);
+            saveCurrentSelection();
+            syncToolbarState();
+            updateWordCount();
+            scheduleDraftSave();
+          });
+        });
+
+        // Block style dropdown
+        fmtBlock.addEventListener('change', () => {
+          restoreSelection();
+          document.execCommand('formatBlock', false, fmtBlock.value);
+          saveCurrentSelection();
+          syncToolbarState();
+          scheduleDraftSave();
+        });
+
+        function unwrapNestedStyle(containerSpan, styleProp) {
+          containerSpan.querySelectorAll('span').forEach(child => {
+            if (child.style[styleProp]) {
+              child.style[styleProp] = '';
+              if (!child.getAttribute('style') || !child.getAttribute('style').trim()) {
+                while (child.firstChild) child.parentNode.insertBefore(child.firstChild, child);
+                child.remove();
+              }
+            }
+          });
+        }
+
+        // Font Family dropdown
+        fmtFont.addEventListener('change', () => {
+          const fontVal = fmtFont.value;
+          applyCssStyleToSelection('fontFamily', fontVal, () => {
+            document.execCommand('fontName', false, '__SS_FONT__');
+            editor.querySelectorAll('font[face="__SS_FONT__"]').forEach(el => {
+              const span = document.createElement('span');
+              span.style.fontFamily = fontVal;
+              while (el.firstChild) span.appendChild(el.firstChild);
+              unwrapNestedStyle(span, 'fontFamily');
+              el.parentNode.replaceChild(span, el);
+            });
+          });
+        });
+
+        // Font Size stepper
+        function applyFontSizePx(px) {
+          const clamped = Math.max(11, Math.min(64, Math.round(px)));
+          fmtSizeVal.value = clamped;
+          applyCssStyleToSelection('fontSize', clamped + 'px', () => {
+            document.execCommand('fontSize', false, '7');
+            editor.querySelectorAll('font[size="7"]').forEach(el => {
+              const span = document.createElement('span');
+              span.style.fontSize = clamped + 'px';
+              while (el.firstChild) span.appendChild(el.firstChild);
+              unwrapNestedStyle(span, 'fontSize');
+              el.parentNode.replaceChild(span, el);
+            });
+          });
+        }
+
+        function applyCssStyleToSelection(prop, value, execNonCollapsed) {
+          restoreSelection();
+          const sel = window.getSelection();
+          if (sel && sel.rangeCount > 0 && sel.getRangeAt(0).collapsed) {
+            // Caret only: insert a clean span with zero-width space so typing continues in the chosen font/size
+            const range = sel.getRangeAt(0);
+            const span = document.createElement('span');
+            span.style[prop] = value;
+            span.appendChild(document.createTextNode('\u200B'));
+            range.insertNode(span);
+            const newRange = document.createRange();
+            newRange.setStart(span.firstChild, 1);
+            newRange.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(newRange);
+            savedRange = newRange.cloneRange();
+          } else {
+            execNonCollapsed();
+            saveCurrentSelection();
+          }
+          scheduleDraftSave();
+        }
+
+        fmtSizeDec.addEventListener('click', () => applyFontSizePx((Number(fmtSizeVal.value) || 17) - 2));
+        fmtSizeInc.addEventListener('click', () => applyFontSizePx((Number(fmtSizeVal.value) || 17) + 2));
+        fmtSizeVal.addEventListener('change', () => applyFontSizePx(Number(fmtSizeVal.value) || 17));
+
+        // ─── Text & Highlight Colour Popovers ───
+        textColorBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          hiliteColorPop.classList.remove('open');
+          textColorPop.classList.toggle('open');
+        });
+
+        hiliteColorBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          textColorPop.classList.remove('open');
+          hiliteColorPop.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!textColorPop.contains(e.target) && e.target !== textColorBtn) textColorPop.classList.remove('open');
+          if (!hiliteColorPop.contains(e.target) && e.target !== hiliteColorBtn) hiliteColorPop.classList.remove('open');
+        });
+
+        function applyTextColor(colorHex) {
+          activeTextBar.style.background = colorHex;
+          restoreSelection();
+          document.execCommand('styleWithCSS', false, true);
+          document.execCommand('foreColor', false, colorHex);
+          saveCurrentSelection();
+          textColorPop.classList.remove('open');
+          scheduleDraftSave();
+        }
+
+        function applyHighlightColor(colorVal) {
+          activeHiliteBar.style.background = colorVal === 'transparent' ? '#080909' : colorVal;
+          restoreSelection();
+          document.execCommand('styleWithCSS', false, true);
+          if (!document.execCommand('hiliteColor', false, colorVal)) {
+            document.execCommand('backColor', false, colorVal);
+          }
+          saveCurrentSelection();
+          hiliteColorPop.classList.remove('open');
+          scheduleDraftSave();
+        }
+
+        textColorPop.querySelectorAll('[data-color]').forEach(sw => {
+          sw.addEventListener('click', () => applyTextColor(sw.getAttribute('data-color')));
+        });
+        customTextColor.addEventListener('input', (e) => applyTextColor(e.target.value));
+
+        hiliteColorPop.querySelectorAll('[data-hilite]').forEach(sw => {
+          sw.addEventListener('click', () => applyHighlightColor(sw.getAttribute('data-hilite')));
+        });
+        customHiliteColor.addEventListener('input', (e) => applyHighlightColor(e.target.value));
+
+        // ─── Clean Paste from Google Docs & Word ───
+        editor.addEventListener('paste', (e) => {
+          const htmlData = e.clipboardData && e.clipboardData.getData('text/html');
+          if (!htmlData) return; // Plain text paste works natively
+          e.preventDefault();
+
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(htmlData, 'text/html');
+
+          // Remove Word/Docs style/meta/script noise
+          doc.querySelectorAll('style, script, meta, link, xml, o\\:p').forEach(el => el.remove());
+
+          doc.body.querySelectorAll('*').forEach(el => {
+            el.removeAttribute('class');
+            el.removeAttribute('id');
+            // Clean white backgrounds and pitch-black font overrides from light-mode Word/Docs
+            if (el.style) {
+              el.style.background = '';
+              el.style.backgroundColor = '';
+              const c = (el.style.color || '').replace(/\s+/g, '').toLowerCase();
+              if (c === 'rgb(0,0,0)' || c === '#000' || c === '#000000' || c === 'black' || c === 'windowtext') {
+                el.style.color = '';
+              }
+              if (!el.getAttribute('style') || !el.getAttribute('style').trim()) {
+                el.removeAttribute('style');
+              }
+            }
+          });
+
+          restoreSelection();
+          document.execCommand('insertHTML', false, doc.body.innerHTML);
+          saveCurrentSelection();
+          updateWordCount();
+          scheduleDraftSave();
+        });
+
+        // ─── Sync Toolbar Active States ───
+        function syncToolbarState() {
+          document.querySelectorAll('.tb-btn[data-cmd]').forEach(btn => {
+            const cmd = btn.getAttribute('data-cmd');
+            try {
+              btn.classList.toggle('active', document.queryCommandState(cmd));
+            } catch (_) {}
+          });
+
+          const sel = window.getSelection();
+          if (sel && sel.rangeCount > 0) {
+            let node = sel.anchorNode;
+            if (node && node.nodeType === 3) node = node.parentNode;
+            if (node && editor.contains(node) && node !== editor) {
+              const cs = window.getComputedStyle(node);
+              const px = Math.round(parseFloat(cs.fontSize));
+              if (!Number.isNaN(px) && px >= 11 && px <= 64) fmtSizeVal.value = px;
+
+              const fam = (cs.fontFamily || '').toLowerCase();
+              if (fam.includes('unifraktur')) fmtFont.value = "'UnifrakturMaguntia', cursive";
+              else if (fam.includes('cinzel')) fmtFont.value = 'Cinzel, serif';
+              else if (fam.includes('cormorant')) fmtFont.value = "'Cormorant Garamond', serif";
+              else if (fam.includes('lora')) fmtFont.value = 'Lora, serif';
+              else fmtFont.value = 'Philosopher, serif';
+
+              // Match block tag
+              let blk = node;
+              while (blk && blk.parentNode !== editor) blk = blk.parentNode;
+              if (blk && blk.tagName) {
+                const tag = blk.tagName.toUpperCase();
+                if (['P', 'H1', 'H2', 'H3', 'BLOCKQUOTE'].includes(tag)) fmtBlock.value = tag;
+              }
+            }
+          }
+        }
+
+        // ─── Ornamental Divider & Custom Link Modal ───
+        document.getElementById('fmt-divider-btn').addEventListener('click', () => {
+          restoreSelection();
+          document.execCommand('insertHTML', false, '<hr class="gothic-divider"><p><br></p>');
+          saveCurrentSelection();
+          scheduleDraftSave();
+        });
+
+        const linkModal = document.getElementById('link-modal');
+        const linkTextInput = document.getElementById('link-text-input');
+        const linkUrlInput = document.getElementById('link-url-input');
+
+        document.getElementById('fmt-link-btn').addEventListener('click', () => {
+          saveCurrentSelection();
+          const selectedTxt = savedRange ? savedRange.toString() : '';
+          linkTextInput.value = selectedTxt;
+          linkUrlInput.value = 'https://';
+          linkModal.classList.add('open');
+          linkModal.setAttribute('aria-hidden', 'false');
+          (selectedTxt ? linkUrlInput : linkTextInput).focus();
+        });
+
+        document.getElementById('cancel-link-modal').addEventListener('click', () => {
+          linkModal.classList.remove('open');
+          linkModal.setAttribute('aria-hidden', 'true');
+        });
+
+        document.getElementById('confirm-insert-link').addEventListener('click', () => {
+          const url = linkUrlInput.value.trim();
+          const txt = linkTextInput.value.trim() || url;
+          if (!url) return;
+          linkModal.classList.remove('open');
+          linkModal.setAttribute('aria-hidden', 'true');
+          restoreSelection();
+          const a = `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(txt)}</a>&nbsp;`;
+          document.execCommand('insertHTML', false, a);
+          saveCurrentSelection();
+          scheduleDraftSave();
+        });
+
+        // ─── Photo Insertion & Page Placement ───
+        const photoModal = document.getElementById('photo-modal');
+        const photoDropzone = document.getElementById('photo-dropzone');
+        const photoFileInput = document.getElementById('photo-file-input');
+        const photoPreviewThumb = document.getElementById('photo-preview-thumb');
+        const photoUrlInput = document.getElementById('photo-url-input');
+        const photoCaptionInput = document.getElementById('photo-caption-input');
+
+        function setupModalPills(containerId, setter) {
+          const container = document.getElementById(containerId);
+          container.querySelectorAll('.choice-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+              container.querySelectorAll('.choice-pill').forEach(p => p.classList.remove('active'));
+              pill.classList.add('active');
+              setter(pill.getAttribute('data-val'));
+            });
+          });
+        }
+        setupModalPills('modal-align-pills', v => { modalAlign = v; });
+        setupModalPills('modal-size-pills', v => { modalSize = v; });
+
+        function compressImageFile(file) {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              const img = new Image();
+              img.onload = () => {
+                const maxDim = 1400;
+                let w = img.width;
+                let h = img.height;
+                if (w > maxDim) {
+                  h = Math.round((h * maxDim) / w);
+                  w = maxDim;
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+                const isPng = file.type === 'image/png';
+                const dataUrl = canvas.toDataURL(isPng ? 'image/png' : 'image/jpeg', isPng ? undefined : 0.86);
+                resolve(dataUrl);
+              };
+              img.onerror = reject;
+              img.src = ev.target.result;
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+        }
+
+        async function handleSelectedPhotoFile(file) {
+          if (!file || !file.type.startsWith('image/')) return;
+          try {
+            pendingPhotoDataUrl = await compressImageFile(file);
+            photoPreviewThumb.src = pendingPhotoDataUrl;
+            photoPreviewThumb.style.display = 'block';
+            photoUrlInput.value = '';
+          } catch (_) {
+            alert('Could not read this image file. Try a PNG, JPG, or WebP.');
+          }
+        }
+
+        document.getElementById('open-photo-modal-btn').addEventListener('click', () => {
+          saveCurrentSelection();
+          pendingPhotoDataUrl = '';
+          photoFileInput.value = '';
+          photoUrlInput.value = '';
+          photoCaptionInput.value = '';
+          photoPreviewThumb.style.display = 'none';
+          photoModal.classList.add('open');
+          photoModal.setAttribute('aria-hidden', 'false');
+        });
+
+        document.getElementById('cancel-photo-modal').addEventListener('click', () => {
+          photoModal.classList.remove('open');
+          photoModal.setAttribute('aria-hidden', 'true');
+        });
+
+        photoDropzone.addEventListener('click', () => photoFileInput.click());
+        photoFileInput.addEventListener('change', (e) => {
+          if (e.target.files && e.target.files[0]) handleSelectedPhotoFile(e.target.files[0]);
+        });
+        photoDropzone.addEventListener('dragover', (e) => { e.preventDefault(); photoDropzone.classList.add('dragover'); });
+        photoDropzone.addEventListener('dragleave', () => photoDropzone.classList.remove('dragover'));
+        photoDropzone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          photoDropzone.classList.remove('dragover');
+          if (e.dataTransfer.files && e.dataTransfer.files[0]) handleSelectedPhotoFile(e.dataTransfer.files[0]);
+        });
+
+        photoUrlInput.addEventListener('input', () => {
+          const val = photoUrlInput.value.trim();
+          if (val) {
+            pendingPhotoDataUrl = '';
+            photoPreviewThumb.src = val;
+            photoPreviewThumb.style.display = 'block';
+          }
+        });
+
+        document.getElementById('confirm-insert-photo').addEventListener('click', () => {
+          const src = pendingPhotoDataUrl || photoUrlInput.value.trim();
+          if (!src) return;
+          const cap = photoCaptionInput.value.trim();
+
+          const fig = document.createElement('figure');
+          fig.className = `blog-figure ${modalAlign} ${modalAlign === 'align-full' ? 'size-100' : modalSize}`;
+          fig.setAttribute('contenteditable', 'false');
+
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = cap || titleInput.value.trim() || 'Scales & Stones journal illustration';
+          fig.appendChild(img);
+
+          if (cap) {
+            const fc = document.createElement('figcaption');
+            fc.textContent = cap;
+            fig.appendChild(fc);
+          }
+
+          photoModal.classList.remove('open');
+          photoModal.setAttribute('aria-hidden', 'true');
+
+          restoreSelection();
+          const sel = window.getSelection();
+          const trailingP = document.createElement('p');
+          trailingP.innerHTML = '<br>';
+
+          if (sel && sel.rangeCount > 0 && editor.contains(sel.getRangeAt(0).commonAncestorContainer)) {
+            let anchorBlock = sel.getRangeAt(0).commonAncestorContainer;
+            if (anchorBlock.nodeType === 3) anchorBlock = anchorBlock.parentNode;
+            while (anchorBlock && anchorBlock.parentNode !== editor) {
+              anchorBlock = anchorBlock.parentNode;
+            }
+            if (anchorBlock && anchorBlock.parentNode === editor) {
+              anchorBlock.after(fig, trailingP);
+            } else {
+              editor.appendChild(fig);
+              editor.appendChild(trailingP);
+            }
+          } else {
+            editor.appendChild(fig);
+            editor.appendChild(trailingP);
+          }
+
+          selectFigure(fig);
+          updateWordCount();
+          scheduleDraftSave();
+        });
+
+        // ─── Interactive Photo Placement Inspector ───
+        function selectFigure(fig) {
+          deselectFigure();
+          selectedFigure = fig;
+          fig.classList.add('selected-figure');
+          imageInspector.classList.add('open');
+
+          const aligns = ['align-left', 'align-center', 'align-right', 'align-full'];
+          imageInspector.querySelectorAll('[data-img-align]').forEach(btn => {
+            btn.classList.toggle('active', fig.classList.contains(btn.getAttribute('data-img-align')));
+          });
+          const sizes = ['size-25', 'size-50', 'size-75', 'size-100'];
+          imageInspector.querySelectorAll('[data-img-size]').forEach(btn => {
+            btn.classList.toggle('active', fig.classList.contains(btn.getAttribute('data-img-size')));
+          });
+          const fc = fig.querySelector('figcaption');
+          imgCaptionInput.value = fc ? fc.textContent : '';
+        }
+
+        function deselectFigure() {
+          if (selectedFigure) selectedFigure.classList.remove('selected-figure');
+          selectedFigure = null;
+          imageInspector.classList.remove('open');
+        }
+
+        editor.addEventListener('click', (e) => {
+          const fig = e.target.closest('.blog-figure');
+          if (fig && editor.contains(fig)) {
+            e.preventDefault();
+            selectFigure(fig);
+          } else {
+            deselectFigure();
+          }
+        });
+
+        imageInspector.querySelectorAll('[data-img-align]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (!selectedFigure) return;
+            const targetAlign = btn.getAttribute('data-img-align');
+            selectedFigure.classList.remove('align-left', 'align-center', 'align-right', 'align-full');
+            selectedFigure.classList.add(targetAlign);
+            if (targetAlign === 'align-full') {
+              selectedFigure.classList.remove('size-25', 'size-50', 'size-75');
+              selectedFigure.classList.add('size-100');
+            }
+            selectFigure(selectedFigure);
+            scheduleDraftSave();
+          });
+        });
+
+        imageInspector.querySelectorAll('[data-img-size]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (!selectedFigure) return;
+            const targetSize = btn.getAttribute('data-img-size');
+            selectedFigure.classList.remove('size-25', 'size-50', 'size-75', 'size-100');
+            selectedFigure.classList.add(targetSize);
+            if (selectedFigure.classList.contains('align-full') && targetSize !== 'size-100') {
+              selectedFigure.classList.remove('align-full');
+              selectedFigure.classList.add('align-center');
+            }
+            selectFigure(selectedFigure);
+            scheduleDraftSave();
+          });
+        });
+
+        imgCaptionInput.addEventListener('input', () => {
+          if (!selectedFigure) return;
+          const val = imgCaptionInput.value.trim();
+          let fc = selectedFigure.querySelector('figcaption');
+          if (val) {
+            if (!fc) {
+              fc = document.createElement('figcaption');
+              selectedFigure.appendChild(fc);
+            }
+            fc.textContent = val;
+            const img = selectedFigure.querySelector('img');
+            if (img) img.alt = val;
+          } else if (fc) {
+            fc.remove();
+          }
+          scheduleDraftSave();
+        });
+
+        document.getElementById('img-move-up').addEventListener('click', () => {
+          if (!selectedFigure || !selectedFigure.previousElementSibling) return;
+          selectedFigure.parentNode.insertBefore(selectedFigure, selectedFigure.previousElementSibling);
+          scheduleDraftSave();
+        });
+
+        document.getElementById('img-move-down').addEventListener('click', () => {
+          if (!selectedFigure || !selectedFigure.nextElementSibling) return;
+          selectedFigure.parentNode.insertBefore(selectedFigure.nextElementSibling, selectedFigure);
+          scheduleDraftSave();
+        });
+
+        document.getElementById('img-delete-btn').addEventListener('click', () => {
+          if (!selectedFigure) return;
+          const victim = selectedFigure;
+          deselectFigure();
+          victim.remove();
+          updateWordCount();
+          scheduleDraftSave();
+        });
+
+        // ─── Clean HTML Serializer ───
+        function getCleanEditorHtml() {
+          const clone = editor.cloneNode(true);
+          clone.querySelectorAll('.blog-figure').forEach(fig => {
+            fig.classList.remove('selected-figure');
+            fig.removeAttribute('contenteditable');
+          });
+          clone.querySelectorAll('figcaption').forEach(fc => {
+            if (!fc.textContent.trim()) fc.remove();
+          });
+          // Strip invisible zero-width spaces used for caret styling
+          const walker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT, null);
+          let n;
+          while ((n = walker.nextNode())) {
+            n.nodeValue = n.nodeValue.replace(/\u200B/g, '');
+          }
+          return clone.innerHTML.trim();
+        }
+
+        function updateWordCount() {
+          const text = (editor.textContent || '').replace(/\u200B/g, '').trim();
+          const words = text ? text.split(/\s+/).length : 0;
+          wordCountEl.textContent = `${words} ${words === 1 ? 'word' : 'words'} · ${text.length} characters`;
+        }
+
+        // ─── Live Preview Toggle ───
+        function buildPostObjectFromForm(overrideHtml) {
+          const title = titleInput.value.trim() || 'Untitled Scroll';
+          const id = slugify(idInput.value.trim() || title);
+          const date = dateInput.value.trim() || formatTodayReadable();
+          const category = getCategoryValue();
+          const author = authorInput.value.trim() || 'Kira & Sana Marlowe';
+          const html = typeof overrideHtml === 'string' ? overrideHtml : getCleanEditorHtml();
+          let excerpt = excerptInput.value.trim();
+          if (!excerpt) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            tmp.querySelectorAll('figcaption').forEach(fc => fc.remove());
+            const plain = (tmp.textContent || '').replace(/\s+/g, ' ').trim();
+            excerpt = plain.length > 180 ? plain.slice(0, 177).replace(/\s+\S*$/, '') + '...' : plain;
+          }
+          return { id, title, date, category, author, excerpt, html };
+        }
+
+        function renderPreview() {
+          const post = buildPostObjectFromForm();
+          document.getElementById('preview-card-slot').innerHTML = `
+            <article class="blog-card" style="cursor:default;">
+              <div class="blog-meta">
+                <span>${escapeHtml(post.date)}</span>
+                <span>&middot;</span>
+                <span>${escapeHtml(post.category)}</span>
+              </div>
+              <h2 style="font-family: var(--font-body); font-weight: 700; font-size: 1.55rem;">${escapeHtml(post.title)}</h2>
+              <p>${escapeHtml(post.excerpt || '(No excerpt entered yet)')}</p>
+              <span class="blog-read-link">Read Entry &rarr;</span>
+            </article>
+          `;
+          document.getElementById('preview-article-slot').innerHTML = `
+            <article class="blog-article-view">
+              <div class="blog-meta">
+                <span>${escapeHtml(post.date)}</span>
+                <span>&middot;</span>
+                <span>${escapeHtml(post.category)}</span>
+                <span>&middot;</span>
+                <span>${escapeHtml(post.author)}</span>
+              </div>
+              <h2 class="section-title" style="text-align: left; font-family: var(--font-body); font-weight: 700; font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 1.5rem;">${escapeHtml(post.title)}</h2>
+              <div class="blog-rich-content">${post.html || '<p style="opacity:0.6; font-style:italic;">Your scroll is currently empty.</p>'}</div>
+            </article>
+          `;
+        }
+
+        togglePreviewBtn.addEventListener('click', () => {
+          isPreviewMode = !isPreviewMode;
+          if (isPreviewMode) {
+            renderPreview();
+            editorCanvasWrap.style.display = 'none';
+            previewSurface.classList.add('active');
+            togglePreviewBtn.textContent = '✎ Back to Editor';
+          } else {
+            previewSurface.classList.remove('active');
+            editorCanvasWrap.style.display = 'block';
+            togglePreviewBtn.textContent = '✦ Preview Entry';
+          }
+        });
+
+        // ─── Local Draft Saving ───
+        let draftTimer = null;
+        function saveLocalDraft() {
+          try {
+            const draft = {
+              editingId: currentEditingId,
+              title: titleInput.value,
+              id: idInput.value,
+              date: dateInput.value,
+              category: getCategoryValue(),
+              author: authorInput.value,
+              excerpt: excerptInput.value,
+              html: getCleanEditorHtml()
+            };
+            localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+            draftIndicatorEl.textContent = 'Draft saved locally · ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          } catch (_) {}
+        }
+
+        function scheduleDraftSave() {
+          clearTimeout(draftTimer);
+          draftTimer = setTimeout(saveLocalDraft, 900);
+        }
+
+        document.getElementById('save-draft-btn').addEventListener('click', () => {
+          saveLocalDraft();
+        });
+
+        // ─── Serialize posts.js ───
+        function serializePostsJs(postsArray) {
+          const header =
+`/* ==========================================================================
+   Scales & Stones — Blog Entries Data (posts.js)
+   Kira & Sana Marlowe
+   Managed via Sanctuary Scribe Studio
+   ========================================================================== */
+
+window.BLOG_POSTS = `;
+          return header + JSON.stringify(postsArray, null, 2) + ';\n';
+        }
+
+        function mergePostIntoList(list, postObj) {
+          const copy = JSON.parse(JSON.stringify(list));
+          const targetMatchId = currentEditingId !== '__NEW__' ? currentEditingId : postObj.id;
+          const idx = copy.findIndex(p => p.id === targetMatchId);
+          if (idx !== -1) {
+            copy[idx] = postObj;
+          } else {
+            copy.unshift(postObj);
+          }
+          return copy;
+        }
+
+        document.getElementById('download-posts-btn').addEventListener('click', () => {
+          const post = buildPostObjectFromForm();
+          const updatedList = mergePostIntoList(postsList, post);
+          const blob = new Blob([serializePostsJs(updatedList)], { type: 'application/javascript;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'posts.js';
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+
+        // ─── GitHub REST API Connection & Publishing ───
+        const ghDrawer = document.getElementById('gh-settings-drawer');
+        const ghOwnerInput = document.getElementById('gh-owner');
+        const ghRepoInput = document.getElementById('gh-repo');
+        const ghBranchInput = document.getElementById('gh-branch');
+        const ghTokenInput = document.getElementById('gh-token');
+        const ghBadgeStatus = document.getElementById('gh-badge-status');
+        const ghTestMsg = document.getElementById('gh-test-msg');
+        const statusBox = document.getElementById('publish-status-box');
+
+        function loadGhCreds() {
+          try {
+            const raw = localStorage.getItem(GH_CREDS_KEY);
+            if (raw) {
+              const c = JSON.parse(raw);
+              if (c.owner) ghOwnerInput.value = c.owner;
+              if (c.repo) ghRepoInput.value = c.repo;
+              if (c.branch) ghBranchInput.value = c.branch;
+              if (c.token) ghTokenInput.value = c.token;
+            }
+          } catch (_) {}
+          ghBadgeStatus.textContent = ghTokenInput.value.trim() ? '· Connected' : '· Setup Needed';
+        }
+        loadGhCreds();
+
+        function saveGhCreds() {
+          const creds = {
+            owner: ghOwnerInput.value.trim() || 'Kira-Sana',
+            repo: ghRepoInput.value.trim() || 'scales-and-stones',
+            branch: ghBranchInput.value.trim() || 'main',
+            token: ghTokenInput.value.trim()
+          };
+          localStorage.setItem(GH_CREDS_KEY, JSON.stringify(creds));
+          ghBadgeStatus.textContent = creds.token ? '· Connected' : '· Setup Needed';
+          return creds;
+        }
+
+        document.getElementById('toggle-gh-settings-btn').addEventListener('click', () => {
+          ghDrawer.classList.toggle('open');
+        });
+
+        document.getElementById('clear-gh-token-btn').addEventListener('click', () => {
+          ghTokenInput.value = '';
+          saveGhCreds();
+          ghTestMsg.textContent = 'Token removed from this browser.';
+        });
+
+        document.getElementById('save-gh-settings-btn').addEventListener('click', async () => {
+          const creds = saveGhCreds();
+          if (!creds.token) {
+            ghTestMsg.textContent = 'Please paste a Personal Access Token first.';
+            return;
+          }
+          ghTestMsg.textContent = 'Testing connection to GitHub...';
+          try {
+            const res = await fetch(`https://api.github.com/repos/${creds.owner}/${creds.repo}`, {
+              headers: {
+                'Authorization': `Bearer ${creds.token}`,
+                'Accept': 'application/vnd.github+json'
+              }
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || `HTTP ${res.status}`);
+            if (data.default_branch && data.default_branch !== creds.branch) {
+              ghBranchInput.value = data.default_branch;
+              saveGhCreds();
+            }
+            const pushOk = data.permissions && data.permissions.push;
+            ghTestMsg.innerHTML = pushOk
+              ? `✦ Connected to <strong>${escapeHtml(data.full_name)}</strong> (branch: <strong>${escapeHtml(ghBranchInput.value)}</strong>)!`
+              : `Connected, but token needs Contents: Read and write permission.`;
+          } catch (err) {
+            ghTestMsg.textContent = 'Connection failed: ' + err.message;
+          }
+        });
+
+        function showPublishStatus(html, isError = false) {
+          statusBox.innerHTML = html;
+          statusBox.classList.toggle('error', isError);
+          statusBox.style.display = 'block';
+        }
+
+        function utf8ToBase64(str) {
+          const bytes = new TextEncoder().encode(str);
+          let binary = '';
+          for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+          return btoa(binary);
+        }
+
+        function base64ToUtf8(b64) {
+          const binary = atob(b64.replace(/\s+/g, ''));
+          const bytes = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+          return new TextDecoder().decode(bytes);
+        }
+
+        async function ghGetFile(creds, filePath) {
+          const url = `https://api.github.com/repos/${creds.owner}/${creds.repo}/contents/${filePath}?ref=${encodeURIComponent(creds.branch)}`;
+          const res = await fetch(url, {
+            headers: {
+              'Authorization': `Bearer ${creds.token}`,
+              'Accept': 'application/vnd.github+json'
+            }
+          });
+          if (res.status === 404) return null;
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.message || `Failed to read ${filePath}`);
+          return data;
+        }
+
+        async function ghPutFile(creds, filePath, base64Content, message, existingSha) {
+          const url = `https://api.github.com/repos/${creds.owner}/${creds.repo}/contents/${filePath}`;
+          const body = {
+            message,
+            content: base64Content,
+            branch: creds.branch
+          };
+          if (existingSha) body.sha = existingSha;
+
+          const res = await fetch(url, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `Bearer ${creds.token}`,
+              'Accept': 'application/vnd.github+json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.message || `Failed to upload ${filePath}`);
+          return data;
+        }
+
+        function parseRemotePostsJs(jsText) {
+          const eqIdx = jsText.indexOf('=');
+          if (eqIdx === -1) return null;
+          let jsonPart = jsText.slice(eqIdx + 1).trim();
+          if (jsonPart.endsWith(';')) jsonPart = jsonPart.slice(0, -1).trim();
+          try {
+            return JSON.parse(jsonPart);
+          } catch (_) {
+            // Fallback for legacy single-quoted JS object literals (original posts.js format)
+            const runner = new Function('var window = {}; ' + jsText + '; return window.BLOG_POSTS;');
+            return runner();
+          }
+        }
+
+        async function uploadEmbeddedImagesToGitHub(creds, rawHtml, slug) {
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = rawHtml;
+          const imgs = Array.from(wrapper.querySelectorAll('img')).filter(img =>
+            (img.getAttribute('src') || '').startsWith('data:image/')
+          );
+          if (imgs.length === 0) return rawHtml;
+
+          const stamp = Date.now().toString(36);
+          for (let i = 0; i < imgs.length; i++) {
+            const img = imgs[i];
+            const dataUrl = img.getAttribute('src');
+            const match = dataUrl.match(/^data:image\/([a-zA-Z0-9+]+);base64,(.+)$/);
+            if (!match) continue;
+            const ext = match[1].toLowerCase().includes('png') ? 'png' : 'jpg';
+            const b64 = match[2];
+            const assetPath = `assets/blog/${slug}-${stamp}-${i + 1}.${ext}`;
+
+            showPublishStatus(`Uploading photo ${i + 1} of ${imgs.length} to Sanctuary storage...`);
+            const existingAsset = await ghGetFile(creds, assetPath);
+            await ghPutFile(creds, assetPath, b64, `Add blog image ${assetPath}`, existingAsset ? existingAsset.sha : null);
+            img.setAttribute('src', assetPath);
+          }
+          return wrapper.innerHTML;
+        }
+
+        async function commitUpdatedPostsList(creds, updatedList, commitMessage, statusLabel) {
+          const serialized = serializePostsJs(updatedList);
+          const b64 = utf8ToBase64(serialized);
+
+          showPublishStatus(statusLabel || 'Publishing entry to live Sanctuary...');
+          const rootFile = await ghGetFile(creds, 'posts.js');
+          await ghPutFile(creds, 'posts.js', b64, commitMessage, rootFile ? rootFile.sha : null);
+
+          const subFile = await ghGetFile(creds, 'js/posts.js');
+          if (subFile) {
+            await ghPutFile(creds, 'js/posts.js', b64, commitMessage + ' (sync js/posts.js)', subFile.sha);
+          }
+          postsList = updatedList;
+        }
+
+        document.getElementById('publish-github-btn').addEventListener('click', async () => {
+          const creds = saveGhCreds();
+          if (!creds.token) {
+            ghDrawer.classList.add('open');
+            ghTokenInput.focus();
+            showPublishStatus('Please connect your GitHub Token first in the settings drawer below so we can upload directly to your site!', true);
+            return;
+          }
+
+          if (!titleInput.value.trim()) {
+            titleInput.focus();
+            showPublishStatus('Please add a Post Title before publishing.', true);
+            return;
+          }
+
+          const rawHtml = getCleanEditorHtml();
+          if (!rawHtml) {
+            editor.focus();
+            showPublishStatus('Write something inside the scroll before publishing!', true);
+            return;
+          }
+
+          const publishBtn = document.getElementById('publish-github-btn');
+          publishBtn.disabled = true;
+
+          try {
+            const slug = slugify(idInput.value.trim() || titleInput.value.trim());
+            const processedHtml = await uploadEmbeddedImagesToGitHub(creds, rawHtml, slug);
+            const postObj = buildPostObjectFromForm(processedHtml);
+
+            // Fetch freshest posts.js from GitHub to preserve posts written on other devices
+            showPublishStatus('Syncing with latest Sanctuary archive...');
+            let baseList = postsList;
+            const remotePostsFile = await ghGetFile(creds, 'posts.js');
+            if (remotePostsFile && remotePostsFile.content) {
+              try {
+                const parsed = parseRemotePostsJs(base64ToUtf8(remotePostsFile.content));
+                if (Array.isArray(parsed)) baseList = parsed;
+              } catch (_) {}
+            }
+
+            const updatedList = mergePostIntoList(baseList, postObj);
+            const isEdit = currentEditingId !== '__NEW__';
+            const msg = `${isEdit ? 'Update' : 'Publish'} blog entry: ${postObj.title}`;
+
+            await commitUpdatedPostsList(creds, updatedList, msg, '✦ Carving scroll onto scalesandstones.com...');
+
+            // Update editor with clean hosted paths and clear stale draft
+            editor.innerHTML = processedHtml;
+            editor.querySelectorAll('.blog-figure').forEach(fig => fig.setAttribute('contenteditable', 'false'));
+            idInput.value = postObj.id;
+            currentEditingId = postObj.id;
+            populatePostSelector(postObj.id);
+            localStorage.removeItem(DRAFT_KEY);
+            draftIndicatorEl.textContent = 'Published live';
+
+            showPublishStatus(
+              `✦ <strong>Published!</strong> "${escapeHtml(postObj.title)}" has been uploaded straight to GitHub. Your live blog will refresh within ~30–60 seconds.<br>` +
+              `<a href="blog.html#${escapeHtml(postObj.id)}" target="_blank" style="color:var(--gold-accent); text-decoration:underline;">View entry on Journal &nearr;</a>`
+            );
+          } catch (err) {
+            showPublishStatus(`Publish failed: ${escapeHtml(err.message)}`, true);
+          } finally {
+            publishBtn.disabled = false;
+          }
+        });
+
+        deletePostBtn.addEventListener('click', async () => {
+          if (currentEditingId === '__NEW__') return;
+          const post = postsList.find(p => p.id === currentEditingId);
+          if (!post) return;
+          if (!confirm(`Delete "${post.title}" from the blog?`)) return;
+
+          const creds = saveGhCreds();
+          if (creds.token) {
+            deletePostBtn.disabled = true;
+            try {
+              let baseList = postsList;
+              const remotePostsFile = await ghGetFile(creds, 'posts.js');
+              if (remotePostsFile && remotePostsFile.content) {
+                try {
+                  const parsed = parseRemotePostsJs(base64ToUtf8(remotePostsFile.content));
+                  if (Array.isArray(parsed)) baseList = parsed;
+                } catch (_) {}
+              }
+              const filteredList = baseList.filter(p => p.id !== currentEditingId);
+              await commitUpdatedPostsList(creds, filteredList, `Delete blog entry: ${post.title}`, 'Removing entry from Sanctuary...');
+              populatePostSelector('__NEW__');
+              loadPostIntoEditor('__NEW__');
+              showPublishStatus(`✦ Deleted "${escapeHtml(post.title)}" from your live blog.`);
+            } catch (err) {
+              showPublishStatus(`Delete failed: ${escapeHtml(err.message)}`, true);
+              deletePostBtn.disabled = false;
+            }
+          } else {
+            postsList = postsList.filter(p => p.id !== currentEditingId);
+            populatePostSelector('__NEW__');
+            loadPostIntoEditor('__NEW__');
+            showPublishStatus('Removed locally. Connect your GitHub Token or click Download posts.js to update the site.');
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
