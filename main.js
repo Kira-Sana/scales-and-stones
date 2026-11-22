@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ─── 2-Minute Delayed Gothic Arch Newsletter Pop-Up (Crow Scrolls) ───
+  // ─── 2-Minute Delayed Gothic Arch Newsletter Pop-Up ───
   const modalBackdrop = document.createElement('div');
   modalBackdrop.className = 'sanctuary-modal-backdrop';
   modalBackdrop.id = 'sanctuary-newsletter-modal';
@@ -95,10 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
   modalBackdrop.innerHTML = `
     <div class="sanctuary-arch-modal" role="dialog" aria-modal="true" aria-labelledby="sanctuary-modal-title">
       <div class="wax-seal-crest" aria-hidden="true">S &amp; S</div>
-      <div class="modal-kicker">✦ Crow Scrolls ✦</div>
+      <div class="modal-kicker">✦ Newsletter ✦</div>
       <h2 id="sanctuary-modal-title">Before You Leave the Deep...</h2>
       <p>
-        Receive Crow Scrolls from Kira &amp; Sana Marlowe with cover reveals, release dates, secret chapters from <em>Scales &amp; Stones</em>, and so on.
+        Join the Newsletter from Kira &amp; Sana Marlowe for cover reveals, release dates, secret chapters from <em>Scales &amp; Stones</em>, and so on.
       </p>
       <form class="sanctuary-modal-form" id="sanctuary-newsletter-form" action="https://assets.mailerlite.com/jsonp/2802467/forms/204368528875193774/subscribe" method="POST">
         <input type="text" name="fields[name]" class="form-control" placeholder="Your first name or nickname..." required autocomplete="given-name">
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <input type="hidden" name="anticsrf" value="true">
         <label class="sanctuary-consent-label">
           <input type="checkbox" name="consent" required>
-          <span>I agree to receive Crow Scrolls (email updates) from Kira &amp; Sana Marlowe. You can unsubscribe at any time.</span>
+          <span>I agree to receive newsletter email updates from Kira &amp; Sana Marlowe. You can unsubscribe at any time.</span>
         </label>
         <button type="submit" class="btn-gothic" id="sanctuary-modal-submit-btn" style="width: 100%; margin-top: 0.2rem;">Seal Your Name</button>
         <div id="sanctuary-modal-status" style="display:none; font-size: 0.85rem; margin-top: 0.8rem; color: #B89B67; text-align: center; font-style: italic;"></div>
@@ -122,6 +122,14 @@ document.addEventListener('DOMContentLoaded', () => {
     modalBackdrop.setAttribute('aria-hidden', 'false');
     sessionStorage.setItem('ss_newsletter_shown', 'true');
   }
+  window.openNewsletterModal = openNewsletterModal;
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('[data-open-newsletter]')) {
+      e.preventDefault();
+      openNewsletterModal();
+    }
+  });
 
   function closeNewsletterModal() {
     modalBackdrop.classList.remove('open');
@@ -154,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(() => {
       submitBtn.innerText = '✦ Oath Sealed ✦';
-      statusEl.innerHTML = '✦ Your name has been inscribed in the Crow Scrolls.<br>Check your inbox for your welcome scroll!';
+      statusEl.innerHTML = '✦ Your name has been added to our Newsletter.<br>Check your inbox for your welcome email!';
       setTimeout(() => {
         closeNewsletterModal();
         newsletterForm.reset();
@@ -170,12 +178,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Add a subtle "Crow Scrolls (Newsletter)" trigger link in the footer so visitors (or you!) can also open it anytime
+  // Add a subtle "Join Our Newsletter" trigger link in the footer so visitors (or you!) can also open it anytime
   const footerCopy = document.querySelector('.footer-copy');
   if (footerCopy) {
     const triggerLink = document.createElement('div');
     triggerLink.style.marginTop = '0.6rem';
-    triggerLink.innerHTML = `<button type="button" class="sanctuary-close-btn" id="footer-newsletter-trigger" style="margin-top:0;">✦ Subscribe to Crow Scrolls (Newsletter)</button>`;
+    triggerLink.innerHTML = `<button type="button" class="sanctuary-close-btn" id="footer-newsletter-trigger" style="margin-top:0;">✦ Join Our Newsletter</button>`;
     footerCopy.parentNode.insertBefore(triggerLink, footerCopy);
     document.getElementById('footer-newsletter-trigger').addEventListener('click', openNewsletterModal);
   }

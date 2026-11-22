@@ -604,9 +604,11 @@
       color: var(--parchment);
       font-family: var(--font-body);
       font-size: 0.7rem;
+      font-weight: 700;
+      white-space: nowrap;
       padding: 0.28rem 0.55rem;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
 
     .insp-btn:hover,
@@ -614,7 +616,12 @@
       border-color: var(--gold-accent);
       background: var(--gold-accent);
       color: var(--ink);
-      font-weight: 700;
+    }
+
+    .insp-btn.insp-delete:hover {
+      border-color: #D45B5B !important;
+      background: #D45B5B !important;
+      color: #080909 !important;
     }
 
     .insp-caption-input {
@@ -964,20 +971,17 @@
       <div class="editor-toolbar" id="editor-toolbar">
         <!-- Row 1: Typography & Inline Formats -->
         <div class="toolbar-row">
-          <select id="fmt-block" class="tb-select" title="Text Style">
-            <option value="P">Normal Text</option>
-            <option value="H1">Heading 1</option>
-            <option value="H2">Heading 2</option>
-            <option value="H3">Heading 3</option>
-            <option value="BLOCKQUOTE">Prophecy / Quote</option>
+          <select id="fmt-block" class="tb-select" title="Heading &amp; Style">
+            <option value="P">Main Text (Philosopher)</option>
+            <option value="H1">Heading 1 (Bold All Caps)</option>
+            <option value="H2">Heading 2 (Bold Philosopher)</option>
+            <option value="H3">Main Title (Unifraktur)</option>
+            <option value="BLOCKQUOTE">Ornamental Quote Box</option>
           </select>
 
           <select id="fmt-font" class="tb-select" title="Font Family">
-            <option value="Philosopher, serif">Philosopher (Default)</option>
-            <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
-            <option value="Cinzel, serif">Cinzel</option>
-            <option value="Lora, serif">Lora</option>
-            <option value="'UnifrakturMaguntia', cursive">UnifrakturMaguntia</option>
+            <option value="Philosopher, serif">Philosopher (Main Text)</option>
+            <option value="'UnifrakturMaguntia', cursive">Unifraktur (Gothic Title)</option>
           </select>
 
           <div class="tb-size-stepper" title="Font Size (px)">
@@ -995,7 +999,7 @@
 
           <span class="tb-sep"></span>
 
-          <!-- Text Color Popover -->
+          <!-- Text Color Popover (Strictly the 3 Sanctuary Inks) -->
           <div class="tb-popover-wrap">
             <button type="button" class="tb-btn" id="text-color-btn" title="Font Colour">
               <span style="display:flex; flex-direction:column; align-items:center; line-height:1;">
@@ -1003,21 +1007,12 @@
                 <span class="color-indicator-bar" id="active-text-color-bar" style="background:#E3DEC8;"></span>
               </span>
             </button>
-            <div class="tb-popover" id="text-color-popover">
+            <div class="tb-popover" id="text-color-popover" style="width: 11.5rem;">
               <div class="tb-popover-title">Ink Colour</div>
-              <div class="swatch-grid">
-                <button type="button" class="swatch-btn" data-color="#E3DEC8" style="background:#E3DEC8;" title="Warm Parchment"></button>
-                <button type="button" class="swatch-btn" data-color="#EFEBD9" style="background:#EFEBD9;" title="Bright Parchment"></button>
-                <button type="button" class="swatch-btn" data-color="#B89B67" style="background:#B89B67;" title="Antique Gold"></button>
-                <button type="button" class="swatch-btn" data-color="#D45B5B" style="background:#D45B5B;" title="Blood Ember"></button>
-                <button type="button" class="swatch-btn" data-color="#9A3636" style="background:#9A3636;" title="Deep Crimson"></button>
-                <button type="button" class="swatch-btn" data-color="#67B8B0" style="background:#67B8B0;" title="Lucantis Teal"></button>
-                <button type="button" class="swatch-btn" data-color="#9E9987" style="background:#9E9987;" title="Muted Stone"></button>
-                <button type="button" class="swatch-btn" data-color="#FFFFFF" style="background:#FFFFFF;" title="Pure White"></button>
-              </div>
-              <div class="custom-color-row">
-                <span>Custom:</span>
-                <input type="color" id="custom-text-color" value="#B89B67">
+              <div class="swatch-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0;">
+                <button type="button" class="swatch-btn" data-color="#E3DEC8" style="background:#E3DEC8;" title="Usual White (Parchment)"></button>
+                <button type="button" class="swatch-btn" data-color="#B89B67" style="background:#B89B67;" title="Sanctuary Gold"></button>
+                <button type="button" class="swatch-btn" data-color="#9E9987" style="background:#9E9987;" title="Washed-Out Grey (Captions / Sources)"></button>
               </div>
             </div>
           </div>
@@ -1046,7 +1041,7 @@
           </div>
         </div>
 
-        <!-- Row 2: Alignment, Lists, Links, Divider & Photos -->
+        <!-- Row 2: Alignment, Lists, Quote, Sources, Links, Divider & Photos -->
         <div class="toolbar-row">
           <button type="button" class="tb-btn" data-cmd="justifyLeft" title="Align Left">
             <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="19" y2="18"/></svg>
@@ -1063,8 +1058,8 @@
 
           <span class="tb-sep"></span>
 
-          <button type="button" class="tb-btn" data-cmd="insertUnorderedList" title="Bullet List">
-            <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
+          <button type="button" class="tb-btn" data-cmd="insertUnorderedList" title="Star List (✦)">
+            <svg viewBox="0 0 24 24"><line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><path d="M4 6h.01M4 12h.01M4 18h.01" stroke-width="3"/></svg>
           </button>
           <button type="button" class="tb-btn" data-cmd="insertOrderedList" title="Numbered List">
             <svg viewBox="0 0 24 24"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4M4 10h2M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
@@ -1078,7 +1073,9 @@
 
           <span class="tb-sep"></span>
 
-          <button type="button" class="tb-btn" id="fmt-link-btn" title="Insert Link">
+          <button type="button" class="tb-btn" id="fmt-quote-btn" title="Wrap Text in Ornamental Quote Plaque" style="font-size:0.74rem; padding:0 0.65rem;">&#10077; Quote</button>
+          <button type="button" class="tb-btn" id="fmt-source-btn" title="Add Source Citation [1]" style="font-size:0.74rem; padding:0 0.65rem;">✦ Source [1]</button>
+          <button type="button" class="tb-btn" id="fmt-link-btn" title="Insert Green Link">
             <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
           </button>
           <button type="button" class="tb-btn" id="fmt-divider-btn" title="Insert Ornamental Divider">✦</button>
@@ -1088,7 +1085,7 @@
 
           <span class="tb-sep"></span>
 
-          <button type="button" class="tb-btn tb-photo-btn" id="open-photo-modal-btn" title="Insert & Place Photo">
+          <button type="button" class="tb-btn tb-photo-btn" id="open-photo-modal-btn" title="Insert &amp; Place Photo">
             <svg viewBox="0 0 24 24" style="width:14px; height:14px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <span>Insert Photo</span>
           </button>
@@ -1117,7 +1114,7 @@
           <div class="inspector-group" style="margin-left:auto;">
             <button type="button" class="insp-btn" id="img-move-up" title="Move photo up one block">&uarr;</button>
             <button type="button" class="insp-btn" id="img-move-down" title="Move photo down one block">&darr;</button>
-            <button type="button" class="insp-btn" id="img-delete-btn" style="border-color:#D45B5B; color:#D45B5B;">Remove</button>
+            <button type="button" class="insp-btn insp-delete" id="img-delete-btn" style="border-color:#D45B5B; color:#D45B5B;">Remove</button>
           </div>
         </div>
       </div>
@@ -1270,6 +1267,28 @@
       <div style="display:flex; gap:0.8rem; justify-content:flex-end;">
         <button type="button" class="btn-studio-sm" id="cancel-link-modal">Cancel</button>
         <button type="button" class="btn-studio-sm gold" id="confirm-insert-link">Insert Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Source / Footnote Insertion Modal ─── -->
+  <div class="studio-modal-backdrop" id="source-modal" aria-hidden="true">
+    <div class="studio-modal-card" role="dialog" aria-modal="true" aria-labelledby="source-modal-title">
+      <h3 id="source-modal-title">Add Source Citation</h3>
+      <p style="font-size:0.84rem; color:var(--parchment-muted); margin-bottom:1rem; line-height:1.55;">
+        Places a numbered reference (like <strong style="color:var(--gold-accent);">[1]</strong>) beside your chosen word and adds the full source at the bottom of the scroll in smaller grey text.
+      </p>
+      <div class="studio-field" style="margin-bottom: 0.9rem;">
+        <label for="source-text-input">Source Title / Description</label>
+        <input type="text" id="source-text-input" class="form-control" placeholder="e.g., Mythological Lore of Scandinavia, Chapter IV...">
+      </div>
+      <div class="studio-field" style="margin-bottom: 1.2rem;">
+        <label for="source-url-input">Optional Source Link URL</label>
+        <input type="url" id="source-url-input" class="form-control" placeholder="https://... (leave blank if print book)">
+      </div>
+      <div style="display:flex; gap:0.8rem; justify-content:flex-end;">
+        <button type="button" class="btn-studio-sm" id="cancel-source-modal">Cancel</button>
+        <button type="button" class="btn-studio-sm gold" id="confirm-insert-source">✦ Add Source</button>
       </div>
     </div>
   </div>
@@ -1460,7 +1479,6 @@
         const textColorBtn = document.getElementById('text-color-btn');
         const textColorPop = document.getElementById('text-color-popover');
         const activeTextBar = document.getElementById('active-text-color-bar');
-        const customTextColor = document.getElementById('custom-text-color');
 
         const hiliteColorBtn = document.getElementById('hilite-color-btn');
         const hiliteColorPop = document.getElementById('hilite-color-popover');
@@ -1647,7 +1665,7 @@
 
         autoExcerptBtn.addEventListener('click', () => {
           const clone = editor.cloneNode(true);
-          clone.querySelectorAll('figcaption, hr').forEach(el => el.remove());
+          clone.querySelectorAll('figcaption, hr, .blog-sources-section, .blog-source-ref').forEach(el => el.remove());
           const plain = (clone.textContent || '').replace(/\s+/g, ' ').trim();
           if (!plain) return;
           excerptInput.value = plain.length > 180 ? plain.slice(0, 177).replace(/\s+\S*$/, '') + '...' : plain;
@@ -1692,10 +1710,29 @@
           });
         });
 
-        // Apply standard execCommand buttons
+        // Apply standard execCommand buttons (plus route alignment to selected image if active)
+        const ALIGN_CMD_MAP = {
+          justifyLeft: 'align-left',
+          justifyCenter: 'align-center',
+          justifyRight: 'align-right',
+          justifyFull: 'align-full'
+        };
+
         document.querySelectorAll('[data-cmd]').forEach(btn => {
           btn.addEventListener('click', () => {
             const cmd = btn.getAttribute('data-cmd');
+            if (selectedFigure && ALIGN_CMD_MAP[cmd]) {
+              const targetAlign = ALIGN_CMD_MAP[cmd];
+              selectedFigure.classList.remove('align-left', 'align-center', 'align-right', 'align-full');
+              selectedFigure.classList.add(targetAlign);
+              if (targetAlign === 'align-full') {
+                selectedFigure.classList.remove('size-25', 'size-50', 'size-75');
+                selectedFigure.classList.add('size-100');
+              }
+              selectFigure(selectedFigure);
+              scheduleDraftSave();
+              return;
+            }
             restoreSelection();
             document.execCommand(cmd, false, null);
             saveCurrentSelection();
@@ -1705,14 +1742,97 @@
           });
         });
 
-        // Block style dropdown
+        function ensureTrailingParagraphAfter(node) {
+          if (!node.nextElementSibling || node.nextElementSibling.classList.contains('blog-sources-section')) {
+            const p = document.createElement('p');
+            p.innerHTML = '<br>';
+            node.after(p);
+          }
+        }
+
+        function toggleQuoteBox() {
+          restoreSelection();
+          const sel = window.getSelection();
+          if (!sel || sel.rangeCount === 0) return;
+          const range = sel.getRangeAt(0);
+          let node = range.commonAncestorContainer;
+          if (node.nodeType === 3) node = node.parentNode;
+
+          const existingQuote = node.closest ? node.closest('blockquote') : null;
+          if (existingQuote && editor.contains(existingQuote)) {
+            const p = document.createElement('p');
+            p.innerHTML = existingQuote.innerHTML || '<br>';
+            existingQuote.replaceWith(p);
+            const r = document.createRange();
+            r.selectNodeContents(p);
+            r.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(r);
+          } else if (!range.collapsed) {
+            const bq = document.createElement('blockquote');
+            const frag = range.extractContents();
+            bq.appendChild(frag);
+            if (!bq.textContent.trim()) bq.innerHTML = 'Quote text...';
+            let blockParent = range.commonAncestorContainer;
+            if (blockParent.nodeType === 3) blockParent = blockParent.parentNode;
+            while (blockParent && blockParent !== editor && blockParent.parentNode !== editor) {
+              blockParent = blockParent.parentNode;
+            }
+            if (blockParent && blockParent.parentNode === editor) {
+              if (!blockParent.textContent.trim()) {
+                blockParent.replaceWith(bq);
+              } else {
+                blockParent.after(bq);
+              }
+            } else {
+              editor.appendChild(bq);
+            }
+            ensureTrailingParagraphAfter(bq);
+            const r = document.createRange();
+            r.selectNodeContents(bq);
+            r.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(r);
+          } else {
+            let blk = node;
+            while (blk && blk !== editor && blk.parentNode !== editor) blk = blk.parentNode;
+            const bq = document.createElement('blockquote');
+            if (blk && blk !== editor && !blk.classList.contains('blog-sources-section') && !blk.classList.contains('blog-figure')) {
+              bq.innerHTML = blk.innerHTML.trim() ? blk.innerHTML : 'Quote text...';
+              blk.replaceWith(bq);
+            } else {
+              bq.textContent = 'Quote text...';
+              const sourcesSec = editor.querySelector('.blog-sources-section');
+              if (sourcesSec) editor.insertBefore(bq, sourcesSec);
+              else editor.appendChild(bq);
+            }
+            ensureTrailingParagraphAfter(bq);
+            const r = document.createRange();
+            r.selectNodeContents(bq);
+            r.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(r);
+          }
+          saveCurrentSelection();
+          syncToolbarState();
+          updateWordCount();
+          scheduleDraftSave();
+        }
+
+        // Block style dropdown & Quote button
         fmtBlock.addEventListener('change', () => {
+          if (fmtBlock.value === 'BLOCKQUOTE') {
+            toggleQuoteBox();
+            return;
+          }
           restoreSelection();
           document.execCommand('formatBlock', false, fmtBlock.value);
           saveCurrentSelection();
           syncToolbarState();
           scheduleDraftSave();
         });
+
+        document.getElementById('fmt-quote-btn').addEventListener('click', toggleQuoteBox);
 
         function unwrapNestedStyle(containerSpan, styleProp) {
           containerSpan.querySelectorAll('span').forEach(child => {
@@ -1757,14 +1877,14 @@
           });
         }
 
-        function applyCssStyleToSelection(prop, value, execNonCollapsed) {
+        function applyCssStyleToSelection(prop, value, execNonCollapsed, extraStyles = {}) {
           restoreSelection();
           const sel = window.getSelection();
           if (sel && sel.rangeCount > 0 && sel.getRangeAt(0).collapsed) {
-            // Caret only: insert a clean span with zero-width space so typing continues in the chosen font/size
             const range = sel.getRangeAt(0);
             const span = document.createElement('span');
             span.style[prop] = value;
+            Object.entries(extraStyles).forEach(([k, v]) => { span.style[k] = v; });
             span.appendChild(document.createTextNode('\u200B'));
             range.insertNode(span);
             const newRange = document.createRange();
@@ -1804,30 +1924,68 @@
 
         function applyTextColor(colorHex) {
           activeTextBar.style.background = colorHex;
-          restoreSelection();
-          document.execCommand('styleWithCSS', false, true);
-          document.execCommand('foreColor', false, colorHex);
-          saveCurrentSelection();
+          applyCssStyleToSelection('color', colorHex, () => {
+            document.execCommand('fontName', false, '__SS_COLOR__');
+            editor.querySelectorAll('font[face="__SS_COLOR__"]').forEach(el => {
+              const span = document.createElement('span');
+              span.style.color = colorHex;
+              while (el.firstChild) span.appendChild(el.firstChild);
+              unwrapNestedStyle(span, 'color');
+              el.parentNode.replaceChild(span, el);
+            });
+          });
           textColorPop.classList.remove('open');
-          scheduleDraftSave();
         }
 
         function applyHighlightColor(colorVal) {
           activeHiliteBar.style.background = colorVal === 'transparent' ? '#080909' : colorVal;
-          restoreSelection();
-          document.execCommand('styleWithCSS', false, true);
-          if (!document.execCommand('hiliteColor', false, colorVal)) {
-            document.execCommand('backColor', false, colorVal);
+          if (colorVal === 'transparent') {
+            restoreSelection();
+            const sel = window.getSelection();
+            if (sel && sel.rangeCount > 0) {
+              let node = sel.anchorNode;
+              if (node && node.nodeType === 3) node = node.parentNode;
+              const bgSpan = node && node.closest ? node.closest('span[style*="background"]') : null;
+              if (bgSpan && editor.contains(bgSpan)) {
+                bgSpan.style.backgroundColor = '';
+                bgSpan.style.padding = '';
+                bgSpan.style.borderRadius = '';
+                if (!bgSpan.getAttribute('style') || !bgSpan.getAttribute('style').trim()) {
+                  while (bgSpan.firstChild) bgSpan.parentNode.insertBefore(bgSpan.firstChild, bgSpan);
+                  bgSpan.remove();
+                }
+              }
+              document.execCommand('fontName', false, '__SS_CLEAR_HILITE__');
+              editor.querySelectorAll('font[face="__SS_CLEAR_HILITE__"]').forEach(el => {
+                unwrapNestedStyle(el, 'backgroundColor');
+                while (el.firstChild) el.parentNode.insertBefore(el.firstChild, el);
+                el.remove();
+              });
+            }
+            saveCurrentSelection();
+            hiliteColorPop.classList.remove('open');
+            scheduleDraftSave();
+            return;
           }
-          saveCurrentSelection();
+
+          applyCssStyleToSelection('backgroundColor', colorVal, () => {
+            document.execCommand('fontName', false, '__SS_HILITE__');
+            editor.querySelectorAll('font[face="__SS_HILITE__"]').forEach(el => {
+              const span = document.createElement('span');
+              span.style.backgroundColor = colorVal;
+              span.style.padding = '0.05em 0.22em';
+              span.style.borderRadius = '2px';
+              while (el.firstChild) span.appendChild(el.firstChild);
+              unwrapNestedStyle(span, 'backgroundColor');
+              el.parentNode.replaceChild(span, el);
+            });
+          }, { padding: '0.05em 0.22em', borderRadius: '2px' });
           hiliteColorPop.classList.remove('open');
-          scheduleDraftSave();
         }
 
         textColorPop.querySelectorAll('[data-color]').forEach(sw => {
           sw.addEventListener('click', () => applyTextColor(sw.getAttribute('data-color')));
         });
-        customTextColor.addEventListener('input', (e) => applyTextColor(e.target.value));
 
         hiliteColorPop.querySelectorAll('[data-hilite]').forEach(sw => {
           sw.addEventListener('click', () => applyHighlightColor(sw.getAttribute('data-hilite')));
@@ -1837,19 +1995,16 @@
         // ─── Clean Paste from Google Docs & Word ───
         editor.addEventListener('paste', (e) => {
           const htmlData = e.clipboardData && e.clipboardData.getData('text/html');
-          if (!htmlData) return; // Plain text paste works natively
+          if (!htmlData) return;
           e.preventDefault();
 
           const parser = new DOMParser();
           const doc = parser.parseFromString(htmlData, 'text/html');
-
-          // Remove Word/Docs style/meta/script noise
           doc.querySelectorAll('style, script, meta, link, xml, o\\:p').forEach(el => el.remove());
 
           doc.body.querySelectorAll('*').forEach(el => {
             el.removeAttribute('class');
             el.removeAttribute('id');
-            // Clean white backgrounds and pitch-black font overrides from light-mode Word/Docs
             if (el.style) {
               el.style.background = '';
               el.style.backgroundColor = '';
@@ -1880,6 +2035,7 @@
           });
 
           const sel = window.getSelection();
+          let insideQuote = false;
           if (sel && sel.rangeCount > 0) {
             let node = sel.anchorNode;
             if (node && node.nodeType === 3) node = node.parentNode;
@@ -1889,13 +2045,11 @@
               if (!Number.isNaN(px) && px >= 11 && px <= 64) fmtSizeVal.value = px;
 
               const fam = (cs.fontFamily || '').toLowerCase();
-              if (fam.includes('unifraktur')) fmtFont.value = "'UnifrakturMaguntia', cursive";
-              else if (fam.includes('cinzel')) fmtFont.value = 'Cinzel, serif';
-              else if (fam.includes('cormorant')) fmtFont.value = "'Cormorant Garamond', serif";
-              else if (fam.includes('lora')) fmtFont.value = 'Lora, serif';
-              else fmtFont.value = 'Philosopher, serif';
+              fmtFont.value = fam.includes('unifraktur')
+                ? "'UnifrakturMaguntia', cursive"
+                : 'Philosopher, serif';
 
-              // Match block tag
+              insideQuote = Boolean(node.closest && node.closest('blockquote'));
               let blk = node;
               while (blk && blk.parentNode !== editor) blk = blk.parentNode;
               if (blk && blk.tagName) {
@@ -1904,9 +2058,17 @@
               }
             }
           }
+          document.getElementById('fmt-quote-btn').classList.toggle('active', insideQuote);
         }
 
-        // ─── Ornamental Divider & Custom Link Modal ───
+        // ─── Ornamental Divider, Custom Link Modal & Source Citations ───
+        function normalizeUrl(rawUrl) {
+          const trimmed = (rawUrl || '').trim();
+          if (!trimmed) return '';
+          if (/^(https?:\/\/|mailto:|#|\/|[a-z0-9_-]+\.html)/i.test(trimmed)) return trimmed;
+          return 'https://' + trimmed;
+        }
+
         document.getElementById('fmt-divider-btn').addEventListener('click', () => {
           restoreSelection();
           document.execCommand('insertHTML', false, '<hr class="gothic-divider"><p><br></p>');
@@ -1917,10 +2079,12 @@
         const linkModal = document.getElementById('link-modal');
         const linkTextInput = document.getElementById('link-text-input');
         const linkUrlInput = document.getElementById('link-url-input');
+        let linkTargetRange = null;
 
         document.getElementById('fmt-link-btn').addEventListener('click', () => {
           saveCurrentSelection();
-          const selectedTxt = savedRange ? savedRange.toString() : '';
+          linkTargetRange = savedRange ? savedRange.cloneRange() : null;
+          const selectedTxt = linkTargetRange ? linkTargetRange.toString() : '';
           linkTextInput.value = selectedTxt;
           linkUrlInput.value = 'https://';
           linkModal.classList.add('open');
@@ -1934,15 +2098,145 @@
         });
 
         document.getElementById('confirm-insert-link').addEventListener('click', () => {
-          const url = linkUrlInput.value.trim();
-          const txt = linkTextInput.value.trim() || url;
-          if (!url) return;
+          const finalUrl = normalizeUrl(linkUrlInput.value);
+          if (!finalUrl || finalUrl === 'https://') {
+            linkUrlInput.focus();
+            return;
+          }
+          const txt = linkTextInput.value.trim() || finalUrl;
           linkModal.classList.remove('open');
           linkModal.setAttribute('aria-hidden', 'true');
-          restoreSelection();
-          const a = `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(txt)}</a>&nbsp;`;
-          document.execCommand('insertHTML', false, a);
+
+          const a = document.createElement('a');
+          a.href = finalUrl;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = txt;
+
+          editor.focus();
+          const sel = window.getSelection();
+          if (linkTargetRange && editor.contains(linkTargetRange.commonAncestorContainer)) {
+            sel.removeAllRanges();
+            sel.addRange(linkTargetRange);
+            linkTargetRange.deleteContents();
+            linkTargetRange.insertNode(a);
+            const spaceNode = document.createTextNode(' ');
+            a.after(spaceNode);
+            const afterRange = document.createRange();
+            afterRange.setStartAfter(spaceNode);
+            afterRange.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(afterRange);
+          } else {
+            const p = document.createElement('p');
+            p.appendChild(a);
+            const sourcesSec = editor.querySelector('.blog-sources-section');
+            if (sourcesSec) editor.insertBefore(p, sourcesSec);
+            else editor.appendChild(p);
+          }
           saveCurrentSelection();
+          updateWordCount();
+          scheduleDraftSave();
+        });
+
+        // Source Citation Modal & Footnotes
+        const sourceModal = document.getElementById('source-modal');
+        const sourceTextInput = document.getElementById('source-text-input');
+        const sourceUrlInput = document.getElementById('source-url-input');
+        let sourceTargetRange = null;
+
+        document.getElementById('fmt-source-btn').addEventListener('click', () => {
+          saveCurrentSelection();
+          sourceTargetRange = savedRange ? savedRange.cloneRange() : null;
+          sourceTextInput.value = '';
+          sourceUrlInput.value = '';
+          sourceModal.classList.add('open');
+          sourceModal.setAttribute('aria-hidden', 'false');
+          sourceTextInput.focus();
+        });
+
+        document.getElementById('cancel-source-modal').addEventListener('click', () => {
+          sourceModal.classList.remove('open');
+          sourceModal.setAttribute('aria-hidden', 'true');
+        });
+
+        document.getElementById('confirm-insert-source').addEventListener('click', () => {
+          const srcDesc = sourceTextInput.value.trim();
+          if (!srcDesc) {
+            sourceTextInput.focus();
+            return;
+          }
+          const srcUrl = normalizeUrl(sourceUrlInput.value);
+          sourceModal.classList.remove('open');
+          sourceModal.setAttribute('aria-hidden', 'true');
+
+          let sourcesSec = editor.querySelector('.blog-sources-section');
+          if (!sourcesSec) {
+            sourcesSec = document.createElement('div');
+            sourcesSec.className = 'blog-sources-section';
+            sourcesSec.innerHTML = '<div class="blog-sources-title">Sources &amp; References</div><ol class="blog-sources-ol"></ol>';
+            editor.appendChild(sourcesSec);
+          }
+          const ol = sourcesSec.querySelector('.blog-sources-ol');
+          const num = ol.querySelectorAll('li').length + 1;
+
+          // Build superscript footnote ref
+          const sup = document.createElement('sup');
+          sup.className = 'blog-source-ref';
+          sup.id = `source-ref-${num}`;
+          const refA = document.createElement('a');
+          refA.href = `#source-note-${num}`;
+          refA.textContent = `[${num}]`;
+          sup.appendChild(refA);
+
+          editor.focus();
+          const sel = window.getSelection();
+          if (sourceTargetRange && editor.contains(sourceTargetRange.commonAncestorContainer)) {
+            // Place right after selected word (collapse to end so the word stays intact)
+            sourceTargetRange.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(sourceTargetRange);
+            sourceTargetRange.insertNode(sup);
+            const afterRange = document.createRange();
+            afterRange.setStartAfter(sup);
+            afterRange.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(afterRange);
+          } else {
+            const targetP = editor.querySelector('p:not(.blog-sources-section *)');
+            if (targetP) targetP.appendChild(sup);
+            else {
+              const p = document.createElement('p');
+              p.appendChild(sup);
+              editor.insertBefore(p, sourcesSec);
+            }
+          }
+
+          // Append footnote item at the bottom of the scroll
+          const li = document.createElement('li');
+          li.id = `source-note-${num}`;
+          if (srcUrl) {
+            const extA = document.createElement('a');
+            extA.href = srcUrl;
+            extA.target = '_blank';
+            extA.rel = 'noopener noreferrer';
+            extA.textContent = srcDesc;
+            li.appendChild(extA);
+          } else {
+            li.textContent = srcDesc;
+          }
+          const backSpace = document.createTextNode(' ');
+          const backA = document.createElement('a');
+          backA.href = `#source-ref-${num}`;
+          backA.title = 'Return to text';
+          backA.innerHTML = '&uarr;';
+          backA.style.marginLeft = '0.3rem';
+          li.appendChild(backSpace);
+          li.appendChild(backA);
+          ol.appendChild(li);
+
+          saveCurrentSelection();
+          updateWordCount();
           scheduleDraftSave();
         });
 
@@ -2074,18 +2368,25 @@
           const trailingP = document.createElement('p');
           trailingP.innerHTML = '<br>';
 
+          const sourcesSec = editor.querySelector('.blog-sources-section');
           if (sel && sel.rangeCount > 0 && editor.contains(sel.getRangeAt(0).commonAncestorContainer)) {
             let anchorBlock = sel.getRangeAt(0).commonAncestorContainer;
             if (anchorBlock.nodeType === 3) anchorBlock = anchorBlock.parentNode;
             while (anchorBlock && anchorBlock.parentNode !== editor) {
               anchorBlock = anchorBlock.parentNode;
             }
-            if (anchorBlock && anchorBlock.parentNode === editor) {
+            if (anchorBlock && anchorBlock.parentNode === editor && !anchorBlock.classList.contains('blog-sources-section')) {
               anchorBlock.after(fig, trailingP);
+            } else if (sourcesSec) {
+              editor.insertBefore(fig, sourcesSec);
+              editor.insertBefore(trailingP, sourcesSec);
             } else {
               editor.appendChild(fig);
               editor.appendChild(trailingP);
             }
+          } else if (sourcesSec) {
+            editor.insertBefore(fig, sourcesSec);
+            editor.insertBefore(trailingP, sourcesSec);
           } else {
             editor.appendChild(fig);
             editor.appendChild(trailingP);
@@ -2237,7 +2538,7 @@
           if (!excerpt) {
             const tmp = document.createElement('div');
             tmp.innerHTML = html;
-            tmp.querySelectorAll('figcaption').forEach(fc => fc.remove());
+            tmp.querySelectorAll('figcaption, hr, .blog-sources-section, .blog-source-ref').forEach(el => el.remove());
             const plain = (tmp.textContent || '').replace(/\s+/g, ' ').trim();
             excerpt = plain.length > 180 ? plain.slice(0, 177).replace(/\s+\S*$/, '') + '...' : plain;
           }
@@ -2267,8 +2568,24 @@
                 <span>&middot;</span>
                 <span>${escapeHtml(post.author)}</span>
               </div>
-              <h2 class="section-title" style="text-align: left; font-family: var(--font-body); font-weight: 700; font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 1.5rem;">${escapeHtml(post.title)}</h2>
+              <h2 class="blog-post-main-title">${escapeHtml(post.title)}</h2>
               <div class="blog-rich-content">${post.html || '<p style="opacity:0.6; font-style:italic;">Your scroll is currently empty.</p>'}</div>
+              <aside class="blog-post-signoff-box">
+                <div class="blog-signoff-logo" aria-hidden="true">
+                  <div class="blog-signoff-crest">S&amp;S</div>
+                  <div class="blog-signoff-sub">Sanctuary</div>
+                </div>
+                <div class="blog-signoff-info">
+                  <div class="blog-signoff-kicker">✦ Written By ✦</div>
+                  <div class="blog-signoff-names">Kira &amp; Sana Marlowe</div>
+                  <p class="blog-signoff-desc">Explore the world of Lucantis, dive into the <em>Scales &amp; Stones</em> trilogy, or join our newsletter for updates and secret drops.</p>
+                  <div class="blog-signoff-actions">
+                    <a href="home.html" target="_blank" class="btn-gothic outline">Main Page</a>
+                    <a href="book.html" target="_blank" class="btn-gothic outline">Scales &amp; Stones Trilogy</a>
+                    <button type="button" class="btn-gothic" disabled title="Opens the newsletter signup on live blog.html">✦ Join Our Newsletter</button>
+                  </div>
+                </div>
+              </aside>
             </article>
           `;
         }

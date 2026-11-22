@@ -229,10 +229,35 @@
               <span>&middot;</span>
               <span>${post.author}</span>
             </div>
-            <h2 class="section-title" style="text-align: left; font-family: var(--font-body); font-weight: 700; font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 1.5rem;">${post.title}</h2>
+            <h2 class="blog-post-main-title">${post.title}</h2>
             <div class="blog-rich-content">${bodyHtml}</div>
+            <aside class="blog-post-signoff-box">
+              <div class="blog-signoff-logo" aria-hidden="true">
+                <div class="blog-signoff-crest">S&amp;S</div>
+                <div class="blog-signoff-sub">Sanctuary</div>
+              </div>
+              <div class="blog-signoff-info">
+                <div class="blog-signoff-kicker">✦ Written By ✦</div>
+                <div class="blog-signoff-names">Kira &amp; Sana Marlowe</div>
+                <p class="blog-signoff-desc">Explore the world of Lucantis, dive into the <em>Scales &amp; Stones</em> trilogy, or join our newsletter for updates and secret drops.</p>
+                <div class="blog-signoff-actions">
+                  <a href="home.html" class="btn-gothic outline">Main Page</a>
+                  <a href="book.html" class="btn-gothic outline">Scales &amp; Stones Trilogy</a>
+                  <button type="button" class="btn-gothic" data-open-newsletter>✦ Join Our Newsletter</button>
+                </div>
+              </div>
+            </aside>
           </article>
         `;
+
+        container.querySelectorAll('.blog-rich-content a[href^="#source-"]').forEach(fnLink => {
+          fnLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = fnLink.getAttribute('href').slice(1);
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+        });
 
         document.getElementById('back-to-blog').addEventListener('click', () => {
           history.pushState('', document.title, window.location.pathname + window.location.search);
