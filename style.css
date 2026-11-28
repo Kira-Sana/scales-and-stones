@@ -1023,7 +1023,8 @@ blockquote.gothic-quote cite {
   border-bottom-color: #9CE0C6;
 }
 
-.blog-rich-content hr.gothic-divider {
+.blog-rich-content hr.gothic-divider,
+.blog-rich-content hr.clean-line-divider {
   border: none;
   height: 1.4rem;
   margin: 2.2rem auto;
@@ -1042,6 +1043,18 @@ blockquote.gothic-quote cite {
   ) no-repeat center / 100% 1px;
 }
 
+.blog-rich-content hr.gothic-divider.gold-line,
+.blog-rich-content hr.clean-line-divider.gold-line {
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(184, 155, 103, 0.3) 12%,
+    var(--gold-accent) 50%,
+    rgba(184, 155, 103, 0.3) 88%,
+    transparent
+  ) no-repeat center / 100% 1px;
+}
+
 .blog-rich-content hr.gothic-divider::after {
   content: '✦';
   position: absolute;
@@ -1052,7 +1065,13 @@ blockquote.gothic-quote cite {
   font-size: 0.95rem;
   line-height: 1;
   letter-spacing: 0;
+  padding: 0 0.55rem;
+  background: var(--ink-card);
   text-shadow: 0 0 8px var(--ink), 0 0 4px var(--ink);
+}
+
+.blog-rich-content hr.gothic-divider.gold-line::after {
+  color: var(--gold-accent);
 }
 
 /* Custom Graphic Paragraph Break Dividers */

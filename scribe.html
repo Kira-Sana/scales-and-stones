@@ -677,21 +677,45 @@
       box-shadow: 0 0 24px rgba(184, 155, 103, 0.28);
     }
 
-    #editor-surface .blog-graphic-divider {
+    #editor-surface .blog-figure.selected-figure::after {
+      content: '✦ Double-click image or use top bar to change photo, size & description';
+      display: block;
+      margin-top: 0.45rem;
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-style: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--gold-accent);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    #editor-surface .blog-graphic-divider,
+    #editor-surface hr.gothic-divider,
+    #editor-surface hr.clean-line-divider {
       cursor: pointer;
       transition: outline 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #editor-surface .blog-graphic-divider {
       padding: 0.35rem 0.5rem;
     }
 
-    #editor-surface .blog-graphic-divider:hover {
+    #editor-surface .blog-graphic-divider:hover,
+    #editor-surface hr.gothic-divider:hover,
+    #editor-surface hr.clean-line-divider:hover {
       outline: 1px dashed rgba(184, 155, 103, 0.7);
       outline-offset: 4px;
     }
 
-    #editor-surface .blog-graphic-divider.selected-divider {
+    #editor-surface .blog-graphic-divider.selected-divider,
+    #editor-surface hr.gothic-divider.selected-divider,
+    #editor-surface hr.clean-line-divider.selected-divider {
       outline: 2px solid var(--gold-accent);
       outline-offset: 5px;
-      background: rgba(184, 155, 103, 0.06);
+      background-color: rgba(184, 155, 103, 0.06);
     }
 
     /* ─── Drafts & Publish Queue Dashboard for Kira & Sana ─── */
@@ -896,6 +920,39 @@
       line-height: 1.25;
     }
 
+    .line-preview-box {
+      width: 100%;
+      height: 2.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0 0.4rem;
+    }
+
+    .line-preview-bar {
+      flex: 1;
+      height: 1px;
+      background: var(--parchment);
+      opacity: 0.85;
+      transition: background-color 0.15s ease;
+    }
+
+    .line-preview-star {
+      color: var(--parchment);
+      font-size: 0.82rem;
+      line-height: 1;
+      transition: color 0.15s ease;
+    }
+
+    .divider-picker-popover.palette-gold .line-preview-bar {
+      background: var(--gold-accent);
+    }
+
+    .divider-picker-popover.palette-gold .line-preview-star {
+      color: var(--gold-accent);
+    }
+
     .divider-color-toggle-bar {
       display: flex;
       gap: 0.4rem;
@@ -978,18 +1035,51 @@
     }
 
     .publish-actions-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
     }
 
     .publish-btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.85rem;
+      display: contents;
+    }
+
+    .publish-actions-row button {
+      appearance: none;
+      width: 100%;
+      height: 3.1rem;
+      background: #080909 !important;
+      border: 1px solid var(--parchment-dim) !important;
+      color: var(--parchment) !important;
+      font-family: var(--font-body) !important;
+      font-size: 0.72rem !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.16em !important;
+      padding: 0 1rem !important;
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      text-align: center;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .publish-actions-row button:hover:not(:disabled) {
+      background: var(--parchment) !important;
+      color: var(--ink) !important;
+      border-color: var(--parchment) !important;
+    }
+
+    .publish-actions-row button:hover:not(:disabled) span {
+      color: var(--ink) !important;
+    }
+
+    @media (max-width: 780px) {
+      .publish-actions-row {
+        grid-template-columns: 1fr;
+      }
     }
 
     .publish-status-box {
@@ -1301,6 +1391,7 @@
             </button>
             <div class="scribe-hub-template-row">
               <select id="hub-template-select" class="form-control" aria-label="Choose a template">
+                <option value="journal-entry">Template: Journal Entry</option>
                 <option value="template-1">Template 1 (Lore &amp; Worldbuilding)</option>
                 <option value="template-2">Template 2 (Writing Diary)</option>
                 <option value="template-3">Template 3 (Chapter Teaser)</option>
@@ -1411,6 +1502,7 @@
           <label for="post-template-select" style="margin-left:0.4rem;">Template:</label>
           <select id="post-template-select" class="form-control" style="max-width: 215px;">
             <option value="empty">Empty Blog Page</option>
+            <option value="journal-entry">Template: Journal Entry</option>
             <option value="template-1">Template 1 (Lore &amp; Worldbuilding)</option>
             <option value="template-2">Template 2 (Writing Diary)</option>
             <option value="template-3">Template 3 (Chapter Teaser)</option>
@@ -1601,6 +1693,20 @@
                   </button>
                 </div>
                 <div class="divider-presets-grid" id="divider-presets-list">
+                  <button type="button" class="divider-option-card" data-divider-type="clean-line">
+                    <div class="line-preview-box">
+                      <span class="line-preview-bar"></span>
+                    </div>
+                    <span class="divider-option-label">Clean Line</span>
+                  </button>
+                  <button type="button" class="divider-option-card" data-divider-type="classic-hr">
+                    <div class="line-preview-box">
+                      <span class="line-preview-bar"></span>
+                      <span class="line-preview-star">✦</span>
+                      <span class="line-preview-bar"></span>
+                    </div>
+                    <span class="divider-option-label">Clean Line with Star</span>
+                  </button>
                   <button type="button" class="divider-option-card full-span" data-divider-type="graphic" data-divider-base="divider-eye" data-divider-size="size-md">
                     <img src="divider-eye.png" alt="All-Seeing Eye Filigree">
                     <span class="divider-option-label">All-Seeing Eye Filigree</span>
@@ -1697,6 +1803,7 @@
               <input type="text" id="img-caption-input" class="insp-caption-input" placeholder="Optional caption...">
             </div>
             <div class="inspector-group" style="margin-left:auto;">
+              <button type="button" class="insp-btn" id="img-replace-btn" title="Change image, caption, or size in modal" style="border-color:var(--gold-accent); color:var(--gold-accent);">&#9998; Change / Edit Image</button>
               <button type="button" class="insp-btn" id="img-move-up" title="Move photo up one block">&uarr;</button>
               <button type="button" class="insp-btn" id="img-move-down" title="Move photo down one block">&darr;</button>
               <button type="button" class="insp-btn insp-delete" id="img-delete-btn" style="border-color:#D45B5B; color:#D45B5B;">Remove</button>
@@ -2135,7 +2242,7 @@
           if (editorViewEl) editorViewEl.style.display = viewName === 'editor' ? 'block' : 'none';
           if (backToHubTopBtn) backToHubTopBtn.style.display = viewName === 'hub' ? 'none' : 'inline-flex';
           if (togglePreviewBtn) togglePreviewBtn.style.display = viewName === 'editor' ? 'inline-flex' : 'none';
-          if (editorPublishBtnGroup) editorPublishBtnGroup.style.display = viewName === 'editor' ? 'flex' : 'none';
+          if (editorPublishBtnGroup) editorPublishBtnGroup.style.display = viewName === 'editor' ? 'contents' : 'none';
 
           if (viewName === 'list' && listTabFilter) {
             activeQueueTab = listTabFilter;
@@ -2815,10 +2922,18 @@
 
         function insertParagraphBreakOption(type, src, sizeClass) {
           dividerPop.classList.remove('open');
+          if (type === 'clean-line') {
+            const hr = document.createElement('hr');
+            hr.className = 'clean-line-divider' + (activeDividerPalette === 'gold' ? ' gold-line' : '');
+            insertBlockNodeAtCursor(hr);
+            selectDivider(hr);
+            return;
+          }
           if (type === 'classic-hr') {
             const hr = document.createElement('hr');
-            hr.className = 'gothic-divider';
+            hr.className = 'gothic-divider' + (activeDividerPalette === 'gold' ? ' gold-line' : '');
             insertBlockNodeAtCursor(hr);
+            selectDivider(hr);
             return;
           }
           if (type === 'triple-star') {
@@ -2849,6 +2964,7 @@
             document.querySelectorAll('#divider-palette-toggle [data-div-palette]').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             activeDividerPalette = btn.getAttribute('data-div-palette') || 'parchment';
+            dividerPop.classList.toggle('palette-gold', activeDividerPalette === 'gold');
             dividerPop.querySelectorAll('#divider-presets-list [data-divider-base]').forEach(card => {
               const base = card.getAttribute('data-divider-base');
               const img = card.querySelector('img');
@@ -3022,6 +3138,24 @@
             category: 'Announcement',
             html: ''
           },
+          'journal-entry': {
+            category: 'Writing Diary',
+            html:
+              '<h1>SUBTITLE HERE</h1>' +
+              '<p>Body text here. Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>' +
+              '<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>' +
+              '<div class="blog-graphic-divider size-md" contenteditable="false"><img class="blog-divider-img" src="divider-eye.png" alt=""></div>' +
+              '<h1>SUBTITLE HERE</h1>' +
+              '<p>Body text here. Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>' +
+              '<figure class="blog-figure align-center size-25" contenteditable="false"><img src="template-cathedral.svg" alt="Here is an example of how we can insert an image and describe it."><figcaption>Here is an example of how we can insert an image and describe it.</figcaption></figure>' +
+              '<p>Here, I state something that needs a source<sup class="blog-source-ref" id="source-ref-1"><a href="#source-note-1">[1]</a></sup>, and here aswell <sup class="blog-source-ref" id="source-ref-2"><a href="#source-note-2">[2]</a></sup>.</p>' +
+              '<h2>Small subtitle here</h2>' +
+              '<p>Body text here, also, <a href="https://scalesandstones.com" target="_blank" rel="noopener noreferrer">here is a link to another page</a> . Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.</p>' +
+              '<ul><li>First Point he.</li><li>Second Point here.</li><li>Third Point.</li></ul>' +
+              '<h1 style="text-align: center;"><span style="color: #B89B67;">FANCY SUBTITLE HERE</span></h1>' +
+              '<blockquote><p>&ldquo;Quote something, or put some text inside this box.. Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.&rdquo;</p></blockquote>' +
+              '<div class="blog-sources-section"><div class="blog-sources-title">Sources &amp; References</div><ol class="blog-sources-ol"><li id="source-note-1">Source Example <a href="#source-ref-1" title="Return to text" style="margin-left: 0.3rem;">&uarr;</a></li><li id="source-note-2">Another Source Example <a href="#source-ref-2" title="Return to text" style="margin-left: 0.3rem;">&uarr;</a></li></ol></div>'
+          },
           'template-1': {
             category: 'Worldbuilding',
             html:
@@ -3094,7 +3228,7 @@
         });
 
         document.getElementById('hub-write-template-btn')?.addEventListener('click', () => {
-          const hubTpl = document.getElementById('hub-template-select')?.value || 'template-1';
+          const hubTpl = document.getElementById('hub-template-select')?.value || 'journal-entry';
           postSelector.value = '__NEW__';
           loadPostIntoEditor('__NEW__');
           applyBlogTemplateChoice(hubTpl, true);
@@ -3357,18 +3491,85 @@
           }
         }
 
-        document.getElementById('open-photo-modal-btn').addEventListener('click', () => {
+        let editingExistingFigure = null;
+        const photoModalTitleEl = document.getElementById('photo-modal-title');
+        const confirmInsertPhotoBtn = document.getElementById('confirm-insert-photo');
+
+        function setModalPillChoice(containerId, val) {
+          const container = document.getElementById(containerId);
+          if (!container) return;
+          container.querySelectorAll('.choice-pill').forEach(p => {
+            p.classList.toggle('active', p.getAttribute('data-val') === val);
+          });
+        }
+
+        function openPhotoModalForNew() {
           saveCurrentSelection();
+          editingExistingFigure = null;
           pendingPhotoDataUrl = '';
           photoFileInput.value = '';
           photoUrlInput.value = '';
           photoCaptionInput.value = '';
           photoPreviewThumb.style.display = 'none';
+          modalAlign = 'align-center';
+          modalSize = 'size-50';
+          setModalPillChoice('modal-align-pills', modalAlign);
+          setModalPillChoice('modal-size-pills', modalSize);
+          if (photoModalTitleEl) photoModalTitleEl.textContent = 'Insert Photo';
+          if (confirmInsertPhotoBtn) confirmInsertPhotoBtn.textContent = '✦ Insert Into Scroll';
           photoModal.classList.add('open');
           photoModal.setAttribute('aria-hidden', 'false');
+        }
+
+        function openPhotoModalForExistingFigure(fig) {
+          if (!fig) return;
+          editingExistingFigure = fig;
+          const img = fig.querySelector('img');
+          const fc = fig.querySelector('figcaption');
+          const curSrc = img ? (img.getAttribute('src') || '') : '';
+
+          photoFileInput.value = '';
+          if (curSrc.startsWith('data:')) {
+            pendingPhotoDataUrl = curSrc;
+            photoUrlInput.value = '';
+          } else {
+            pendingPhotoDataUrl = '';
+            photoUrlInput.value = curSrc;
+          }
+          if (curSrc) {
+            photoPreviewThumb.src = curSrc;
+            photoPreviewThumb.style.display = 'block';
+          } else {
+            photoPreviewThumb.style.display = 'none';
+          }
+
+          photoCaptionInput.value = fc ? fc.textContent : '';
+
+          modalAlign = ['align-left', 'align-center', 'align-right', 'align-full'].find(c => fig.classList.contains(c)) || 'align-center';
+          modalSize = ['size-25', 'size-50', 'size-75', 'size-100'].find(c => fig.classList.contains(c)) || 'size-50';
+          setModalPillChoice('modal-align-pills', modalAlign);
+          setModalPillChoice('modal-size-pills', modalSize);
+
+          if (photoModalTitleEl) photoModalTitleEl.textContent = 'Edit / Change Photo';
+          if (confirmInsertPhotoBtn) confirmInsertPhotoBtn.textContent = '✦ Save Photo Changes';
+          photoModal.classList.add('open');
+          photoModal.setAttribute('aria-hidden', 'false');
+        }
+
+        document.getElementById('open-photo-modal-btn').addEventListener('click', () => {
+          if (selectedFigure && editor.contains(selectedFigure)) {
+            openPhotoModalForExistingFigure(selectedFigure);
+          } else {
+            openPhotoModalForNew();
+          }
+        });
+
+        document.getElementById('img-replace-btn')?.addEventListener('click', () => {
+          if (selectedFigure) openPhotoModalForExistingFigure(selectedFigure);
         });
 
         document.getElementById('cancel-photo-modal').addEventListener('click', () => {
+          editingExistingFigure = null;
           photoModal.classList.remove('open');
           photoModal.setAttribute('aria-hidden', 'true');
         });
@@ -3398,6 +3599,39 @@
           const src = pendingPhotoDataUrl || photoUrlInput.value.trim();
           if (!src) return;
           const cap = photoCaptionInput.value.trim();
+
+          if (editingExistingFigure && editor.contains(editingExistingFigure)) {
+            const fig = editingExistingFigure;
+            fig.className = `blog-figure ${modalAlign} ${modalAlign === 'align-full' ? 'size-100' : modalSize}`;
+            fig.setAttribute('contenteditable', 'false');
+
+            let img = fig.querySelector('img');
+            if (!img) {
+              img = document.createElement('img');
+              fig.insertBefore(img, fig.firstChild);
+            }
+            img.src = src;
+            img.alt = cap || titleInput.value.trim() || 'Scales & Stones journal illustration';
+
+            let fc = fig.querySelector('figcaption');
+            if (cap) {
+              if (!fc) {
+                fc = document.createElement('figcaption');
+                fig.appendChild(fc);
+              }
+              fc.textContent = cap;
+            } else if (fc) {
+              fc.remove();
+            }
+
+            editingExistingFigure = null;
+            photoModal.classList.remove('open');
+            photoModal.setAttribute('aria-hidden', 'true');
+            selectFigure(fig);
+            updateWordCount();
+            scheduleDraftSave();
+            return;
+          }
 
           const fig = document.createElement('figure');
           fig.className = `blog-figure ${modalAlign} ${modalAlign === 'align-full' ? 'size-100' : modalSize}`;
@@ -3482,14 +3716,22 @@
           divEl.classList.add('selected-divider');
           dividerInspector.classList.add('open');
 
+          const isHr = divEl.tagName === 'HR';
           dividerInspector.querySelectorAll('[data-div-size]').forEach(btn => {
+            btn.parentElement.style.display = isHr ? 'none' : 'flex';
             btn.classList.toggle('active', divEl.classList.contains(btn.getAttribute('data-div-size')));
           });
 
-          const img = divEl.querySelector('img');
+          const img = divEl.querySelector ? divEl.querySelector('img') : null;
           const colorGroup = document.getElementById('divider-color-swap-group');
           const srcAttr = img ? (img.getAttribute('src') || '') : '';
-          if (img && /^divider-[a-z0-9-]+(-gold)?\.png$/i.test(srcAttr)) {
+          if (isHr) {
+            colorGroup.style.display = 'flex';
+            const isGold = divEl.classList.contains('gold-line');
+            dividerInspector.querySelectorAll('[data-div-color]').forEach(btn => {
+              btn.classList.toggle('active', (btn.getAttribute('data-div-color') === 'gold') === isGold);
+            });
+          } else if (img && /^divider-[a-z0-9-]+(-gold)?\.png$/i.test(srcAttr)) {
             colorGroup.style.display = 'flex';
             const isGold = /-gold\.png$/i.test(srcAttr);
             dividerInspector.querySelectorAll('[data-div-color]').forEach(btn => {
@@ -3508,7 +3750,7 @@
 
         editor.addEventListener('click', (e) => {
           const fig = e.target.closest('.blog-figure');
-          const divBreak = e.target.closest('.blog-graphic-divider');
+          const divBreak = e.target.closest('.blog-graphic-divider, hr.gothic-divider, hr.clean-line-divider');
           if (fig && editor.contains(fig)) {
             e.preventDefault();
             selectFigure(fig);
@@ -3518,6 +3760,15 @@
           } else {
             deselectFigure();
             deselectDivider();
+          }
+        });
+
+        editor.addEventListener('dblclick', (e) => {
+          const fig = e.target.closest('.blog-figure');
+          if (fig && editor.contains(fig)) {
+            e.preventDefault();
+            selectFigure(fig);
+            openPhotoModalForExistingFigure(fig);
           }
         });
 
@@ -3535,13 +3786,19 @@
         dividerInspector.querySelectorAll('[data-div-color]').forEach(btn => {
           btn.addEventListener('click', () => {
             if (!selectedDivider) return;
+            const targetColor = btn.getAttribute('data-div-color');
+            if (selectedDivider.tagName === 'HR') {
+              selectedDivider.classList.toggle('gold-line', targetColor === 'gold');
+              selectDivider(selectedDivider);
+              scheduleDraftSave();
+              return;
+            }
             const img = selectedDivider.querySelector('img');
             if (!img) return;
             const curSrc = img.getAttribute('src') || '';
             const baseMatch = curSrc.match(/^(divider-[a-z0-9-]+?)(-gold)?\.png$/i);
             if (!baseMatch) return;
             const baseName = baseMatch[1];
-            const targetColor = btn.getAttribute('data-div-color');
             img.setAttribute('src', targetColor === 'gold' ? `${baseName}-gold.png` : `${baseName}.png`);
             selectDivider(selectedDivider);
             scheduleDraftSave();
@@ -3645,7 +3902,7 @@
             fig.classList.remove('selected-figure');
             fig.removeAttribute('contenteditable');
           });
-          clone.querySelectorAll('.blog-graphic-divider').forEach(div => {
+          clone.querySelectorAll('.blog-graphic-divider, hr.gothic-divider, hr.clean-line-divider').forEach(div => {
             div.classList.remove('selected-divider');
             div.removeAttribute('contenteditable');
           });
