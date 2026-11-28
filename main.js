@@ -61,7 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
     <nav class="toc-nav" aria-label="Table of Contents">
       ${navLinksHtml}
     </nav>
-    <div class="toc-footer-note">KIRA &amp; SANA MARLOWE &middot; SCALES &amp; STONES</div>
+    <div class="toc-footer-note">
+      <span class="toc-note-left">KIRA &amp; SANA MARLOWE</span>
+      <span class="toc-note-star" aria-hidden="true">✦</span>
+      <span class="toc-note-center">SCALES &amp; STONES</span>
+      <span class="toc-note-star" aria-hidden="true">✦</span>
+      <span class="toc-note-right">DARK ROMANTASY TRILOGY</span>
+    </div>
   `;
   document.body.appendChild(tocOverlay);
 

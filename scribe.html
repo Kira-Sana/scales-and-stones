@@ -677,6 +677,266 @@
       box-shadow: 0 0 24px rgba(184, 155, 103, 0.28);
     }
 
+    #editor-surface .blog-graphic-divider {
+      cursor: pointer;
+      transition: outline 0.2s ease, box-shadow 0.2s ease;
+      padding: 0.35rem 0.5rem;
+    }
+
+    #editor-surface .blog-graphic-divider:hover {
+      outline: 1px dashed rgba(184, 155, 103, 0.7);
+      outline-offset: 4px;
+    }
+
+    #editor-surface .blog-graphic-divider.selected-divider {
+      outline: 2px solid var(--gold-accent);
+      outline-offset: 5px;
+      background: rgba(184, 155, 103, 0.06);
+    }
+
+    /* ─── Drafts & Publish Queue Dashboard for Kira & Sana ─── */
+    .queue-dashboard-panel {
+      border: 1px solid var(--parchment-dim);
+      background: linear-gradient(160deg, rgba(23, 38, 37, 0.26) 0%, rgba(10, 13, 13, 0.94) 100%);
+      padding: 1.35rem 1.65rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .queue-dashboard-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.9rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--parchment-faint);
+    }
+
+    .queue-dashboard-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .queue-dashboard-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--gold-accent);
+    }
+
+    .queue-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .queue-tab-btn {
+      appearance: none;
+      background: #080909;
+      border: 1px solid var(--parchment-dim);
+      color: var(--parchment-muted);
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.4rem 0.85rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .queue-tab-btn:hover,
+    .queue-tab-btn.active {
+      border-color: var(--gold-accent);
+      color: var(--parchment-bright);
+      background: rgba(184, 155, 103, 0.18);
+    }
+
+    .queue-list-container {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 0.25rem;
+    }
+
+    .queue-item-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--parchment-faint);
+      background: rgba(8, 9, 9, 0.78);
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .queue-item-row:hover {
+      border-color: var(--parchment-dim);
+      background: rgba(18, 26, 25, 0.72);
+    }
+
+    .queue-item-row.active-editing {
+      border-color: var(--gold-accent);
+      background: rgba(184, 155, 103, 0.1);
+    }
+
+    .queue-item-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .status-pill-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.22rem 0.55rem;
+      border: 1px solid var(--parchment-dim);
+      white-space: nowrap;
+    }
+
+    .status-pill-badge.status-draft {
+      border-color: #C79B52;
+      color: #F2D29B;
+      background: rgba(199, 155, 82, 0.16);
+    }
+
+    .status-pill-badge.status-queued {
+      border-color: #78B8A0;
+      color: #A4E5CC;
+      background: rgba(120, 184, 160, 0.16);
+    }
+
+    .status-pill-badge.status-published {
+      border-color: var(--parchment-dim);
+      color: var(--parchment-muted);
+      background: rgba(227, 222, 200, 0.06);
+    }
+
+    .queue-item-title {
+      font-weight: 700;
+      color: var(--parchment-bright);
+      font-size: 0.96rem;
+    }
+
+    .queue-item-meta {
+      font-size: 0.75rem;
+      color: var(--parchment-muted);
+    }
+
+    .queue-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    /* ─── Paragraph Break / Ornament Picker Popover ─── */
+    .divider-picker-popover {
+      width: 25.5rem;
+      max-height: 29rem;
+      overflow-y: auto;
+    }
+
+    .divider-presets-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .divider-option-card {
+      width: 100%;
+      background: #080909;
+      border: 1px solid var(--parchment-dim);
+      padding: 0.6rem 0.65rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.18s ease;
+      text-align: center;
+    }
+
+    .divider-option-card.full-span {
+      grid-column: 1 / -1;
+    }
+
+    .divider-option-card:hover {
+      border-color: var(--gold-accent);
+      background: rgba(184, 155, 103, 0.14);
+    }
+
+    .divider-option-card img {
+      max-width: 100%;
+      max-height: 3.1rem;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .divider-option-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--parchment-muted);
+      line-height: 1.25;
+    }
+
+    .divider-color-toggle-bar {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .divider-color-toggle-btn {
+      flex: 1;
+      background: #080909;
+      border: 1px solid var(--parchment-dim);
+      color: var(--parchment-muted);
+      font-family: var(--font-body);
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.36rem 0.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .divider-color-toggle-btn.active,
+    .divider-color-toggle-btn:hover {
+      border-color: var(--gold-accent);
+      color: var(--parchment-bright);
+      background: rgba(184, 155, 103, 0.18);
+    }
+
+    .divider-custom-upload-box {
+      margin-top: 0.55rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--parchment-faint);
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
     .editor-statusbar {
       display: flex;
       justify-content: space-between;
@@ -858,7 +1118,107 @@
       font-weight: 700;
     }
 
+    /* ─── Clean Scribe Hub Landing Menu (Mom-Friendly 4-Option Navigation) ─── */
+    .scribe-hub-view {
+      padding: 1rem 0 2.5rem;
+      animation: pageFade 0.35s ease-out;
+    }
+
+    .scribe-hub-intro {
+      text-align: center;
+      max-width: 38rem;
+      margin: 0 auto 2rem;
+      color: var(--parchment-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .scribe-hub-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.35rem;
+    }
+
+    .scribe-hub-card {
+      border: 1px solid var(--parchment-dim);
+      background: linear-gradient(155deg, rgba(23, 38, 37, 0.24) 0%, rgba(10, 13, 13, 0.94) 100%);
+      padding: 1.85rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.15rem;
+      transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .scribe-hub-card:hover {
+      border-color: var(--gold-accent);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+    }
+
+    .scribe-hub-card-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--parchment-faint);
+      padding-bottom: 0.75rem;
+    }
+
+    .scribe-hub-card h2 {
+      font-family: var(--font-body);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--parchment-bright);
+      letter-spacing: 0.02em;
+    }
+
+    .scribe-hub-count {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--gold-accent);
+      white-space: nowrap;
+    }
+
+    .scribe-hub-desc {
+      font-size: 0.94rem;
+      color: var(--parchment-muted);
+      line-height: 1.55;
+    }
+
+    .scribe-hub-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: auto;
+    }
+
+    .scribe-hub-template-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+
+    .scribe-hub-template-row select {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .scribe-subview-backbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--parchment-faint);
+    }
+
     @media (max-width: 780px) {
+      .scribe-hub-grid,
       .meta-grid-2,
       .meta-grid-3 {
         grid-template-columns: 1fr;
@@ -905,253 +1265,501 @@
   <main class="scribe-studio" id="scribe-studio" aria-hidden="true">
     <header class="studio-topbar">
       <div class="studio-brand">
-        <div class="eyebrow">✦ Sanctuary Scribe Studio ✦</div>
+        <div class="eyebrow">Sanctuary Scribe Studio</div>
         <h1>Journal Weaver</h1>
       </div>
       <div class="studio-top-actions">
-        <button type="button" class="btn-studio-sm gold" id="toggle-preview-btn">✦ Preview Entry</button>
+        <button type="button" class="btn-studio-sm" id="back-to-hub-top-btn" style="display:none;">&larr; Main Menu</button>
+        <button type="button" class="btn-studio-sm gold" id="toggle-preview-btn" style="display:none;">Preview Entry</button>
         <a href="blog.html" target="_blank" class="btn-studio-sm">Open Blog &nearr;</a>
         <a href="home.html" class="btn-studio-sm">Home</a>
         <button type="button" class="btn-studio-sm" id="lock-studio-btn">Lock</button>
       </div>
     </header>
 
-    <!-- Post Selection & Metadata -->
-    <section class="studio-panel">
-      <div class="studio-post-bar">
-        <label for="post-selector">Entry:</label>
-        <select id="post-selector" class="form-control"></select>
-        <button type="button" class="btn-studio-sm danger" id="delete-post-btn" disabled>Delete Entry</button>
+    <!-- ─── VIEW 1: CLEAN 4-OPTION LANDING MENU (FOR SANA & KIRA) ─── -->
+    <section class="scribe-hub-view" id="scribe-hub-view">
+      <p class="scribe-hub-intro">
+        Choose what you would like to do today:
+      </p>
+
+      <div class="scribe-hub-grid">
+        <!-- Card 1: Write New Blog Entry (From Scratch or From Template) -->
+        <article class="scribe-hub-card">
+          <div>
+            <div class="scribe-hub-card-header">
+              <h2>Write New Blog Entry</h2>
+              <span class="scribe-hub-count">Create</span>
+            </div>
+            <p class="scribe-hub-desc">
+              Start a blank blog entry from scratch, or pick a ready-made template to fill in.
+            </p>
+          </div>
+          <div class="scribe-hub-actions">
+            <button type="button" class="btn-studio-sm gold" id="hub-write-scratch-btn" style="justify-content:center; padding:0.7rem 1rem;">
+              Write From Scratch
+            </button>
+            <div class="scribe-hub-template-row">
+              <select id="hub-template-select" class="form-control" aria-label="Choose a template">
+                <option value="template-1">Template 1 (Lore &amp; Worldbuilding)</option>
+                <option value="template-2">Template 2 (Writing Diary)</option>
+                <option value="template-3">Template 3 (Chapter Teaser)</option>
+              </select>
+              <button type="button" class="btn-studio-sm" id="hub-write-template-btn">
+                From Template &rarr;
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Edit Drafts -->
+        <article class="scribe-hub-card">
+          <div>
+            <div class="scribe-hub-card-header">
+              <h2>Edit Drafts</h2>
+              <span class="scribe-hub-count" id="hub-count-drafts">0 Drafts</span>
+            </div>
+            <p class="scribe-hub-desc">
+              Open saved drafts to continue writing, move them to the publish queue, or click Publish when ready.
+            </p>
+          </div>
+          <div class="scribe-hub-actions">
+            <button type="button" class="btn-studio-sm gold" id="hub-open-drafts-btn" style="justify-content:center; padding:0.7rem 1rem;">
+              Open Drafts &rarr;
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 3: Publish Queue — Overview & Edit -->
+        <article class="scribe-hub-card">
+          <div>
+            <div class="scribe-hub-card-header">
+              <h2>Publish Queue &mdash; Overview &amp; Edit</h2>
+              <span class="scribe-hub-count" id="hub-count-queue">0 in Queue</span>
+            </div>
+            <p class="scribe-hub-desc">
+              Review finished posts waiting in your queue, reorder them, or publish the next queued entry with one click.
+            </p>
+          </div>
+          <div class="scribe-hub-actions">
+            <button type="button" class="btn-studio-sm gold" id="hub-open-queue-btn" style="justify-content:center; padding:0.7rem 1rem;">
+              Open Publish Queue &rarr;
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 4: Edit Blog Entries (Published) -->
+        <article class="scribe-hub-card">
+          <div>
+            <div class="scribe-hub-card-header">
+              <h2>Edit Blog Entries</h2>
+              <span class="scribe-hub-count" id="hub-count-published">0 Published</span>
+            </div>
+            <p class="scribe-hub-desc">
+              Browse and edit blog entries that are already live on the blog, or move an entry back to drafts.
+            </p>
+          </div>
+          <div class="scribe-hub-actions">
+            <button type="button" class="btn-studio-sm" id="hub-open-published-btn" style="justify-content:center; padding:0.7rem 1rem;">
+              View Published Blog Entries &rarr;
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ─── VIEW 2: FOCUSED LIST VIEW (DRAFTS / PUBLISH QUEUE / PUBLISHED ENTRIES) ─── -->
+    <section class="queue-dashboard-panel" id="queue-dashboard-panel" style="display:none;">
+      <div class="scribe-subview-backbar">
+        <button type="button" class="btn-studio-sm" id="list-back-to-hub-btn">&larr; Back to Scribe Menu</button>
+        <div style="display:flex; gap:0.55rem; flex-wrap:wrap; align-items:center;">
+          <button type="button" class="btn-studio-sm gold" id="publish-next-queue-btn" title="1-Click Publish the next post waiting in the Queue">Publish Next in Queue</button>
+          <button type="button" class="btn-studio-sm" id="new-entry-quick-btn">+ Write New Blog Entry</button>
+        </div>
       </div>
 
-      <div class="meta-grid-2">
-        <div class="studio-field">
-          <label for="post-title">Post Title</label>
-          <input type="text" id="post-title" class="form-control" placeholder="e.g., Secrets of the Bloodline Magic...">
+      <div class="queue-dashboard-header">
+        <div class="queue-dashboard-title-group">
+          <span class="queue-dashboard-title" id="list-view-heading">Drafts &amp; Publish Queue</span>
+          <div class="queue-tabs" id="queue-filter-tabs">
+            <button type="button" class="queue-tab-btn active" data-qtab="draft">Drafts (<span id="count-draft">0</span>)</button>
+            <button type="button" class="queue-tab-btn" data-qtab="queued">Publish Queue (<span id="count-queued">0</span>)</button>
+            <button type="button" class="queue-tab-btn" data-qtab="published">Published Blog Entries (<span id="count-published">0</span>)</button>
+            <button type="button" class="queue-tab-btn" data-qtab="drafts-queue">All Drafts &amp; Queue (<span id="count-drafts-queue">0</span>)</button>
+          </div>
         </div>
+      </div>
+      <div class="queue-list-container" id="queue-list-container" style="max-height:none;"></div>
+    </section>
+
+    <!-- ─── VIEW 3: FOCUSED BLOG ENTRY EDITOR ─── -->
+    <div id="scribe-editor-view" style="display:none;">
+      <div class="scribe-subview-backbar">
+        <button type="button" class="btn-studio-sm" id="editor-back-to-hub-btn">&larr; Back to Scribe Menu</button>
+        <div style="display:flex; gap:0.55rem; flex-wrap:wrap;">
+          <button type="button" class="btn-studio-sm" id="editor-go-drafts-btn">View Drafts</button>
+          <button type="button" class="btn-studio-sm" id="editor-go-queue-btn">View Publish Queue</button>
+        </div>
+      </div>
+
+      <!-- Post Selection & Metadata -->
+      <section class="studio-panel">
+        <div class="studio-post-bar">
+          <label for="post-selector">Entry:</label>
+          <select id="post-selector" class="form-control"></select>
+
+          <label for="post-template-select" style="margin-left:0.4rem;">Template:</label>
+          <select id="post-template-select" class="form-control" style="max-width: 215px;">
+            <option value="empty">Empty Blog Page</option>
+            <option value="template-1">Template 1 (Lore &amp; Worldbuilding)</option>
+            <option value="template-2">Template 2 (Writing Diary)</option>
+            <option value="template-3">Template 3 (Chapter Teaser)</option>
+          </select>
+
+          <label for="post-status" style="margin-left:0.4rem;">Status:</label>
+          <select id="post-status" class="form-control" style="max-width: 210px;">
+            <option value="published">Published (Live on Blog)</option>
+            <option value="draft">Shared Draft</option>
+            <option value="queued">Queue</option>
+          </select>
+          <button type="button" class="btn-studio-sm danger" id="delete-post-btn" disabled>Delete Entry</button>
+        </div>
+
+        <div class="meta-grid-2">
+          <div class="studio-field">
+            <label for="post-title">Post Title</label>
+            <input type="text" id="post-title" class="form-control" placeholder="e.g., Secrets of the Bloodline Magic...">
+          </div>
+          <div class="studio-field">
+            <label for="post-id">
+              <span>URL Slug ID</span>
+              <button type="button" class="inline-helper-btn" id="regen-slug-btn">Regenerate</button>
+            </label>
+            <input type="text" id="post-id" class="form-control" placeholder="e.g., secrets-of-bloodline-magic">
+          </div>
+        </div>
+
+        <div class="meta-grid-3">
+          <div class="studio-field">
+            <label for="post-date">
+              <span>Publication Date</span>
+              <label style="font-size:0.62rem; text-transform:none; letter-spacing:0.04em; color:var(--gold-accent); cursor:pointer; display:inline-flex; align-items:center; gap:0.25rem; margin:0;">
+                <input type="checkbox" id="post-auto-publish-date" checked> Auto-publish Queue on date
+              </label>
+            </label>
+            <div class="date-input-row">
+              <input type="text" id="post-date" class="form-control" placeholder="November 22, 2026">
+              <input type="date" id="post-date-picker" class="form-control date-picker-hidden" title="Pick date from calendar" aria-label="Pick date from calendar">
+            </div>
+          </div>
+          <div class="studio-field">
+            <label for="post-category">Category</label>
+            <select id="post-category" class="form-control"></select>
+            <input type="text" id="post-category-custom" class="form-control" placeholder="Type new category name..." style="display: none; margin-top: 0.45rem;">
+          </div>
+          <div class="studio-field">
+            <label for="post-author">Author(s)</label>
+            <input type="text" id="post-author" class="form-control" value="Kira &amp; Sana Marlowe">
+          </div>
+        </div>
+
         <div class="studio-field">
-          <label for="post-id">
-            <span>URL Slug ID</span>
-            <button type="button" class="inline-helper-btn" id="regen-slug-btn">Regenerate</button>
+          <label for="post-excerpt">
+            <span>Card Excerpt (shown on the blog feed)</span>
+            <button type="button" class="inline-helper-btn" id="auto-excerpt-btn">Auto-fill from article</button>
           </label>
-          <input type="text" id="post-id" class="form-control" placeholder="e.g., secrets-of-bloodline-magic">
+          <textarea id="post-excerpt" class="form-control" style="min-height: 70px;" placeholder="A captivating 1–2 sentence hook shown on the journal card..."></textarea>
         </div>
-      </div>
+      </section>
 
-      <div class="meta-grid-3">
-        <div class="studio-field">
-          <label for="post-date">Publication Date</label>
-          <div class="date-input-row">
-            <input type="text" id="post-date" class="form-control" placeholder="November 22, 2026">
-            <input type="date" id="post-date-picker" class="form-control date-picker-hidden" title="Pick date from calendar" aria-label="Pick date from calendar">
-          </div>
-        </div>
-        <div class="studio-field">
-          <label for="post-category">Category</label>
-          <select id="post-category" class="form-control"></select>
-          <input type="text" id="post-category-custom" class="form-control" placeholder="Type new category name..." style="display: none; margin-top: 0.45rem;">
-        </div>
-        <div class="studio-field">
-          <label for="post-author">Author(s)</label>
-          <input type="text" id="post-author" class="form-control" value="Kira &amp; Sana Marlowe">
-        </div>
-      </div>
+      <!-- Google Docs / Word Editor Shell -->
+      <section class="editor-shell">
+        <div class="editor-toolbar" id="editor-toolbar">
+          <!-- Row 1: Typography & Inline Formats -->
+          <div class="toolbar-row">
+            <select id="fmt-block" class="tb-select" title="Heading &amp; Style">
+              <option value="P">Main Text (Philosopher)</option>
+              <option value="H1">Heading 1 (Bold All Caps)</option>
+              <option value="H2">Heading 2 (Bold Philosopher)</option>
+              <option value="H3">Main Title (Unifraktur)</option>
+              <option value="BLOCKQUOTE">Ornamental Quote Box</option>
+            </select>
 
-      <div class="studio-field">
-        <label for="post-excerpt">
-          <span>Card Excerpt (shown on the blog feed)</span>
-          <button type="button" class="inline-helper-btn" id="auto-excerpt-btn">✦ Auto-fill from article</button>
-        </label>
-        <textarea id="post-excerpt" class="form-control" style="min-height: 70px;" placeholder="A captivating 1–2 sentence hook shown on the journal card..."></textarea>
-      </div>
-    </section>
+            <select id="fmt-font" class="tb-select" title="Font Family">
+              <option value="Philosopher, serif">Philosopher (Main Text)</option>
+              <option value="'ScalesCustomS', 'UnifrakturMaguntia', cursive">Unifraktur (Gothic Title)</option>
+            </select>
 
-    <!-- Google Docs / Word Editor Shell -->
-    <section class="editor-shell">
-      <div class="editor-toolbar" id="editor-toolbar">
-        <!-- Row 1: Typography & Inline Formats -->
-        <div class="toolbar-row">
-          <select id="fmt-block" class="tb-select" title="Heading &amp; Style">
-            <option value="P">Main Text (Philosopher)</option>
-            <option value="H1">Heading 1 (Bold All Caps)</option>
-            <option value="H2">Heading 2 (Bold Philosopher)</option>
-            <option value="H3">Main Title (Unifraktur)</option>
-            <option value="BLOCKQUOTE">Ornamental Quote Box</option>
-          </select>
+            <div class="tb-size-stepper" title="Font Size (px)">
+              <button type="button" id="fmt-size-dec" aria-label="Decrease font size">&minus;</button>
+              <input type="number" id="fmt-size-val" class="tb-size-input" value="17" min="11" max="64" aria-label="Font size in pixels">
+              <button type="button" id="fmt-size-inc" aria-label="Increase font size">+</button>
+            </div>
 
-          <select id="fmt-font" class="tb-select" title="Font Family">
-            <option value="Philosopher, serif">Philosopher (Main Text)</option>
-            <option value="'UnifrakturMaguntia', cursive">Unifraktur (Gothic Title)</option>
-          </select>
+            <span class="tb-sep"></span>
 
-          <div class="tb-size-stepper" title="Font Size (px)">
-            <button type="button" id="fmt-size-dec" aria-label="Decrease font size">&minus;</button>
-            <input type="number" id="fmt-size-val" class="tb-size-input" value="17" min="11" max="64" aria-label="Font size in pixels">
-            <button type="button" id="fmt-size-inc" aria-label="Increase font size">+</button>
-          </div>
+            <button type="button" class="tb-btn" data-cmd="bold" title="Bold (Ctrl+B)"><strong>B</strong></button>
+            <button type="button" class="tb-btn" data-cmd="italic" title="Italic (Ctrl+I)"><em>I</em></button>
+            <button type="button" class="tb-btn" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
+            <button type="button" class="tb-btn" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
 
-          <span class="tb-sep"></span>
+            <span class="tb-sep"></span>
 
-          <button type="button" class="tb-btn" data-cmd="bold" title="Bold (Ctrl+B)"><strong>B</strong></button>
-          <button type="button" class="tb-btn" data-cmd="italic" title="Italic (Ctrl+I)"><em>I</em></button>
-          <button type="button" class="tb-btn" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
-          <button type="button" class="tb-btn" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
+            <!-- Text Color Popover (Strictly the 3 Sanctuary Inks) -->
+            <div class="tb-popover-wrap">
+              <button type="button" class="tb-btn" id="text-color-btn" title="Font Colour">
+                <span style="display:flex; flex-direction:column; align-items:center; line-height:1;">
+                  <span style="font-weight:700; font-size:0.86rem;">A</span>
+                  <span class="color-indicator-bar" id="active-text-color-bar" style="background:#E3DEC8;"></span>
+                </span>
+              </button>
+              <div class="tb-popover" id="text-color-popover" style="width: 11.5rem;">
+                <div class="tb-popover-title">Ink Colour</div>
+                <div class="swatch-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0;">
+                  <button type="button" class="swatch-btn" data-color="#E3DEC8" style="background:#E3DEC8;" title="Usual White (Parchment)"></button>
+                  <button type="button" class="swatch-btn" data-color="#B89B67" style="background:#B89B67;" title="Sanctuary Gold"></button>
+                  <button type="button" class="swatch-btn" data-color="#9E9987" style="background:#9E9987;" title="Washed-Out Grey (Captions / Sources)"></button>
+                </div>
+              </div>
+            </div>
 
-          <span class="tb-sep"></span>
-
-          <!-- Text Color Popover (Strictly the 3 Sanctuary Inks) -->
-          <div class="tb-popover-wrap">
-            <button type="button" class="tb-btn" id="text-color-btn" title="Font Colour">
-              <span style="display:flex; flex-direction:column; align-items:center; line-height:1;">
-                <span style="font-weight:700; font-size:0.86rem;">A</span>
-                <span class="color-indicator-bar" id="active-text-color-bar" style="background:#E3DEC8;"></span>
-              </span>
-            </button>
-            <div class="tb-popover" id="text-color-popover" style="width: 11.5rem;">
-              <div class="tb-popover-title">Ink Colour</div>
-              <div class="swatch-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0;">
-                <button type="button" class="swatch-btn" data-color="#E3DEC8" style="background:#E3DEC8;" title="Usual White (Parchment)"></button>
-                <button type="button" class="swatch-btn" data-color="#B89B67" style="background:#B89B67;" title="Sanctuary Gold"></button>
-                <button type="button" class="swatch-btn" data-color="#9E9987" style="background:#9E9987;" title="Washed-Out Grey (Captions / Sources)"></button>
+            <!-- Highlight Color Popover -->
+            <div class="tb-popover-wrap">
+              <button type="button" class="tb-btn" id="hilite-color-btn" title="Highlight Colour">
+                <span style="display:flex; flex-direction:column; align-items:center; line-height:1;">
+                  <svg viewBox="0 0 24 24" style="width:13px; height:13px;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  <span class="color-indicator-bar" id="active-hilite-color-bar" style="background:rgba(184,155,103,0.45);"></span>
+                </span>
+              </button>
+              <div class="tb-popover" id="hilite-color-popover">
+                <div class="tb-popover-title">Parchment Highlight</div>
+                <div class="swatch-grid">
+                  <button type="button" class="swatch-btn" data-hilite="transparent" style="background:#080909; position:relative;" title="No Highlight">&times;</button>
+                  <button type="button" class="swatch-btn" data-hilite="rgba(184, 155, 103, 0.28)" style="background:rgba(184, 155, 103, 0.45);" title="Gilded Glow"></button>
+                  <button type="button" class="swatch-btn" data-hilite="rgba(140, 35, 35, 0.42)" style="background:rgba(140, 35, 35, 0.6);" title="Crimson Wash"></button>
+                  <button type="button" class="swatch-btn" data-hilite="rgba(23, 72, 70, 0.65)" style="background:rgba(23, 72, 70, 0.8);" title="Abyss Teal"></button>
+                </div>
+                <div class="custom-color-row">
+                  <span>Custom:</span>
+                  <input type="color" id="custom-hilite-color" value="#3d321c">
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Highlight Color Popover -->
-          <div class="tb-popover-wrap">
-            <button type="button" class="tb-btn" id="hilite-color-btn" title="Highlight Colour">
-              <span style="display:flex; flex-direction:column; align-items:center; line-height:1;">
-                <svg viewBox="0 0 24 24" style="width:13px; height:13px;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                <span class="color-indicator-bar" id="active-hilite-color-bar" style="background:rgba(184,155,103,0.45);"></span>
-              </span>
+          <!-- Row 2: Alignment, Lists, Quote, Sources, Links, Break/Graphic & Photos -->
+          <div class="toolbar-row">
+            <button type="button" class="tb-btn" data-cmd="justifyLeft" title="Align Left">
+              <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="19" y2="18"/></svg>
             </button>
-            <div class="tb-popover" id="hilite-color-popover">
-              <div class="tb-popover-title">Parchment Highlight</div>
-              <div class="swatch-grid">
-                <button type="button" class="swatch-btn" data-hilite="transparent" style="background:#080909; position:relative;" title="No Highlight">&times;</button>
-                <button type="button" class="swatch-btn" data-hilite="rgba(184, 155, 103, 0.28)" style="background:rgba(184, 155, 103, 0.45);" title="Gilded Glow"></button>
-                <button type="button" class="swatch-btn" data-hilite="rgba(140, 35, 35, 0.42)" style="background:rgba(140, 35, 35, 0.6);" title="Crimson Wash"></button>
-                <button type="button" class="swatch-btn" data-hilite="rgba(23, 72, 70, 0.65)" style="background:rgba(23, 72, 70, 0.8);" title="Abyss Teal"></button>
+            <button type="button" class="tb-btn" data-cmd="justifyCenter" title="Align Center">
+              <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+            </button>
+            <button type="button" class="tb-btn" data-cmd="justifyRight" title="Align Right">
+              <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="5" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <button type="button" class="tb-btn" data-cmd="justifyFull" title="Justify">
+              <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+
+            <span class="tb-sep"></span>
+
+            <button type="button" class="tb-btn" data-cmd="insertUnorderedList" title="Bullet List">
+              <svg viewBox="0 0 24 24"><line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><path d="M4 6h.01M4 12h.01M4 18h.01" stroke-width="3"/></svg>
+            </button>
+            <button type="button" class="tb-btn" data-cmd="insertOrderedList" title="Numbered List">
+              <svg viewBox="0 0 24 24"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4M4 10h2M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+            </button>
+            <button type="button" class="tb-btn" data-cmd="outdent" title="Decrease Indent">
+              <svg viewBox="0 0 24 24"><polyline points="7 8 3 12 7 16"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="18" x2="11" y2="18"/></svg>
+            </button>
+            <button type="button" class="tb-btn" data-cmd="indent" title="Increase Indent">
+              <svg viewBox="0 0 24 24"><polyline points="3 8 7 12 3 16"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="18" x2="11" y2="18"/></svg>
+            </button>
+
+            <span class="tb-sep"></span>
+
+            <button type="button" class="tb-btn" id="fmt-quote-btn" title="Wrap Text in Ornamental Quote Plaque" style="font-size:0.74rem; padding:0 0.65rem;">&#10077; Quote</button>
+            <button type="button" class="tb-btn" id="fmt-source-btn" title="Add Source Citation [1]" style="font-size:0.74rem; padding:0 0.65rem;">Source [1]</button>
+            <button type="button" class="tb-btn" id="fmt-link-btn" title="Insert Green Link">
+              <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+            </button>
+
+            <!-- Paragraph Break / Graphic Divider Picker Popover (Strictly Your Own Hand-Drawn Graphics) -->
+            <div class="tb-popover-wrap">
+              <button type="button" class="tb-btn" id="fmt-divider-btn" title="Choose Paragraph Break Graphic" style="font-size:0.74rem; padding:0 0.65rem;">Break / Graphic &#9662;</button>
+              <div class="tb-popover divider-picker-popover" id="divider-picker-popover">
+                <div class="tb-popover-title">Choose Paragraph Break Graphic</div>
+                <div class="divider-color-toggle-bar" id="divider-palette-toggle">
+                  <button type="button" class="divider-color-toggle-btn active" data-div-palette="parchment">
+                    <span style="width:10px; height:10px; background:#E3DEC8; border:1px solid #080909; display:inline-block;"></span>
+                    Warm Parchment
+                  </button>
+                  <button type="button" class="divider-color-toggle-btn" data-div-palette="gold">
+                    <span style="width:10px; height:10px; background:#B89B67; border:1px solid #080909; display:inline-block;"></span>
+                    Sanctuary Gold
+                  </button>
+                </div>
+                <div class="divider-presets-grid" id="divider-presets-list">
+                  <button type="button" class="divider-option-card full-span" data-divider-type="graphic" data-divider-base="divider-eye" data-divider-size="size-md">
+                    <img src="divider-eye.png" alt="All-Seeing Eye Filigree">
+                    <span class="divider-option-label">All-Seeing Eye Filigree</span>
+                  </button>
+                  <button type="button" class="divider-option-card full-span" data-divider-type="graphic" data-divider-base="divider-arrow" data-divider-size="size-md">
+                    <img src="divider-arrow.png" alt="Fletched Arrow">
+                    <span class="divider-option-label">Fletched Arrow</span>
+                  </button>
+                  <button type="button" class="divider-option-card" data-divider-type="graphic" data-divider-base="divider-wyvern" data-divider-size="size-sm">
+                    <img src="divider-wyvern.png" alt="Wyvern (Cherry)">
+                    <span class="divider-option-label">Wyvern (Cherry)</span>
+                  </button>
+                  <button type="button" class="divider-option-card" data-divider-type="graphic" data-divider-base="divider-cross" data-divider-size="size-sm">
+                    <img src="divider-cross.png" alt="Gothic Fleur Cross">
+                    <span class="divider-option-label">Gothic Fleur Cross</span>
+                  </button>
+                  <button type="button" class="divider-option-card" data-divider-type="graphic" data-divider-base="divider-helm" data-divider-size="size-sm">
+                    <img src="divider-helm.png" alt="Beaked Knight Helm">
+                    <span class="divider-option-label">Beaked Knight Helm</span>
+                  </button>
+                  <button type="button" class="divider-option-card" data-divider-type="graphic" data-divider-base="divider-wheel" data-divider-size="size-sm">
+                    <img src="divider-wheel.png" alt="Eight-Spoke Wheel">
+                    <span class="divider-option-label">Eight-Spoke Wheel</span>
+                  </button>
+                  <button type="button" class="divider-option-card" data-divider-type="graphic" data-divider-base="divider-pine" data-divider-size="size-sm">
+                    <img src="divider-pine.png" alt="Pine Needle Bough">
+                    <span class="divider-option-label">Pine Needle Bough</span>
+                  </button>
+                  <button type="button" class="divider-option-card" data-divider-type="graphic" data-divider-base="divider-blossom-branch" data-divider-size="size-sm">
+                    <img src="divider-blossom-branch.png" alt="Blossom Branch">
+                    <span class="divider-option-label">Blossom Branch</span>
+                  </button>
+                  <button type="button" class="divider-option-card" data-divider-type="graphic" data-divider-base="divider-blossom-upright" data-divider-size="size-sm">
+                    <img src="divider-blossom-upright.png" alt="Blossom Sprig">
+                    <span class="divider-option-label">Blossom Sprig</span>
+                  </button>
+                  <button type="button" class="divider-option-card" data-divider-type="graphic" data-divider-base="divider-apple" data-divider-size="size-sm">
+                    <img src="divider-apple.png" alt="Bitten Apple">
+                    <span class="divider-option-label">Bitten Apple</span>
+                  </button>
+                  <button type="button" class="divider-option-card full-span" data-divider-type="graphic" data-divider-base="divider-lamb" data-divider-size="size-sm">
+                    <img src="divider-lamb.png" alt="Young Lamb">
+                    <span class="divider-option-label">Young Lamb</span>
+                  </button>
+                </div>
+                <div id="custom-dividers-saved-list" class="divider-presets-grid"></div>
+
+                <!-- Upload Any Transparent PNG & Auto-Recolor to Site Colours -->
+                <div class="divider-custom-upload-box">
+                  <div class="tb-popover-title" style="margin-bottom:0.2rem;">+ Add Another PNG Graphic</div>
+                  <div style="display:flex; gap:0.4rem; align-items:center;">
+                    <select id="custom-divider-tint-select" class="tb-select" style="flex:1; font-size:0.72rem; padding:0.28rem 1.4rem 0.28rem 0.45rem;">
+                      <option value="parchment">Auto-Tint: Warm Parchment (#E3DEC8)</option>
+                      <option value="gold">Auto-Tint: Sanctuary Gold (#B89B67)</option>
+                      <option value="original">Keep Original Image Colours</option>
+                    </select>
+                    <button type="button" class="btn-studio-sm gold" id="upload-custom-divider-btn" style="padding:0.35rem 0.65rem; font-size:0.65rem;">+ Upload PNG</button>
+                  </div>
+                  <input type="file" id="custom-divider-file-input" accept="image/*" style="display:none;">
+                </div>
               </div>
-              <div class="custom-color-row">
-                <span>Custom:</span>
-                <input type="color" id="custom-hilite-color" value="#3d321c">
-              </div>
+            </div>
+
+            <button type="button" class="tb-btn" data-cmd="removeFormat" title="Clear Formatting">
+              <svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16M18 4L6 20" stroke-width="1.8"/></svg>
+            </button>
+
+            <span class="tb-sep"></span>
+
+            <button type="button" class="tb-btn tb-photo-btn" id="open-photo-modal-btn" title="Insert &amp; Place Photo">
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span>Insert Photo</span>
+            </button>
+          </div>
+
+          <!-- Contextual Photo Inspector (Appears when clicking any photo in the editor) -->
+          <div class="image-inspector" id="image-inspector">
+            <div class="inspector-group">
+              <span class="inspector-label">Place:</span>
+              <button type="button" class="insp-btn" data-img-align="align-left" title="Float Left (text wraps on right)">&#9703; Left</button>
+              <button type="button" class="insp-btn" data-img-align="align-center" title="Center">&#9644; Center</button>
+              <button type="button" class="insp-btn" data-img-align="align-right" title="Float Right (text wraps on left)">&#9704; Right</button>
+              <button type="button" class="insp-btn" data-img-align="align-full" title="Full Width">&#8596; Full</button>
+            </div>
+            <div class="inspector-group">
+              <span class="inspector-label">Size:</span>
+              <button type="button" class="insp-btn" data-img-size="size-25">25%</button>
+              <button type="button" class="insp-btn" data-img-size="size-50">50%</button>
+              <button type="button" class="insp-btn" data-img-size="size-75">75%</button>
+              <button type="button" class="insp-btn" data-img-size="size-100">100%</button>
+            </div>
+            <div class="inspector-group">
+              <span class="inspector-label">Caption:</span>
+              <input type="text" id="img-caption-input" class="insp-caption-input" placeholder="Optional caption...">
+            </div>
+            <div class="inspector-group" style="margin-left:auto;">
+              <button type="button" class="insp-btn" id="img-move-up" title="Move photo up one block">&uarr;</button>
+              <button type="button" class="insp-btn" id="img-move-down" title="Move photo down one block">&darr;</button>
+              <button type="button" class="insp-btn insp-delete" id="img-delete-btn" style="border-color:#D45B5B; color:#D45B5B;">Remove</button>
+            </div>
+          </div>
+
+          <!-- Contextual Graphic Divider Inspector (Appears when clicking any graphic paragraph break in the editor) -->
+          <div class="image-inspector" id="divider-inspector">
+            <div class="inspector-group">
+              <span class="inspector-label">Break Size:</span>
+              <button type="button" class="insp-btn" data-div-size="size-sm">Small</button>
+              <button type="button" class="insp-btn" data-div-size="size-md">Medium</button>
+              <button type="button" class="insp-btn" data-div-size="size-lg">Large</button>
+            </div>
+            <div class="inspector-group" id="divider-color-swap-group">
+              <span class="inspector-label">Colour:</span>
+              <button type="button" class="insp-btn" data-div-color="parchment">Parchment (#E3DEC8)</button>
+              <button type="button" class="insp-btn" data-div-color="gold">Gold (#B89B67)</button>
+            </div>
+            <div class="inspector-group" style="margin-left:auto;">
+              <button type="button" class="insp-btn" id="div-move-up" title="Move break up one block">&uarr;</button>
+              <button type="button" class="insp-btn" id="div-move-down" title="Move break down one block">&darr;</button>
+              <button type="button" class="insp-btn insp-delete" id="div-delete-btn" style="border-color:#D45B5B; color:#D45B5B;">Remove Break</button>
             </div>
           </div>
         </div>
 
-        <!-- Row 2: Alignment, Lists, Quote, Sources, Links, Divider & Photos -->
-        <div class="toolbar-row">
-          <button type="button" class="tb-btn" data-cmd="justifyLeft" title="Align Left">
-            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="19" y2="18"/></svg>
-          </button>
-          <button type="button" class="tb-btn" data-cmd="justifyCenter" title="Align Center">
-            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
-          </button>
-          <button type="button" class="tb-btn" data-cmd="justifyRight" title="Align Right">
-            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="5" y1="18" x2="21" y2="18"/></svg>
-          </button>
-          <button type="button" class="tb-btn" data-cmd="justifyFull" title="Justify">
-            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
-
-          <span class="tb-sep"></span>
-
-          <button type="button" class="tb-btn" data-cmd="insertUnorderedList" title="Star List (✦)">
-            <svg viewBox="0 0 24 24"><line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><path d="M4 6h.01M4 12h.01M4 18h.01" stroke-width="3"/></svg>
-          </button>
-          <button type="button" class="tb-btn" data-cmd="insertOrderedList" title="Numbered List">
-            <svg viewBox="0 0 24 24"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4M4 10h2M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
-          </button>
-          <button type="button" class="tb-btn" data-cmd="outdent" title="Decrease Indent">
-            <svg viewBox="0 0 24 24"><polyline points="7 8 3 12 7 16"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="18" x2="11" y2="18"/></svg>
-          </button>
-          <button type="button" class="tb-btn" data-cmd="indent" title="Increase Indent">
-            <svg viewBox="0 0 24 24"><polyline points="3 8 7 12 3 16"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="18" x2="11" y2="18"/></svg>
-          </button>
-
-          <span class="tb-sep"></span>
-
-          <button type="button" class="tb-btn" id="fmt-quote-btn" title="Wrap Text in Ornamental Quote Plaque" style="font-size:0.74rem; padding:0 0.65rem;">&#10077; Quote</button>
-          <button type="button" class="tb-btn" id="fmt-source-btn" title="Add Source Citation [1]" style="font-size:0.74rem; padding:0 0.65rem;">✦ Source [1]</button>
-          <button type="button" class="tb-btn" id="fmt-link-btn" title="Insert Green Link">
-            <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-          </button>
-          <button type="button" class="tb-btn" id="fmt-divider-btn" title="Insert Ornamental Divider">✦</button>
-          <button type="button" class="tb-btn" data-cmd="removeFormat" title="Clear Formatting">
-            <svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16M18 4L6 20" stroke-width="1.8"/></svg>
-          </button>
-
-          <span class="tb-sep"></span>
-
-          <button type="button" class="tb-btn tb-photo-btn" id="open-photo-modal-btn" title="Insert &amp; Place Photo">
-            <svg viewBox="0 0 24 24" style="width:14px; height:14px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Insert Photo</span>
-          </button>
+        <!-- Editable Document Area -->
+        <div class="editor-canvas-wrap" id="editor-canvas-wrap">
+          <div
+            id="editor-surface"
+            class="blog-rich-content"
+            contenteditable="true"
+            data-placeholder="Start typing here..."
+          ></div>
         </div>
 
-        <!-- Contextual Photo Inspector (Appears when clicking any photo in the editor) -->
-        <div class="image-inspector" id="image-inspector">
-          <div class="inspector-group">
-            <span class="inspector-label">Place:</span>
-            <button type="button" class="insp-btn" data-img-align="align-left" title="Float Left (text wraps on right)">&#9703; Left</button>
-            <button type="button" class="insp-btn" data-img-align="align-center" title="Center">&#9644; Center</button>
-            <button type="button" class="insp-btn" data-img-align="align-right" title="Float Right (text wraps on left)">&#9704; Right</button>
-            <button type="button" class="insp-btn" data-img-align="align-full" title="Full Width">&#8596; Full</button>
-          </div>
-          <div class="inspector-group">
-            <span class="inspector-label">Size:</span>
-            <button type="button" class="insp-btn" data-img-size="size-25">25%</button>
-            <button type="button" class="insp-btn" data-img-size="size-50">50%</button>
-            <button type="button" class="insp-btn" data-img-size="size-75">75%</button>
-            <button type="button" class="insp-btn" data-img-size="size-100">100%</button>
-          </div>
-          <div class="inspector-group">
-            <span class="inspector-label">Caption:</span>
-            <input type="text" id="img-caption-input" class="insp-caption-input" placeholder="Optional caption...">
-          </div>
-          <div class="inspector-group" style="margin-left:auto;">
-            <button type="button" class="insp-btn" id="img-move-up" title="Move photo up one block">&uarr;</button>
-            <button type="button" class="insp-btn" id="img-move-down" title="Move photo down one block">&darr;</button>
-            <button type="button" class="insp-btn insp-delete" id="img-delete-btn" style="border-color:#D45B5B; color:#D45B5B;">Remove</button>
+        <!-- Live Preview Surface (matches blog.html 1-to-1) -->
+        <div id="preview-surface">
+          <div style="max-width: 49rem; margin: 0 auto;">
+            <div class="preview-label">Blog Feed Card Preview</div>
+            <div id="preview-card-slot" style="margin-bottom: 2.2rem;"></div>
+            <div class="preview-label">Full Article Reader Preview</div>
+            <div id="preview-article-slot"></div>
           </div>
         </div>
-      </div>
 
-      <!-- Editable Document Area -->
-      <div class="editor-canvas-wrap" id="editor-canvas-wrap">
-        <div
-          id="editor-surface"
-          class="blog-rich-content"
-          contenteditable="true"
-          data-placeholder="Begin weaving your scroll here... Tip: click any inserted photo to change whether it sits Left, Center, Right, or Full Width."
-        ></div>
-      </div>
-
-      <!-- Live Preview Surface (matches blog.html 1-to-1) -->
-      <div id="preview-surface">
-        <div style="max-width: 49rem; margin: 0 auto;">
-          <div class="preview-label">✦ Blog Feed Card Preview</div>
-          <div id="preview-card-slot" style="margin-bottom: 2.2rem;"></div>
-          <div class="preview-label">✦ Full Article Reader Preview</div>
-          <div id="preview-article-slot"></div>
+        <div class="editor-statusbar">
+          <span id="editor-word-count">0 words &middot; 0 characters</span>
+          <span id="draft-save-indicator">Draft ready</span>
         </div>
-      </div>
+      </section>
+    </div>
 
-      <div class="editor-statusbar">
-        <span id="editor-word-count">0 words &middot; 0 characters</span>
-        <span id="draft-save-indicator">Draft ready</span>
-      </div>
-    </section>
-
-    <!-- Publishing & Direct GitHub Connection Panel -->
-    <section class="publish-panel">
+    <!-- Publishing, Shared Drafts, Queue & Direct GitHub Connection Panel -->
+    <section class="publish-panel" id="studio-publish-panel">
       <div class="publish-actions-row">
-        <div class="publish-btn-group">
-          <button type="button" class="btn-gothic" id="publish-github-btn">✦ Publish to Sanctuary</button>
+        <div class="publish-btn-group" id="editor-publish-btn-group">
+          <button type="button" class="btn-gothic" id="publish-github-btn" title="Publish live to scalesandstones.com/blog.html right now">Publish Live Now</button>
+          <button type="button" class="btn-studio-sm gold" id="save-shared-draft-btn" title="Save as a shared Draft on GitHub">Save as Shared Draft</button>
+          <button type="button" class="btn-studio-sm gold" id="save-queue-btn" title="Place this entry in the Publish Queue on GitHub">Add to Queue</button>
           <button type="button" class="btn-gothic outline" id="download-posts-btn">Download posts.js</button>
-          <button type="button" class="btn-studio-sm" id="save-draft-btn">Save Local Draft</button>
+          <button type="button" class="btn-studio-sm" id="save-draft-btn">Save Browser Draft</button>
         </div>
         <button type="button" class="btn-studio-sm" id="toggle-gh-settings-btn">
           &#9881; GitHub Connection <span id="gh-badge-status" style="color:var(--gold-accent);"></span>
@@ -1449,8 +2057,12 @@
 
         const DRAFT_KEY = 'ss_scribe_draft_v1';
         const GH_CREDS_KEY = 'ss_gh_creds_v1';
+        const CUSTOM_DIVIDERS_KEY = 'ss_custom_dividers_v1';
 
         const postSelector = document.getElementById('post-selector');
+        const templateSelect = document.getElementById('post-template-select');
+        const statusSelect = document.getElementById('post-status');
+        const autoPublishDateCheck = document.getElementById('post-auto-publish-date');
         const deletePostBtn = document.getElementById('delete-post-btn');
         const titleInput = document.getElementById('post-title');
         const idInput = document.getElementById('post-id');
@@ -1462,6 +2074,15 @@
         const authorInput = document.getElementById('post-author');
         const excerptInput = document.getElementById('post-excerpt');
         const autoExcerptBtn = document.getElementById('auto-excerpt-btn');
+
+        const hubViewEl = document.getElementById('scribe-hub-view');
+        const listViewEl = document.getElementById('queue-dashboard-panel');
+        const editorViewEl = document.getElementById('scribe-editor-view');
+        const backToHubTopBtn = document.getElementById('back-to-hub-top-btn');
+        const editorPublishBtnGroup = document.getElementById('editor-publish-btn-group');
+        const queueListContainer = document.getElementById('queue-list-container');
+        const publishNextQueueBtn = document.getElementById('publish-next-queue-btn');
+        const listViewHeading = document.getElementById('list-view-heading');
 
         const editor = document.getElementById('editor-surface');
         const editorCanvasWrap = document.getElementById('editor-canvas-wrap');
@@ -1485,20 +2106,54 @@
         const activeHiliteBar = document.getElementById('active-hilite-color-bar');
         const customHiliteColor = document.getElementById('custom-hilite-color');
 
+        const dividerBtn = document.getElementById('fmt-divider-btn');
+        const dividerPop = document.getElementById('divider-picker-popover');
+
         const imageInspector = document.getElementById('image-inspector');
         const imgCaptionInput = document.getElementById('img-caption-input');
+        const dividerInspector = document.getElementById('divider-inspector');
 
         let postsList = Array.isArray(window.BLOG_POSTS)
           ? JSON.parse(JSON.stringify(window.BLOG_POSTS))
           : [];
         let currentEditingId = '__NEW__';
+        let activeQueueTab = 'draft';
+        let activeSubView = 'hub';
         let slugManuallyEdited = false;
         let savedRange = null;
         let selectedFigure = null;
+        let selectedDivider = null;
         let pendingPhotoDataUrl = '';
         let modalAlign = 'align-center';
         let modalSize = 'size-50';
         let isPreviewMode = false;
+
+        function switchScribeSubView(viewName, listTabFilter) {
+          activeSubView = viewName;
+          if (hubViewEl) hubViewEl.style.display = viewName === 'hub' ? 'block' : 'none';
+          if (listViewEl) listViewEl.style.display = viewName === 'list' ? 'block' : 'none';
+          if (editorViewEl) editorViewEl.style.display = viewName === 'editor' ? 'block' : 'none';
+          if (backToHubTopBtn) backToHubTopBtn.style.display = viewName === 'hub' ? 'none' : 'inline-flex';
+          if (togglePreviewBtn) togglePreviewBtn.style.display = viewName === 'editor' ? 'inline-flex' : 'none';
+          if (editorPublishBtnGroup) editorPublishBtnGroup.style.display = viewName === 'editor' ? 'flex' : 'none';
+
+          if (viewName === 'list' && listTabFilter) {
+            activeQueueTab = listTabFilter;
+            document.querySelectorAll('#queue-filter-tabs [data-qtab]').forEach(b => {
+              b.classList.toggle('active', b.getAttribute('data-qtab') === listTabFilter);
+            });
+            if (listViewHeading) {
+              listViewHeading.textContent = listTabFilter === 'draft'
+                ? 'Edit Drafts'
+                : listTabFilter === 'queued'
+                  ? 'Publish Queue — Overview & Edit'
+                  : listTabFilter === 'published'
+                    ? 'Edit Published Blog Entries'
+                    : 'All Drafts & Publish Queue';
+            }
+          }
+          renderQueueDashboard();
+        }
 
         // ─── Helpers ───
         function formatTodayReadable(dateObj = new Date()) {
@@ -1526,6 +2181,19 @@
             .replace(/"/g, '&quot;');
         }
 
+        function normalizePostStatus(rawStatus) {
+          const st = String(rawStatus || 'published').toLowerCase();
+          if (st === 'draft' || st === 'queued') return st;
+          return 'published';
+        }
+
+        function getStatusTagPrefix(post) {
+          const st = normalizePostStatus(post && post.status);
+          if (st === 'draft') return '[DRAFT] ';
+          if (st === 'queued') return '[QUEUED] ';
+          return '[LIVE] ';
+        }
+
         function populateCategories(selectedVal) {
           const defaults = ['Announcement', 'Worldbuilding', 'Writing Diary', 'Lore & Magic', 'Character Spotlight'];
           const fromPosts = postsList.map(p => p.category).filter(Boolean);
@@ -1547,22 +2215,32 @@
         }
 
         function populatePostSelector(selectValue = '__NEW__') {
-          postSelector.innerHTML = '<option value="__NEW__">✦ Write New Entry</option>' +
+          postSelector.innerHTML = '<option value="__NEW__">Write New Entry</option>' +
             postsList.map(p =>
-              `<option value="${escapeHtml(p.id)}">${escapeHtml(p.title)} (${escapeHtml(p.date)})</option>`
+              `<option value="${escapeHtml(p.id)}">${getStatusTagPrefix(p)}${escapeHtml(p.title)} (${escapeHtml(p.date)})</option>`
             ).join('');
           postSelector.value = selectValue;
           deletePostBtn.disabled = (selectValue === '__NEW__');
+          renderQueueDashboard();
+        }
+
+        function decorateNonEditableBlocksInEditor() {
+          editor.querySelectorAll('.blog-figure, .blog-graphic-divider').forEach(el => {
+            el.setAttribute('contenteditable', 'false');
+          });
         }
 
         function loadPostIntoEditor(id) {
           deselectFigure();
+          deselectDivider();
           currentEditingId = id;
           if (id === '__NEW__') {
             slugManuallyEdited = false;
             titleInput.value = '';
             idInput.value = '';
             dateInput.value = formatTodayReadable();
+            if (statusSelect) statusSelect.value = 'draft';
+            if (autoPublishDateCheck) autoPublishDateCheck.checked = true;
             populateCategories('Announcement');
             authorInput.value = 'Kira & Sana Marlowe';
             excerptInput.value = '';
@@ -1575,6 +2253,8 @@
             titleInput.value = post.title || '';
             idInput.value = post.id || '';
             dateInput.value = post.date || formatTodayReadable();
+            if (statusSelect) statusSelect.value = normalizePostStatus(post.status);
+            if (autoPublishDateCheck) autoPublishDateCheck.checked = post.autoPublishOnDate !== false;
             populateCategories(post.category || 'Announcement');
             authorInput.value = post.author || 'Kira & Sana Marlowe';
             excerptInput.value = post.excerpt || '';
@@ -1585,12 +2265,11 @@
             } else {
               editor.innerHTML = '';
             }
-            editor.querySelectorAll('.blog-figure').forEach(fig => {
-              fig.setAttribute('contenteditable', 'false');
-            });
+            decorateNonEditableBlocksInEditor();
             deletePostBtn.disabled = false;
           }
           updateWordCount();
+          renderQueueDashboard();
           if (isPreviewMode) renderPreview();
         }
 
@@ -1610,16 +2289,20 @@
               titleInput.value = d.title || '';
               idInput.value = d.id || '';
               dateInput.value = d.date || formatTodayReadable();
+              if (statusSelect && d.status) statusSelect.value = normalizePostStatus(d.status);
+              if (autoPublishDateCheck && typeof d.autoPublishOnDate === 'boolean') autoPublishDateCheck.checked = d.autoPublishOnDate;
               populateCategories(d.category || 'Announcement');
               authorInput.value = d.author || 'Kira & Sana Marlowe';
               excerptInput.value = d.excerpt || '';
               editor.innerHTML = d.html || '';
-              editor.querySelectorAll('.blog-figure').forEach(fig => fig.setAttribute('contenteditable', 'false'));
+              decorateNonEditableBlocksInEditor();
               slugManuallyEdited = Boolean(d.id);
               draftIndicatorEl.textContent = 'Restored unsaved draft';
             }
           }
         } catch (_) {}
+
+        switchScribeSubView('hub');
 
         postSelector.addEventListener('change', () => {
           loadPostIntoEditor(postSelector.value);
@@ -1904,22 +2587,36 @@
         fmtSizeInc.addEventListener('click', () => applyFontSizePx((Number(fmtSizeVal.value) || 17) + 2));
         fmtSizeVal.addEventListener('change', () => applyFontSizePx(Number(fmtSizeVal.value) || 17));
 
-        // ─── Text & Highlight Colour Popovers ───
+        // ─── Text, Highlight & Break Graphic Popovers ───
+        function closeAllToolbarPopovers(exceptEl) {
+          [textColorPop, hiliteColorPop, dividerPop].forEach(pop => {
+            if (pop && pop !== exceptEl) pop.classList.remove('open');
+          });
+        }
+
         textColorBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          hiliteColorPop.classList.remove('open');
+          closeAllToolbarPopovers(textColorPop);
           textColorPop.classList.toggle('open');
         });
 
         hiliteColorBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          textColorPop.classList.remove('open');
+          closeAllToolbarPopovers(hiliteColorPop);
           hiliteColorPop.classList.toggle('open');
+        });
+
+        dividerBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          saveCurrentSelection();
+          closeAllToolbarPopovers(dividerPop);
+          dividerPop.classList.toggle('open');
         });
 
         document.addEventListener('click', (e) => {
           if (!textColorPop.contains(e.target) && e.target !== textColorBtn) textColorPop.classList.remove('open');
           if (!hiliteColorPop.contains(e.target) && e.target !== hiliteColorBtn) hiliteColorPop.classList.remove('open');
+          if (dividerPop && !dividerPop.contains(e.target) && e.target !== dividerBtn) dividerPop.classList.remove('open');
         });
 
         function applyTextColor(colorHex) {
@@ -2045,8 +2742,8 @@
               if (!Number.isNaN(px) && px >= 11 && px <= 64) fmtSizeVal.value = px;
 
               const fam = (cs.fontFamily || '').toLowerCase();
-              fmtFont.value = fam.includes('unifraktur')
-                ? "'UnifrakturMaguntia', cursive"
+              fmtFont.value = (fam.includes('unifraktur') || fam.includes('scalescustoms'))
+                ? "'ScalesCustomS', 'UnifrakturMaguntia', cursive"
                 : 'Philosopher, serif';
 
               insideQuote = Boolean(node.closest && node.closest('blockquote'));
@@ -2061,7 +2758,7 @@
           document.getElementById('fmt-quote-btn').classList.toggle('active', insideQuote);
         }
 
-        // ─── Ornamental Divider, Custom Link Modal & Source Citations ───
+        // ─── Ornamental Paragraph Break / Graphic Divider Picker & Auto-Recoloring Uploader ───
         function normalizeUrl(rawUrl) {
           const trimmed = (rawUrl || '').trim();
           if (!trimmed) return '';
@@ -2069,11 +2766,368 @@
           return 'https://' + trimmed;
         }
 
-        document.getElementById('fmt-divider-btn').addEventListener('click', () => {
+        function insertBlockNodeAtCursor(blockNode) {
           restoreSelection();
-          document.execCommand('insertHTML', false, '<hr class="gothic-divider"><p><br></p>');
+          const sel = window.getSelection();
+          const trailingP = document.createElement('p');
+          trailingP.innerHTML = '<br>';
+          const sourcesSec = editor.querySelector('.blog-sources-section');
+
+          if (sel && sel.rangeCount > 0 && editor.contains(sel.getRangeAt(0).commonAncestorContainer)) {
+            let anchorBlock = sel.getRangeAt(0).commonAncestorContainer;
+            if (anchorBlock.nodeType === 3) anchorBlock = anchorBlock.parentNode;
+            while (anchorBlock && anchorBlock !== editor && anchorBlock.parentNode !== editor) {
+              anchorBlock = anchorBlock.parentNode;
+            }
+            if (anchorBlock && anchorBlock.parentNode === editor && !anchorBlock.classList.contains('blog-sources-section')) {
+              if (!anchorBlock.textContent.trim() && anchorBlock.tagName === 'P' && !anchorBlock.querySelector('img')) {
+                anchorBlock.replaceWith(blockNode);
+                blockNode.after(trailingP);
+              } else {
+                anchorBlock.after(blockNode, trailingP);
+              }
+            } else if (sourcesSec) {
+              editor.insertBefore(blockNode, sourcesSec);
+              editor.insertBefore(trailingP, sourcesSec);
+            } else {
+              editor.appendChild(blockNode);
+              editor.appendChild(trailingP);
+            }
+          } else if (sourcesSec) {
+            editor.insertBefore(blockNode, sourcesSec);
+            editor.insertBefore(trailingP, sourcesSec);
+          } else {
+            editor.appendChild(blockNode);
+            editor.appendChild(trailingP);
+          }
+
+          const r = document.createRange();
+          r.selectNodeContents(trailingP);
+          r.collapse(true);
+          if (sel) {
+            sel.removeAllRanges();
+            sel.addRange(r);
+          }
           saveCurrentSelection();
+          updateWordCount();
           scheduleDraftSave();
+        }
+
+        function insertParagraphBreakOption(type, src, sizeClass) {
+          dividerPop.classList.remove('open');
+          if (type === 'classic-hr') {
+            const hr = document.createElement('hr');
+            hr.className = 'gothic-divider';
+            insertBlockNodeAtCursor(hr);
+            return;
+          }
+          if (type === 'triple-star') {
+            const div = document.createElement('div');
+            div.className = 'blog-graphic-divider blog-text-ornament';
+            div.setAttribute('contenteditable', 'false');
+            div.innerHTML = '✦ &nbsp;&nbsp; ✦ &nbsp;&nbsp; ✦';
+            insertBlockNodeAtCursor(div);
+            return;
+          }
+          // Graphic image divider
+          const div = document.createElement('div');
+          div.className = `blog-graphic-divider ${sizeClass || 'size-md'}`;
+          div.setAttribute('contenteditable', 'false');
+          const img = document.createElement('img');
+          img.className = 'blog-divider-img';
+          img.src = src;
+          img.alt = '';
+          div.appendChild(img);
+          insertBlockNodeAtCursor(div);
+          selectDivider(div);
+        }
+
+        let activeDividerPalette = 'parchment';
+        document.querySelectorAll('#divider-palette-toggle [data-div-palette]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelectorAll('#divider-palette-toggle [data-div-palette]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeDividerPalette = btn.getAttribute('data-div-palette') || 'parchment';
+            dividerPop.querySelectorAll('#divider-presets-list [data-divider-base]').forEach(card => {
+              const base = card.getAttribute('data-divider-base');
+              const img = card.querySelector('img');
+              if (img && base) {
+                img.src = activeDividerPalette === 'gold' ? `${base}-gold.png` : `${base}.png`;
+              }
+            });
+          });
+        });
+
+        dividerPop.querySelectorAll('#divider-presets-list [data-divider-type]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const type = btn.getAttribute('data-divider-type');
+            const base = btn.getAttribute('data-divider-base');
+            const src = base
+              ? (activeDividerPalette === 'gold' ? `${base}-gold.png` : `${base}.png`)
+              : (btn.getAttribute('data-divider-src') || '');
+            insertParagraphBreakOption(
+              type,
+              src,
+              btn.getAttribute('data-divider-size') || 'size-md'
+            );
+          });
+        });
+
+        // Custom uploaded PNG dividers (auto-cropped and recolored to Parchment #E3DEC8 or Sanctuary Gold #B89B67)
+        let savedCustomDividers = [];
+        try {
+          savedCustomDividers = JSON.parse(localStorage.getItem(CUSTOM_DIVIDERS_KEY) || '[]');
+          if (!Array.isArray(savedCustomDividers)) savedCustomDividers = [];
+        } catch (_) {
+          savedCustomDividers = [];
+        }
+
+        function renderSavedCustomDividers() {
+          const listEl = document.getElementById('custom-dividers-saved-list');
+          if (!listEl) return;
+          listEl.innerHTML = '';
+          savedCustomDividers.forEach((item, idx) => {
+            const wrap = document.createElement('div');
+            wrap.style.position = 'relative';
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'divider-option-card';
+            btn.innerHTML = `
+              <img src="${escapeHtml(item.dataUrl)}" alt="${escapeHtml(item.label || 'Custom Break')}">
+              <span class="divider-option-label">${escapeHtml(item.label || 'Custom Break Graphic')}</span>
+            `;
+            btn.addEventListener('click', () => {
+              insertParagraphBreakOption('graphic', item.dataUrl, 'size-md');
+            });
+            const delBtn = document.createElement('button');
+            delBtn.type = 'button';
+            delBtn.textContent = '×';
+            delBtn.title = 'Remove from saved graphics';
+            delBtn.style.cssText = 'position:absolute; top:4px; right:6px; background:transparent; border:none; color:var(--parchment-muted); cursor:pointer; font-size:0.95rem;';
+            delBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              savedCustomDividers.splice(idx, 1);
+              try { localStorage.setItem(CUSTOM_DIVIDERS_KEY, JSON.stringify(savedCustomDividers)); } catch (_) {}
+              renderSavedCustomDividers();
+            });
+            wrap.appendChild(btn);
+            wrap.appendChild(delBtn);
+            listEl.appendChild(wrap);
+          });
+        }
+        renderSavedCustomDividers();
+
+        function cropAndTintDividerImage(file, tintMode) {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              const img = new Image();
+              img.onload = () => {
+                const maxW = 1100;
+                let w = img.width;
+                let h = img.height;
+                if (w > maxW) {
+                  h = Math.round((h * maxW) / w);
+                  w = maxW;
+                }
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = w;
+                tempCanvas.height = h;
+                const tCtx = tempCanvas.getContext('2d');
+                tCtx.drawImage(img, 0, 0, w, h);
+
+                const imgData = tCtx.getImageData(0, 0, w, h);
+                const data = imgData.data;
+                let minX = w, minY = h, maxX = 0, maxY = 0, found = false;
+
+                // Target palette RGB
+                const targetR = tintMode === 'gold' ? 184 : 227;
+                const targetG = tintMode === 'gold' ? 155 : 222;
+                const targetB = tintMode === 'gold' ? 103 : 200;
+
+                for (let y = 0; y < h; y++) {
+                  for (let x = 0; x < w; x++) {
+                    const i = (y * w + x) * 4;
+                    const a = data[i + 3];
+                    if (a > 10) {
+                      found = true;
+                      if (x < minX) minX = x;
+                      if (x > maxX) maxX = x;
+                      if (y < minY) minY = y;
+                      if (y > maxY) maxY = y;
+                    }
+                    if (a > 0 && tintMode !== 'original') {
+                      data[i] = targetR;
+                      data[i + 1] = targetG;
+                      data[i + 2] = targetB;
+                    }
+                  }
+                }
+                tCtx.putImageData(imgData, 0, 0);
+
+                if (!found) {
+                  resolve(tempCanvas.toDataURL('image/png'));
+                  return;
+                }
+
+                const pad = 6;
+                minX = Math.max(0, minX - pad);
+                minY = Math.max(0, minY - pad);
+                maxX = Math.min(w - 1, maxX + pad);
+                maxY = Math.min(h - 1, maxY + pad);
+                const cw = maxX - minX + 1;
+                const ch = maxY - minY + 1;
+
+                const outCanvas = document.createElement('canvas');
+                outCanvas.width = cw;
+                outCanvas.height = ch;
+                const oCtx = outCanvas.getContext('2d');
+                oCtx.drawImage(tempCanvas, minX, minY, cw, ch, 0, 0, cw, ch);
+                resolve(outCanvas.toDataURL('image/png'));
+              };
+              img.onerror = reject;
+              img.src = ev.target.result;
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+        }
+
+        const uploadCustomDivBtn = document.getElementById('upload-custom-divider-btn');
+        const customDivFileInput = document.getElementById('custom-divider-file-input');
+        const customDivTintSelect = document.getElementById('custom-divider-tint-select');
+
+        uploadCustomDivBtn.addEventListener('click', () => customDivFileInput.click());
+        customDivFileInput.addEventListener('change', async (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          try {
+            const tintMode = customDivTintSelect.value || 'parchment';
+            const dataUrl = await cropAndTintDividerImage(file, tintMode);
+            const cleanName = file.name.replace(/\.[^.]+$/, '') + (tintMode === 'gold' ? ' (Gold)' : tintMode === 'parchment' ? ' (Parchment)' : '');
+            savedCustomDividers.unshift({ label: cleanName, dataUrl });
+            try { localStorage.setItem(CUSTOM_DIVIDERS_KEY, JSON.stringify(savedCustomDividers)); } catch (_) {}
+            renderSavedCustomDividers();
+            insertParagraphBreakOption('graphic', dataUrl, 'size-md');
+          } catch (_) {
+            alert('Could not process that PNG image.');
+          }
+          customDivFileInput.value = '';
+        });
+
+        // ─── Post Layout Templates Dropdown (Top Bar & Scribe Hub) ───
+        const BLOG_TEMPLATES = {
+          'empty': {
+            category: 'Announcement',
+            html: ''
+          },
+          'template-1': {
+            category: 'Worldbuilding',
+            html:
+              '<blockquote><p>&ldquo;Write an opening epigraph, prophecy, or quote from the archives of Lucantis here...&rdquo;</p></blockquote>' +
+              '<h1>I. The Ancient Lore</h1>' +
+              '<p>Begin your first lore section here. Introduce the history, bloodline secret, or location from <em>Scales &amp; Stones</em>...</p>' +
+              '<div class="blog-graphic-divider size-md" contenteditable="false"><img class="blog-divider-img" src="divider-eye.png" alt=""></div>' +
+              '<h1>II. Beneath the Surface</h1>' +
+              '<p>Continue into the second half of your dispatch after the ornamental eye break...</p>'
+          },
+          'template-2': {
+            category: 'Writing Diary',
+            html:
+              '<h2>From Kira&rsquo;s Desk</h2>' +
+              '<p>Share your writing update, drafting progress, or character notes here...</p>' +
+              '<div class="blog-graphic-divider size-md" contenteditable="false"><img class="blog-divider-img" src="divider-eye-gold.png" alt=""></div>' +
+              '<h2>From Sana&rsquo;s Desk</h2>' +
+              '<p>Share Sana&rsquo;s perspective, editing reflections, or favourite moments from the chapter...</p>' +
+              '<h2>Highlights This Week</h2>' +
+              '<ul><li>Current word count or draft milestone</li><li>Favourite line or scene we wrote</li><li>What comes next</li></ul>'
+          },
+          'template-3': {
+            category: 'Announcement',
+            html:
+              '<p><em>A short behind-the-scenes note introducing this teaser scene and where it takes place...</em></p>' +
+              '<div class="blog-graphic-divider size-md" contenteditable="false"><img class="blog-divider-img" src="divider-eye.png" alt=""></div>' +
+              '<blockquote><p>&ldquo;Paste a striking pull-quote from the chapter here...&rdquo;</p></blockquote>' +
+              '<p>Paste your chapter excerpt paragraphs here...</p>' +
+              '<div class="blog-graphic-divider size-sm" contenteditable="false"><img class="blog-divider-img" src="divider-eye-gold.png" alt=""></div>' +
+              '<p><em>Tell us what you think of this glimpse in our newsletter or on social media!</em></p>'
+          }
+        };
+
+        function applyBlogTemplateChoice(tplId, skipConfirm) {
+          const tpl = BLOG_TEMPLATES[tplId];
+          if (!tpl) return;
+          if (templateSelect) templateSelect.value = tplId;
+
+          if (!skipConfirm && editor.textContent.trim().length > 0) {
+            if (!confirm('Replace current editor text with this template? (Click Cancel to append it below your existing text instead)')) {
+              if (tpl.html) {
+                editor.insertAdjacentHTML('beforeend', tpl.html);
+                decorateNonEditableBlocksInEditor();
+                updateWordCount();
+                scheduleDraftSave();
+              }
+              return;
+            }
+          }
+          editor.innerHTML = tpl.html;
+          if (tpl.category) populateCategories(tpl.category);
+          decorateNonEditableBlocksInEditor();
+          updateWordCount();
+          scheduleDraftSave();
+        }
+
+        if (templateSelect) {
+          templateSelect.addEventListener('change', () => {
+            applyBlogTemplateChoice(templateSelect.value, false);
+          });
+        }
+
+        // Wire up Scribe Hub Landing Menu Buttons
+        document.getElementById('hub-write-scratch-btn')?.addEventListener('click', () => {
+          postSelector.value = '__NEW__';
+          loadPostIntoEditor('__NEW__');
+          if (templateSelect) templateSelect.value = 'empty';
+          switchScribeSubView('editor');
+          titleInput.focus();
+        });
+
+        document.getElementById('hub-write-template-btn')?.addEventListener('click', () => {
+          const hubTpl = document.getElementById('hub-template-select')?.value || 'template-1';
+          postSelector.value = '__NEW__';
+          loadPostIntoEditor('__NEW__');
+          applyBlogTemplateChoice(hubTpl, true);
+          switchScribeSubView('editor');
+          titleInput.focus();
+        });
+
+        document.getElementById('hub-open-drafts-btn')?.addEventListener('click', () => {
+          switchScribeSubView('list', 'draft');
+        });
+
+        document.getElementById('hub-open-queue-btn')?.addEventListener('click', () => {
+          switchScribeSubView('list', 'queued');
+        });
+
+        document.getElementById('hub-open-published-btn')?.addEventListener('click', () => {
+          switchScribeSubView('list', 'published');
+        });
+
+        document.getElementById('back-to-hub-top-btn')?.addEventListener('click', () => {
+          switchScribeSubView('hub');
+        });
+        document.getElementById('list-back-to-hub-btn')?.addEventListener('click', () => {
+          switchScribeSubView('hub');
+        });
+        document.getElementById('editor-back-to-hub-btn')?.addEventListener('click', () => {
+          switchScribeSubView('hub');
+        });
+        document.getElementById('editor-go-drafts-btn')?.addEventListener('click', () => {
+          switchScribeSubView('list', 'draft');
+        });
+        document.getElementById('editor-go-queue-btn')?.addEventListener('click', () => {
+          switchScribeSubView('list', 'queued');
         });
 
         const linkModal = document.getElementById('link-modal');
@@ -2397,18 +3451,17 @@
           scheduleDraftSave();
         });
 
-        // ─── Interactive Photo Placement Inspector ───
+        // ─── Interactive Photo & Graphic Divider Inspectors ───
         function selectFigure(fig) {
           deselectFigure();
+          deselectDivider();
           selectedFigure = fig;
           fig.classList.add('selected-figure');
           imageInspector.classList.add('open');
 
-          const aligns = ['align-left', 'align-center', 'align-right', 'align-full'];
           imageInspector.querySelectorAll('[data-img-align]').forEach(btn => {
             btn.classList.toggle('active', fig.classList.contains(btn.getAttribute('data-img-align')));
           });
-          const sizes = ['size-25', 'size-50', 'size-75', 'size-100'];
           imageInspector.querySelectorAll('[data-img-size]').forEach(btn => {
             btn.classList.toggle('active', fig.classList.contains(btn.getAttribute('data-img-size')));
           });
@@ -2422,14 +3475,98 @@
           imageInspector.classList.remove('open');
         }
 
+        function selectDivider(divEl) {
+          deselectFigure();
+          deselectDivider();
+          selectedDivider = divEl;
+          divEl.classList.add('selected-divider');
+          dividerInspector.classList.add('open');
+
+          dividerInspector.querySelectorAll('[data-div-size]').forEach(btn => {
+            btn.classList.toggle('active', divEl.classList.contains(btn.getAttribute('data-div-size')));
+          });
+
+          const img = divEl.querySelector('img');
+          const colorGroup = document.getElementById('divider-color-swap-group');
+          const srcAttr = img ? (img.getAttribute('src') || '') : '';
+          if (img && /^divider-[a-z0-9-]+(-gold)?\.png$/i.test(srcAttr)) {
+            colorGroup.style.display = 'flex';
+            const isGold = /-gold\.png$/i.test(srcAttr);
+            dividerInspector.querySelectorAll('[data-div-color]').forEach(btn => {
+              btn.classList.toggle('active', (btn.getAttribute('data-div-color') === 'gold') === isGold);
+            });
+          } else {
+            colorGroup.style.display = 'none';
+          }
+        }
+
+        function deselectDivider() {
+          if (selectedDivider) selectedDivider.classList.remove('selected-divider');
+          selectedDivider = null;
+          dividerInspector.classList.remove('open');
+        }
+
         editor.addEventListener('click', (e) => {
           const fig = e.target.closest('.blog-figure');
+          const divBreak = e.target.closest('.blog-graphic-divider');
           if (fig && editor.contains(fig)) {
             e.preventDefault();
             selectFigure(fig);
+          } else if (divBreak && editor.contains(divBreak)) {
+            e.preventDefault();
+            selectDivider(divBreak);
           } else {
             deselectFigure();
+            deselectDivider();
           }
+        });
+
+        dividerInspector.querySelectorAll('[data-div-size]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (!selectedDivider) return;
+            const targetSize = btn.getAttribute('data-div-size');
+            selectedDivider.classList.remove('size-sm', 'size-md', 'size-lg');
+            selectedDivider.classList.add(targetSize);
+            selectDivider(selectedDivider);
+            scheduleDraftSave();
+          });
+        });
+
+        dividerInspector.querySelectorAll('[data-div-color]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (!selectedDivider) return;
+            const img = selectedDivider.querySelector('img');
+            if (!img) return;
+            const curSrc = img.getAttribute('src') || '';
+            const baseMatch = curSrc.match(/^(divider-[a-z0-9-]+?)(-gold)?\.png$/i);
+            if (!baseMatch) return;
+            const baseName = baseMatch[1];
+            const targetColor = btn.getAttribute('data-div-color');
+            img.setAttribute('src', targetColor === 'gold' ? `${baseName}-gold.png` : `${baseName}.png`);
+            selectDivider(selectedDivider);
+            scheduleDraftSave();
+          });
+        });
+
+        document.getElementById('div-move-up').addEventListener('click', () => {
+          if (!selectedDivider || !selectedDivider.previousElementSibling) return;
+          selectedDivider.parentNode.insertBefore(selectedDivider, selectedDivider.previousElementSibling);
+          scheduleDraftSave();
+        });
+
+        document.getElementById('div-move-down').addEventListener('click', () => {
+          if (!selectedDivider || !selectedDivider.nextElementSibling) return;
+          selectedDivider.parentNode.insertBefore(selectedDivider.nextElementSibling, selectedDivider);
+          scheduleDraftSave();
+        });
+
+        document.getElementById('div-delete-btn').addEventListener('click', () => {
+          if (!selectedDivider) return;
+          const victim = selectedDivider;
+          deselectDivider();
+          victim.remove();
+          updateWordCount();
+          scheduleDraftSave();
         });
 
         imageInspector.querySelectorAll('[data-img-align]').forEach(btn => {
@@ -2508,6 +3645,10 @@
             fig.classList.remove('selected-figure');
             fig.removeAttribute('contenteditable');
           });
+          clone.querySelectorAll('.blog-graphic-divider').forEach(div => {
+            div.classList.remove('selected-divider');
+            div.removeAttribute('contenteditable');
+          });
           clone.querySelectorAll('figcaption').forEach(fc => {
             if (!fc.textContent.trim()) fc.remove();
           });
@@ -2527,22 +3668,24 @@
         }
 
         // ─── Live Preview Toggle ───
-        function buildPostObjectFromForm(overrideHtml) {
+        function buildPostObjectFromForm(overrideHtml, overrideStatus) {
           const title = titleInput.value.trim() || 'Untitled Scroll';
           const id = slugify(idInput.value.trim() || title);
           const date = dateInput.value.trim() || formatTodayReadable();
           const category = getCategoryValue();
           const author = authorInput.value.trim() || 'Kira & Sana Marlowe';
+          const status = normalizePostStatus(overrideStatus || (statusSelect ? statusSelect.value : 'published'));
+          const autoPublishOnDate = autoPublishDateCheck ? Boolean(autoPublishDateCheck.checked) : true;
           const html = typeof overrideHtml === 'string' ? overrideHtml : getCleanEditorHtml();
           let excerpt = excerptInput.value.trim();
           if (!excerpt) {
             const tmp = document.createElement('div');
             tmp.innerHTML = html;
-            tmp.querySelectorAll('figcaption, hr, .blog-sources-section, .blog-source-ref').forEach(el => el.remove());
+            tmp.querySelectorAll('figcaption, hr, .blog-graphic-divider, .blog-sources-section, .blog-source-ref').forEach(el => el.remove());
             const plain = (tmp.textContent || '').replace(/\s+/g, ' ').trim();
             excerpt = plain.length > 180 ? plain.slice(0, 177).replace(/\s+\S*$/, '') + '...' : plain;
           }
-          return { id, title, date, category, author, excerpt, html };
+          return { id, title, date, category, author, status, autoPublishOnDate, excerpt, html };
         }
 
         function renderPreview() {
@@ -2613,13 +3756,15 @@
               title: titleInput.value,
               id: idInput.value,
               date: dateInput.value,
+              status: statusSelect ? statusSelect.value : 'draft',
+              autoPublishOnDate: autoPublishDateCheck ? autoPublishDateCheck.checked : true,
               category: getCategoryValue(),
               author: authorInput.value,
               excerpt: excerptInput.value,
               html: getCleanEditorHtml()
             };
             localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-            draftIndicatorEl.textContent = 'Draft saved locally · ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            draftIndicatorEl.textContent = 'Browser draft saved · ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           } catch (_) {}
         }
 
@@ -2668,6 +3813,142 @@ window.BLOG_POSTS = `;
           a.click();
           URL.revokeObjectURL(url);
         });
+
+        // ─── Drafts, Publish Queue & Blog Entries List View (For Kira & Sana) ───
+        document.querySelectorAll('#queue-filter-tabs [data-qtab]').forEach(tabBtn => {
+          tabBtn.addEventListener('click', () => {
+            document.querySelectorAll('#queue-filter-tabs [data-qtab]').forEach(b => b.classList.remove('active'));
+            tabBtn.classList.add('active');
+            activeQueueTab = tabBtn.getAttribute('data-qtab') || 'draft';
+            if (listViewHeading) {
+              listViewHeading.textContent = activeQueueTab === 'draft'
+                ? 'Edit Drafts'
+                : activeQueueTab === 'queued'
+                  ? 'Publish Queue — Overview & Edit'
+                  : activeQueueTab === 'published'
+                    ? 'Edit Published Blog Entries'
+                    : 'All Drafts & Publish Queue';
+            }
+            renderQueueDashboard();
+          });
+        });
+
+        document.getElementById('new-entry-quick-btn').addEventListener('click', () => {
+          postSelector.value = '__NEW__';
+          loadPostIntoEditor('__NEW__');
+          if (templateSelect) templateSelect.value = 'empty';
+          switchScribeSubView('editor');
+          titleInput.focus();
+        });
+
+        function renderQueueDashboard() {
+          const drafts = postsList.filter(p => normalizePostStatus(p.status) === 'draft');
+          const queued = postsList.filter(p => normalizePostStatus(p.status) === 'queued');
+          const published = postsList.filter(p => normalizePostStatus(p.status) === 'published');
+
+          // Update Hub card counts
+          const hubD = document.getElementById('hub-count-drafts');
+          const hubQ = document.getElementById('hub-count-queue');
+          const hubP = document.getElementById('hub-count-published');
+          if (hubD) hubD.textContent = `${drafts.length} ${drafts.length === 1 ? 'Draft' : 'Drafts'}`;
+          if (hubQ) hubQ.textContent = `${queued.length} in Queue`;
+          if (hubP) hubP.textContent = `${published.length} Published`;
+
+          if (!queueListContainer) return;
+
+          const countDQ = document.getElementById('count-drafts-queue');
+          const countD = document.getElementById('count-draft');
+          const countQ = document.getElementById('count-queued');
+          const countP = document.getElementById('count-published');
+          if (countDQ) countDQ.textContent = String(drafts.length + queued.length);
+          if (countD) countD.textContent = String(drafts.length);
+          if (countQ) countQ.textContent = String(queued.length);
+          if (countP) countP.textContent = String(published.length);
+
+          if (publishNextQueueBtn) {
+            publishNextQueueBtn.disabled = queued.length === 0;
+            publishNextQueueBtn.textContent = queued.length > 0
+              ? `Publish Next in Queue ("${queued[queued.length - 1].title.slice(0, 22)}${queued[queued.length - 1].title.length > 22 ? '…' : ''}")`
+              : 'Publish Next in Queue (Empty)';
+          }
+
+          let items = [];
+          if (activeQueueTab === 'draft') items = drafts;
+          else if (activeQueueTab === 'queued') items = queued;
+          else if (activeQueueTab === 'published') items = published;
+          else items = [...queued, ...drafts];
+
+          if (items.length === 0) {
+            queueListContainer.innerHTML = `
+              <div style="padding: 1.4rem 1rem; text-align:center; color:var(--parchment-muted); font-size:0.88rem; font-style:italic; border:1px dashed var(--parchment-faint);">
+                ${activeQueueTab === 'published'
+                  ? 'No published blog entries yet.'
+                  : activeQueueTab === 'queued'
+                    ? 'Your Publish Queue is currently empty. You can add any blog entry or draft to the Queue when you finish writing it.'
+                    : 'No saved drafts right now. Click "+ Write New Blog Entry" to start writing and save a draft.'}
+              </div>
+            `;
+            return;
+          }
+
+          queueListContainer.innerHTML = items.map(post => {
+            const st = normalizePostStatus(post.status);
+            const badgeLabel = st === 'draft' ? 'Draft' : st === 'queued' ? 'Queue' : 'Published';
+            const badgeClass = st === 'draft' ? 'status-draft' : st === 'queued' ? 'status-queued' : 'status-published';
+            const isEditing = post.id === currentEditingId;
+
+            return `
+              <div class="queue-item-row ${isEditing ? 'active-editing' : ''}" data-qpost-id="${escapeHtml(post.id)}">
+                <div class="queue-item-info">
+                  <span class="status-pill-badge ${badgeClass}">${badgeLabel}</span>
+                  <span class="queue-item-title">${escapeHtml(post.title)}</span>
+                  <span class="queue-item-meta">${escapeHtml(post.date)} &middot; ${escapeHtml(post.category || 'Journal')}</span>
+                </div>
+                <div class="queue-item-actions">
+                  <button type="button" class="btn-studio-sm" data-qaction="edit" data-qid="${escapeHtml(post.id)}" style="padding:0.35rem 0.7rem; font-size:0.65rem;">Open / Edit</button>
+                  ${st !== 'published' ? `
+                    <button type="button" class="btn-studio-sm gold" data-qaction="publish-now" data-qid="${escapeHtml(post.id)}" style="padding:0.35rem 0.75rem; font-size:0.65rem;" title="1-Click Publish this post live to the blog">Publish Now</button>
+                  ` : ''}
+                  ${st === 'draft' ? `
+                    <button type="button" class="btn-studio-sm" data-qaction="move-queue" data-qid="${escapeHtml(post.id)}" style="padding:0.35rem 0.65rem; font-size:0.65rem;" title="Move this draft into the Publish Queue">Move to Queue</button>
+                  ` : ''}
+                  ${st === 'queued' ? `
+                    <button type="button" class="btn-studio-sm" data-qaction="queue-up" data-qid="${escapeHtml(post.id)}" style="padding:0.35rem 0.5rem; font-size:0.65rem;" title="Move earlier in Queue">&uarr;</button>
+                    <button type="button" class="btn-studio-sm" data-qaction="queue-down" data-qid="${escapeHtml(post.id)}" style="padding:0.35rem 0.5rem; font-size:0.65rem;" title="Move later in Queue">&darr;</button>
+                    <button type="button" class="btn-studio-sm" data-qaction="move-draft" data-qid="${escapeHtml(post.id)}" style="padding:0.35rem 0.65rem; font-size:0.65rem;" title="Move back to Drafts">Move to Drafts</button>
+                  ` : ''}
+                  ${st === 'published' ? `
+                    <button type="button" class="btn-studio-sm" data-qaction="move-draft" data-qid="${escapeHtml(post.id)}" style="padding:0.35rem 0.65rem; font-size:0.65rem;" title="Unpublish back to Drafts">Move to Drafts</button>
+                  ` : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          queueListContainer.querySelectorAll('[data-qaction]').forEach(btn => {
+            btn.addEventListener('click', async () => {
+              const action = btn.getAttribute('data-qaction');
+              const qid = btn.getAttribute('data-qid');
+              if (!qid) return;
+
+              if (action === 'edit') {
+                postSelector.value = qid;
+                loadPostIntoEditor(qid);
+                switchScribeSubView('editor');
+                return;
+              }
+              if (action === 'publish-now') {
+                await quickChangePostStatus(qid, 'published', true);
+              } else if (action === 'move-queue') {
+                await quickChangePostStatus(qid, 'queued', false);
+              } else if (action === 'move-draft') {
+                await quickChangePostStatus(qid, 'draft', false);
+              } else if (action === 'queue-up' || action === 'queue-down') {
+                await reorderPostInList(qid, action === 'queue-up' ? -1 : 1);
+              }
+            });
+          });
+        }
 
         // ─── GitHub REST API Connection & Publishing ───
         const ghDrawer = document.getElementById('gh-settings-drawer');
@@ -2810,7 +4091,6 @@ window.BLOG_POSTS = `;
           try {
             return JSON.parse(jsonPart);
           } catch (_) {
-            // Fallback for legacy single-quoted JS object literals (original posts.js format)
             const runner = new Function('var window = {}; ' + jsText + '; return window.BLOG_POSTS;');
             return runner();
           }
@@ -2832,21 +4112,36 @@ window.BLOG_POSTS = `;
             if (!match) continue;
             const ext = match[1].toLowerCase().includes('png') ? 'png' : 'jpg';
             const b64 = match[2];
-            const assetPath = `assets/blog/${slug}-${stamp}-${i + 1}.${ext}`;
+            const isDivider = img.classList.contains('blog-divider-img');
+            const assetPath = isDivider
+              ? `assets/dividers/${slug}-break-${stamp}-${i + 1}.png`
+              : `assets/blog/${slug}-${stamp}-${i + 1}.${ext}`;
 
-            showPublishStatus(`Uploading photo ${i + 1} of ${imgs.length} to Sanctuary storage...`);
+            showPublishStatus(`Uploading ${isDivider ? 'custom break graphic' : 'photo'} ${i + 1} of ${imgs.length} to Sanctuary storage...`);
             const existingAsset = await ghGetFile(creds, assetPath);
-            await ghPutFile(creds, assetPath, b64, `Add blog image ${assetPath}`, existingAsset ? existingAsset.sha : null);
+            await ghPutFile(creds, assetPath, b64, `Add blog asset ${assetPath}`, existingAsset ? existingAsset.sha : null);
             img.setAttribute('src', assetPath);
           }
           return wrapper.innerHTML;
+        }
+
+        async function fetchFreshestPostsListFromGitHub(creds) {
+          if (!creds || !creds.token) return postsList;
+          const remotePostsFile = await ghGetFile(creds, 'posts.js');
+          if (remotePostsFile && remotePostsFile.content) {
+            try {
+              const parsed = parseRemotePostsJs(base64ToUtf8(remotePostsFile.content));
+              if (Array.isArray(parsed)) return parsed;
+            } catch (_) {}
+          }
+          return postsList;
         }
 
         async function commitUpdatedPostsList(creds, updatedList, commitMessage, statusLabel) {
           const serialized = serializePostsJs(updatedList);
           const b64 = utf8ToBase64(serialized);
 
-          showPublishStatus(statusLabel || 'Publishing entry to live Sanctuary...');
+          showPublishStatus(statusLabel || 'Syncing scroll with Sanctuary...');
           const rootFile = await ghGetFile(creds, 'posts.js');
           await ghPutFile(creds, 'posts.js', b64, commitMessage, rootFile ? rootFile.sha : null);
 
@@ -2857,71 +4152,182 @@ window.BLOG_POSTS = `;
           postsList = updatedList;
         }
 
-        document.getElementById('publish-github-btn').addEventListener('click', async () => {
+        // 1-Click Status Change (Sana's "✦ Publish Now" button, Queue button, or "Publish Next in Queue")
+        async function quickChangePostStatus(postId, newStatus, stampTodayIfPublishing) {
           const creds = saveGhCreds();
-          if (!creds.token) {
-            ghDrawer.classList.add('open');
-            ghTokenInput.focus();
-            showPublishStatus('Please connect your GitHub Token first in the settings drawer below so we can upload directly to your site!', true);
-            return;
+          try {
+            let baseList = await fetchFreshestPostsListFromGitHub(creds);
+            const target = baseList.find(p => p.id === postId);
+            if (!target) return;
+            target.status = newStatus;
+            if (stampTodayIfPublishing && newStatus === 'published' && !target.date) {
+              target.date = formatTodayReadable();
+            }
+
+            if (creds.token) {
+              const actionVerb = newStatus === 'published' ? 'Publish' : newStatus === 'queued' ? 'Queue' : 'Save draft';
+              await commitUpdatedPostsList(
+                creds,
+                baseList,
+                `${actionVerb} blog entry: ${target.title}`,
+                `✦ Updating "${escapeHtml(target.title)}" (${newStatus.toUpperCase()})...`
+              );
+              if (currentEditingId === postId && statusSelect) {
+                statusSelect.value = newStatus;
+              }
+              populatePostSelector(currentEditingId);
+              showPublishStatus(
+                newStatus === 'published'
+                  ? `✦ <strong>Published Live!</strong> "${escapeHtml(target.title)}" is now live on the blog! <a href="blog.html#${escapeHtml(target.id)}" target="_blank" style="color:var(--gold-accent); text-decoration:underline;">View on Journal &nearr;</a>`
+                  : `✦ Updated "${escapeHtml(target.title)}" to <strong>${newStatus.toUpperCase()}</strong> on GitHub.`
+              );
+            } else {
+              postsList = baseList;
+              if (currentEditingId === postId && statusSelect) {
+                statusSelect.value = newStatus;
+              }
+              populatePostSelector(currentEditingId);
+              showPublishStatus(
+                `✦ Updated "${escapeHtml(target.title)}" to <strong>${newStatus.toUpperCase()}</strong> locally. Connect your GitHub Token or click Download posts.js to push to the live site.`
+              );
+            }
+          } catch (err) {
+            showPublishStatus(`Could not update status: ${escapeHtml(err.message)}`, true);
           }
+        }
+
+        async function reorderPostInList(postId, directionDelta) {
+          const creds = saveGhCreds();
+          const idx = postsList.findIndex(p => p.id === postId);
+          if (idx === -1) return;
+          const targetIdx = idx + directionDelta;
+          if (targetIdx < 0 || targetIdx >= postsList.length) return;
+          const copy = [...postsList];
+          const [moved] = copy.splice(idx, 1);
+          copy.splice(targetIdx, 0, moved);
+          postsList = copy;
+          renderQueueDashboard();
+          if (creds.token) {
+            try {
+              await commitUpdatedPostsList(creds, postsList, 'Reorder blog publish queue', 'Updating queue order...');
+              showPublishStatus('✦ Updated Publish Queue order on GitHub.');
+            } catch (_) {}
+          }
+        }
+
+        if (publishNextQueueBtn) {
+          publishNextQueueBtn.addEventListener('click', async () => {
+            const queued = postsList.filter(p => normalizePostStatus(p.status) === 'queued');
+            if (queued.length === 0) return;
+            // Publish the oldest/bottom queued item (FIFO queue)
+            const nextPost = queued[queued.length - 1];
+            await quickChangePostStatus(nextPost.id, 'published', true);
+          });
+        }
+
+        async function syncCurrentEditorPostWithStatus(targetStatus) {
+          if (statusSelect) statusSelect.value = targetStatus;
 
           if (!titleInput.value.trim()) {
             titleInput.focus();
-            showPublishStatus('Please add a Post Title before publishing.', true);
+            showPublishStatus('Please add a Post Title first.', true);
             return;
           }
 
           const rawHtml = getCleanEditorHtml();
           if (!rawHtml) {
             editor.focus();
-            showPublishStatus('Write something inside the scroll before publishing!', true);
+            showPublishStatus('Write something inside the scroll first!', true);
             return;
           }
 
-          const publishBtn = document.getElementById('publish-github-btn');
-          publishBtn.disabled = true;
+          const creds = saveGhCreds();
+          if (!creds.token) {
+            // Save into local postsList so user can still test & download posts.js even without token
+            const localPostObj = buildPostObjectFromForm(rawHtml, targetStatus);
+            postsList = mergePostIntoList(postsList, localPostObj);
+            currentEditingId = localPostObj.id;
+            idInput.value = localPostObj.id;
+            populatePostSelector(localPostObj.id);
+            saveLocalDraft();
+            showPublishStatus(
+              `✦ Saved "${escapeHtml(localPostObj.title)}" as <strong>${targetStatus.toUpperCase()}</strong> in this session. Connect your GitHub Token below (or click Download posts.js) so Sana can see it across devices!`,
+              false
+            );
+            return;
+          }
+
+          const allBtns = [
+            document.getElementById('publish-github-btn'),
+            document.getElementById('save-shared-draft-btn'),
+            document.getElementById('save-queue-btn')
+          ].filter(Boolean);
+          allBtns.forEach(b => { b.disabled = true; });
 
           try {
             const slug = slugify(idInput.value.trim() || titleInput.value.trim());
             const processedHtml = await uploadEmbeddedImagesToGitHub(creds, rawHtml, slug);
-            const postObj = buildPostObjectFromForm(processedHtml);
+            const postObj = buildPostObjectFromForm(processedHtml, targetStatus);
 
-            // Fetch freshest posts.js from GitHub to preserve posts written on other devices
             showPublishStatus('Syncing with latest Sanctuary archive...');
-            let baseList = postsList;
-            const remotePostsFile = await ghGetFile(creds, 'posts.js');
-            if (remotePostsFile && remotePostsFile.content) {
-              try {
-                const parsed = parseRemotePostsJs(base64ToUtf8(remotePostsFile.content));
-                if (Array.isArray(parsed)) baseList = parsed;
-              } catch (_) {}
-            }
-
+            const baseList = await fetchFreshestPostsListFromGitHub(creds);
             const updatedList = mergePostIntoList(baseList, postObj);
-            const isEdit = currentEditingId !== '__NEW__';
-            const msg = `${isEdit ? 'Update' : 'Publish'} blog entry: ${postObj.title}`;
+            const actionLabel = targetStatus === 'published'
+              ? 'Publish blog entry'
+              : targetStatus === 'queued'
+                ? 'Queue blog entry'
+                : 'Save shared blog draft';
 
-            await commitUpdatedPostsList(creds, updatedList, msg, '✦ Carving scroll onto scalesandstones.com...');
+            await commitUpdatedPostsList(
+              creds,
+              updatedList,
+              `${actionLabel}: ${postObj.title}`,
+              targetStatus === 'published'
+                ? '✦ Carving scroll onto scalesandstones.com...'
+                : targetStatus === 'queued'
+                  ? '⏳ Adding scroll to Publish Queue on GitHub...'
+                  : '✎ Saving shared draft to GitHub for Sana & Kira...'
+            );
 
-            // Update editor with clean hosted paths and clear stale draft
             editor.innerHTML = processedHtml;
-            editor.querySelectorAll('.blog-figure').forEach(fig => fig.setAttribute('contenteditable', 'false'));
+            decorateNonEditableBlocksInEditor();
             idInput.value = postObj.id;
             currentEditingId = postObj.id;
             populatePostSelector(postObj.id);
             localStorage.removeItem(DRAFT_KEY);
-            draftIndicatorEl.textContent = 'Published live';
+            draftIndicatorEl.textContent = targetStatus === 'published' ? 'Published live' : targetStatus === 'queued' ? 'In Publish Queue' : 'Shared Draft saved';
 
-            showPublishStatus(
-              `✦ <strong>Published!</strong> "${escapeHtml(postObj.title)}" has been uploaded straight to GitHub. Your live blog will refresh within ~30–60 seconds.<br>` +
-              `<a href="blog.html#${escapeHtml(postObj.id)}" target="_blank" style="color:var(--gold-accent); text-decoration:underline;">View entry on Journal &nearr;</a>`
-            );
+            if (targetStatus === 'published') {
+              showPublishStatus(
+                `✦ <strong>Published Live!</strong> "${escapeHtml(postObj.title)}" has been uploaded straight to GitHub.<br>` +
+                `<a href="blog.html#${escapeHtml(postObj.id)}" target="_blank" style="color:var(--gold-accent); text-decoration:underline;">View entry on Journal &nearr;</a>`
+              );
+            } else if (targetStatus === 'queued') {
+              showPublishStatus(
+                `⏳ <strong>Added to Publish Queue!</strong> "${escapeHtml(postObj.title)}" is saved in your shared queue (hidden from public readers until the scheduled date or until Sana clicks <em>✦ Publish Now</em>).`
+              );
+            } else {
+              showPublishStatus(
+                `✎ <strong>Shared Draft Saved!</strong> "${escapeHtml(postObj.title)}" is saved on GitHub as a Draft. It stays completely hidden from the public blog until you or Sana click <em>✦ Publish Now</em>!`
+              );
+            }
           } catch (err) {
-            showPublishStatus(`Publish failed: ${escapeHtml(err.message)}`, true);
+            showPublishStatus(`Sync failed: ${escapeHtml(err.message)}`, true);
           } finally {
-            publishBtn.disabled = false;
+            allBtns.forEach(b => { b.disabled = false; });
           }
+        }
+
+        document.getElementById('publish-github-btn').addEventListener('click', () => {
+          syncCurrentEditorPostWithStatus('published');
+        });
+
+        document.getElementById('save-shared-draft-btn').addEventListener('click', () => {
+          syncCurrentEditorPostWithStatus('draft');
+        });
+
+        document.getElementById('save-queue-btn').addEventListener('click', () => {
+          syncCurrentEditorPostWithStatus('queued');
         });
 
         deletePostBtn.addEventListener('click', async () => {
@@ -2934,14 +4340,7 @@ window.BLOG_POSTS = `;
           if (creds.token) {
             deletePostBtn.disabled = true;
             try {
-              let baseList = postsList;
-              const remotePostsFile = await ghGetFile(creds, 'posts.js');
-              if (remotePostsFile && remotePostsFile.content) {
-                try {
-                  const parsed = parseRemotePostsJs(base64ToUtf8(remotePostsFile.content));
-                  if (Array.isArray(parsed)) baseList = parsed;
-                } catch (_) {}
-              }
+              const baseList = await fetchFreshestPostsListFromGitHub(creds);
               const filteredList = baseList.filter(p => p.id !== currentEditingId);
               await commitUpdatedPostsList(creds, filteredList, `Delete blog entry: ${post.title}`, 'Removing entry from Sanctuary...');
               populatePostSelector('__NEW__');

@@ -87,7 +87,24 @@
       const sortLabel = document.getElementById('blog-sort-label');
       const categoryPills = document.getElementById('blog-category-pills');
 
-      const posts = window.BLOG_POSTS || [];
+      const rawPosts = window.BLOG_POSTS || [];
+      // Only show published posts (or queued posts whose scheduled auto-publish date has arrived) on the public blog
+      function isPostPubliclyVisible(post) {
+        if (!post || typeof post !== 'object') return false;
+        const st = (post.status || 'published').toLowerCase();
+        if (st === 'draft') return false;
+        if (st === 'queued') {
+          if (post.autoPublishOnDate && post.date) {
+            const scheduledTime = Date.parse(post.date);
+            if (!Number.isNaN(scheduledTime) && scheduledTime <= Date.now()) {
+              return true;
+            }
+          }
+          return false;
+        }
+        return true;
+      }
+      const posts = rawPosts.filter(isPostPubliclyVisible);
       const PAGE_SIZE = 10;
 
       let activeCategory = 'All';
